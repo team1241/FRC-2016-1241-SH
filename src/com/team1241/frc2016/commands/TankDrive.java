@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *	This class is used to set a default command for the Drivetrain subsystem. This command allows the driver to
  *	control the robot using tank drive. 
  *
- * @author Mahrus Kazi
- * @since 2015-09-13
+ * @author Bryan Kristiono
+ * @since 2016-01-10
  */
 public class TankDrive extends Command {
-	private boolean driving = true;
 
 	public TankDrive() {
 		requires(Robot.drive);
@@ -26,27 +25,17 @@ public class TankDrive extends Command {
 	 * In this method values from the joystick are sent to the corresponding drives to make the robot move.
 	 */
 	protected void execute() {
-		if (!Robot.drive.getBumperSwitch() && Robot.drive.auton==true) {
-			Robot.drive.runLeftDrive(0.3);
-			Robot.drive.runRightDrive(-0.3);
-		}
-		else {
-			Robot.drive.auton = false;
-			Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY()*0.3);
-			Robot.drive.runRightDrive(Robot.oi.getDriveRightY()*0.3);
-		}
+		Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY());
+		Robot.drive.runRightDrive(Robot.oi.getDriveRightY());
 	}
 
-	protected boolean isFinished()
-	{
+	protected boolean isFinished() {
 		return false;
 	}
 
-	protected void end()
-	{
+	protected void end() {
 	}
 
-	protected void interrupted()
-	{   
+	protected void interrupted() {   
 	}
 }

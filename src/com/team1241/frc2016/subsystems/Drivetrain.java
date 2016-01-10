@@ -1,7 +1,7 @@
 package com.team1241.frc2016.subsystems;
 
 import com.team1241.frc2016.NumberConstants;
-import com.team1241.frc2016.RobotMap;
+import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
 import com.team1241.frc2016.utilities.PIDController;
@@ -38,32 +38,30 @@ public class Drivetrain extends Subsystem {
 	public Drivetrain() {
 		auton = false;
 		
-		rightDriveFront = new CANTalon(RobotMap.RIGHT_DRIVE_FRONT);
-		rightDriveBack = new CANTalon(RobotMap.RIGHT_DRIVE_BACK);
+		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
+		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		
-		leftDriveFront = new CANTalon(RobotMap.LEFT_DRIVE_FRONT);
-		leftDriveBack = new CANTalon(RobotMap.LEFT_DRIVE_BACK);
+		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
+		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		
-		leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_A, 
-				RobotMap.LEFT_DRIVE_ENCODER_B, 
-				RobotMap.leftDriveTrainEncoderReverse, 
+		leftDriveEncoder = new Encoder(ElectricalConstants.LEFT_DRIVE_ENCODER_A, 
+				ElectricalConstants.LEFT_DRIVE_ENCODER_B, 
+				ElectricalConstants.leftDriveTrainEncoderReverse, 
 				Encoder.EncodingType.k4X);
 		
-		leftDriveEncoder.setDistancePerPulse(RobotMap.driveEncoderDistPerTick);
+		leftDriveEncoder.setDistancePerPulse(ElectricalConstants.driveEncoderDistPerTick);
 
 
-		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_A,
-				RobotMap.RIGHT_DRIVE_ENCODER_B, 
-				RobotMap.rightDriveTrainEncoderReverse, 
+		rightDriveEncoder = new Encoder(ElectricalConstants.RIGHT_DRIVE_ENCODER_A,
+				ElectricalConstants.RIGHT_DRIVE_ENCODER_B, 
+				ElectricalConstants.rightDriveTrainEncoderReverse, 
 				Encoder.EncodingType.k4X);
 		
-		rightDriveEncoder.setDistancePerPulse(RobotMap.driveEncoderDistPerTick);
+		rightDriveEncoder.setDistancePerPulse(ElectricalConstants.driveEncoderDistPerTick);
 		
 		drivePID = new PIDController(NumberConstants.pDrive, 
 									NumberConstants.iDrive, 
 									NumberConstants.dDrive);
-		
-		bumperSwitch = new DigitalInput(RobotMap.INTAKE_BUMPER);
 	}
 	
     public void initDefaultCommand() {
@@ -173,10 +171,6 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
-    }
-    
-    public boolean getBumperSwitch() {
-    	return !bumperSwitch.get();
     }
 }
 
