@@ -38,10 +38,4 @@ public class NumberConstants {
 	public static final double pElevDown								 = 0.03;
 	public static final double iElevDown								 = 0.00;
 	public static final double dElevDown								 = 0.00;
-	
-	//**************************************************************************
-    //*******************************TOTE LIMIT*********************************
-    //**************************************************************************
-	
-	public static final int toteLimit 										= 6;
 }

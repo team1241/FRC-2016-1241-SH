@@ -2,24 +2,20 @@ package com.team1241.frc2016.subsystems;
 
 import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.ElectricalConstants;
-import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
 import com.team1241.frc2016.utilities.PIDController;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * The subsystem that is used for the drive train of the robot. It runs the 4 motors in the drive train as well as
+ * read the encoder values from the motors.
+ * @author Bryan Kristiono
+ * @since 2016-10-10
  */
 public class Drivetrain extends Subsystem {
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	public boolean auton;
-	
 	CANTalon rightDriveFront;
 	CANTalon rightDriveBack;
 	
@@ -31,13 +27,9 @@ public class Drivetrain extends Subsystem {
     
     public PIDController drivePID;
     
-    DigitalInput bumperSwitch;
-    
     public double cogx = 0;
 
 	public Drivetrain() {
-		auton = false;
-		
 		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
 		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		
