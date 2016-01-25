@@ -7,84 +7,108 @@ package com.team1241.frc2016;
  */
 public class ElectricalConstants {
 	//**************************************************************************
-	//**************************** DRIVE MOTORS*********************************
-	//**************************************************************************        
-
-	public static final int RIGHT_DRIVE_FRONT                               = 8; 
-	public static final int RIGHT_DRIVE_BACK                                = 9;
-
-	public static final int LEFT_DRIVE_FRONT                                = 0;
+	//****************************** DRIVE MOTORS ******************************
+	//**************************************************************************     
+	
+	public static final int LEFT_DRIVE_FRONT                                = 3;
+	public static final int LEFT_DRIVE_MIDDLE								= 2;
 	public static final int LEFT_DRIVE_BACK                                 = 1;
-
+	
+	public static final int RIGHT_DRIVE_FRONT                               = 11;
+	public static final int RIGHT_DRIVE_MIDDLE								= 12;
+	public static final int RIGHT_DRIVE_BACK                                = 13;
+	
 	//**************************************************************************
-	//*************************** SHOOTER MOTORS *******************************
+	//***************************** SHOOTER MOTORS *****************************
 	//**************************************************************************        
-
-
+	
+	public static final int LEFT_SHOOTER_MOTOR								= 5;
+	public static final int RIGHT_SHOOTER_MOTOR								= 9;
+	
 	//**************************************************************************
-	//**************************** INTAKE MOTORS *******************************
+	//****************************** TURRET MOTORS *****************************
+	//**************************************************************************  
+	
+	public static final int TURRET_MOTOR									= 6;
+	
+	//**************************************************************************
+	//****************************** INTAKE MOTORS *****************************
 	//**************************************************************************        
+	
+	public static final int INTAKE_MOTOR 									= 7;
+	
+	//**************************************************************************
+	//******************************* ARM MOTORS *******************************
+	//************************************************************************** 
+	
+	public static final int LEFT_ARM_MOTOR									= 4;
+	public static final int RIGHT_ARM_MOTOR									= 10;
+	
+	//**************************************************************************
+	//***************************** CONVEYOR MOTORS ****************************
+	//**************************************************************************  
+	
+	public static final int CONVEYOR_MOTOR									= 8;
+	
+	//**************************************************************************
+	//***************************** DRIVE ENCODERS *****************************
+	//**************************************************************************
+	
+	public static final int LEFT_DRIVE_ENCODER_A                            = 0;
+	public static final int LEFT_DRIVE_ENCODER_B                            = 1;
+	
+	public static final int RIGHT_DRIVE_ENCODER_A                           = 8;
+	public static final int RIGHT_DRIVE_ENCODER_B                           = 9;
+	
+	//**************************************************************************
+	//***************************** TURRET ENCODERS ****************************
+	//**************************************************************************
 
-//	public static final int RIGHT_INTAKE_MOTOR 								= 7;
-//	public static final int LEFT_INTAKE_MOTOR 						        = 2;
+	public static final int TURRET_ENCODER_A								= 2;
+	public static final int TURRET_ENCODER_B                		        = 3;
 
 	//**************************************************************************
-	//************************** DRIVE ENCODERS ********************************
+	//***************************** ANALOG SENSORS *****************************
+	//**************************************************************************
+	
+	public static final int SHOOTER_OPTICS									= 0;
+	public static final int POPPER_OPTICS									= 1;
+	public static final int ARM_POTENTIOMETER								= 3;
+	
+	//**************************************************************************
+	//******************************** PNEUMATICS ******************************
 	//**************************************************************************
 
-	public static final int LEFT_DRIVE_ENCODER_A                            = 2;
-	public static final int LEFT_DRIVE_ENCODER_B                            = 3;
-
-	public static final int RIGHT_DRIVE_ENCODER_A                           = 1;
-	public static final int RIGHT_DRIVE_ENCODER_B                           = 0;
-
-	//**************************************************************************
-	//************************* TURRET ENCODERS ******************************
-	//**************************************************************************
-
-//	public static final int ELEV_ENCODER_A                		            = 4;
-//	public static final int ELEV_ENCODER_B                		            = 5;
-
-	//**************************************************************************
-	//*************************** Digital Sensors ******************************
-	//**************************************************************************
-
-
-	//***************************************************************************
-	//*************************** Pneumatics ************************************
-	//***************************************************************************
-
-//	public static final int LEFT_INTAKE_SOLENOID_A							= 4;
-//	public static final int LEFT_INTAKE_SOLENOID_B 							= 3;
-//
-//	public static final int RIGHT_INTAKE_SOLENOID_A 						= 7;
-//	public static final int RIGHT_INTAKE_SOLENOID_B 						= 0;
-//
-//	public static final int CONTAINER_ELEVATOR_HOLDER_SOLENOID_A 			= 2; 
-//	public static final int CONTAINER_ELEVATOR_HOLDER_SOLENOID_B			= 5;
-//
-//	public static final int CONTAINER_TOP_HOLDER_SOLENOID_A 				= 1; 
-//	public static final int CONTAINER_TOP_HOLDER_SOLENOID_B					= 6; 
+	public static final int SHOOTER_HOOD_SOLENOID_A							= 0;
+	public static final int SHOOTER_HOOD_SOLENOID_B							= 7;
+	
+	public static final int POPPER_SHOOT_SOLENOID_A							= 1;
+	public static final int POPPER_SHOOT_SOLENOID_B							= 6;
+	
+	public static final int POPPER_HOLD_SOLENOID_A							= 2;
+	public static final int POPPER_HOLD_SOLENOID_B							= 5;
+	
+	public static final int POPPER_RELEASE_SOLENOID_A						= 3;
+	public static final int POPPER_RELEASE_SOLENOID_B						= 4;
 
 	//**************************************************************************
-	//********************* DRIVE ENCODER CONSTANTS ****************************
+	//************************* DRIVE ENCODER CONSTANTS ************************
 	//**************************************************************************
 	public static final int driveWheelRadius = 4;//wheel radius in inches
 	public static final int drivePulsePerRotation = 128; //encoder pulse per rotation
 	public static final double driveGearRatio = 1/1; //ratio between wheel and encoder
 	public static final double driveEncoderPulsePerRot = drivePulsePerRotation*driveGearRatio; //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick =(Math.PI*2*driveWheelRadius)/driveEncoderPulsePerRot;
-	public static final boolean rightDriveTrainEncoderReverse = false; 
-	public static final boolean leftDriveTrainEncoderReverse = false; 
+	public static final boolean leftDriveTrainEncoderReverse = false;
+	public static final boolean rightDriveTrainEncoderReverse = false;
 
 	//**************************************************************************
-	//******************** ELEVATOR ENCODER CONSTANTS **************************
+	//************************ TURRET ENCODER CONSTANTS ************************
 	//**************************************************************************
-	public static final int elevPulleyRadius = 1;
-	public static final int elevPulsePerRotation = 128; //encoder pulse per rotation
-	public static final double elevGearRatio = 1/1; //ratio between pulley and encoder
-	public static final double elevEncoderPulsePerRot = elevPulsePerRotation*elevGearRatio; //pulse per rotation * gear ratio
-	public static final double elevEncoderDistPerTick =(Math.PI*2*elevPulleyRadius)/elevEncoderPulsePerRot;
-	public static final boolean rightElevEncoderReverse = false; 
-	public static final boolean leftElevEncoderReverse = false;
+	public static final int turretGearRadius = 1;
+	public static final int turretPulsePerRotation = 128; //encoder pulse per rotation
+	public static final double turretGearRatio = 1/1; //ratio between pulley and encoder
+	public static final double turretEncoderPulsePerRot = turretPulsePerRotation*turretGearRatio; //pulse per rotation * gear ratio
+	public static final double turretEncoderDistPerTick =(Math.PI*2*turretGearRadius)/turretEncoderPulsePerRot;
+	public static final boolean turretEncoderReverse = false;
 }
