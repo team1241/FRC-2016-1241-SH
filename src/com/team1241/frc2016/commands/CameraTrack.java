@@ -18,20 +18,6 @@ public class CameraTrack extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double x = Robot.drive.cogx;
-    	SmartDashboard.putNumber("X",x);
-//    	if (x < 250 && x != 0) {
-//    		Robot.drive.runLeftDrive(-0.2);
-//    		Robot.drive.runRightDrive(-0.2);
-//    	}
-//    	else if (x > 450 && x != 0){
-//    		Robot.drive.runLeftDrive(0.2);
-//    		Robot.drive.runRightDrive(0.2);
-//    	}
-//    	else {
-//    		Robot.drive.runLeftDrive(0);
-//    		Robot.drive.runRightDrive(0);
-//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

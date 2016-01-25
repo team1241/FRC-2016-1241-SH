@@ -2,6 +2,7 @@ package com.team1241.frc2016.subsystems;
 
 import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.ElectricalConstants;
+import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
 import com.team1241.frc2016.utilities.PIDController;
 
@@ -16,26 +17,35 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @since 2016-10-10
  */
 public class Drivetrain extends Subsystem {
-	CANTalon rightDriveFront;
-	CANTalon rightDriveBack;
-	
+	//Motors
 	CANTalon leftDriveFront;
+	CANTalon leftDriveMiddle;
 	CANTalon leftDriveBack;
 	
+	CANTalon rightDriveFront;
+	CANTalon rightDriveMiddle;
+	CANTalon rightDriveBack;
+	
+	//Encoders
 	Encoder leftDriveEncoder;               
     Encoder rightDriveEncoder; 
     
+    //PIDController
     public PIDController drivePID;
-    
-    public double cogx = 0;
 
+    
 	public Drivetrain() {
-		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
-		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
-		
+		//Motors
 		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
+		leftDriveMiddle = new CANTalon(ElectricalConstants.LEFT_DRIVE_MIDDLE);
 		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		
+		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
+		rightDriveMiddle = new CANTalon(ElectricalConstants.RIGHT_DRIVE_MIDDLE);
+		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
+		
+		
+		//Encoders
 		leftDriveEncoder = new Encoder(ElectricalConstants.LEFT_DRIVE_ENCODER_A, 
 				ElectricalConstants.LEFT_DRIVE_ENCODER_B, 
 				ElectricalConstants.leftDriveTrainEncoderReverse, 
@@ -64,22 +74,19 @@ public class Drivetrain extends Subsystem {
 //    	setDefaultCommand(new ArcadeDrive());
     }
     
-    public void updateCogX(double x){
-    	cogx = x;
-    }
-    
     public void runLeftDrive(double pwmVal) {
-    	if(pwmVal>1)
-    		pwmVal = 1;
+    	if(Math.abs(pwmVal)>1)
+    		pwmVal = Math.pow(pwmVal, 0);
     	leftDriveFront.set(pwmVal);
+    	leftDriveMiddle.set(pwmVal);
     	leftDriveBack.set(pwmVal);
     }
     
     public void runRightDrive(double pwmVal) {
-    	pwmVal = pwmVal*1.4;
-    	if(pwmVal>1)
-    		pwmVal = 1;
+    	if(Math.abs(pwmVal)>1)
+    		pwmVal = Math.pow(pwmVal, 0);
     	rightDriveFront.set(pwmVal);
+    	rightDriveMiddle.set(pwmVal);
     	rightDriveBack.set(pwmVal);
     }
     
@@ -97,10 +104,8 @@ public class Drivetrain extends Subsystem {
     /**
      * Resets the encoder AND gyro to zero
      */
-    public void reset()
-    {
+    public void reset() {
         resetEncoders();
-//        resetGyro();
     }
 
     /**
