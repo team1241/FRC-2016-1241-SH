@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+import com.team1241.frc2016.autonCommands.NoAuto;
 import com.team1241.frc2016.autonCommands.SimpleAuton;
 import com.team1241.frc2016.commands.DriveDistance;
 import com.team1241.frc2016.subsystems.Drivetrain;
@@ -24,10 +25,14 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-	public static final Drivetrain drive = new Drivetrain();
+	//Subsystems
+	public static Drivetrain drive;
+//	public static Shooter shooter;
+//	public static Intake intake;
+//	public static Conveyor conveyor;
+	
 	public static OI oi;
-
+	
     Command autonomousCommand;
     public SendableChooser autoChooser;
 
@@ -37,10 +42,11 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
+		drive = new Drivetrain();
+		
         // instantiate the command used for the autonomous period
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Something", new SimpleAuton());
-		autoChooser.addDefault("More", new DriveDistance(20, 0.3, 5));
+		autoChooser.addDefault("No Auto", new NoAuto());
 		SmartDashboard.putData("Auto Mode", autoChooser);
     }
 	
@@ -66,7 +72,8 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-    	autonomousCommand.cancel();
+    	if(autonomousCommand!=null)
+    		autonomousCommand.cancel();
     }
 
     /**
@@ -81,17 +88,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        LiveWindow.run();
         updateSmartDashboard();
-        
-        NetworkTable server = NetworkTable.getTable("SmartDashboard");
-        try{
-        	SmartDashboard.putNumber("COG",server.getNumber("COG_X",0));
-        }
-        catch(TableKeyNotDefinedException ex){
-        	
-        }
-        
-        drive.updateCogX(server.getNumber("COG_X",0));
     }
     
     /**
