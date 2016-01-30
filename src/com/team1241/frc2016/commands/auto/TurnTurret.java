@@ -16,7 +16,7 @@ public class TurnTurret extends Command {
     	this.setPoint = setPoint;
     	this.speed = speed;
     	this.timeOut = timeOut;
-//        requires(Robot.turret);
+//        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time

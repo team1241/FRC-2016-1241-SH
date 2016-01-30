@@ -12,7 +12,7 @@ public class ActuateHood extends Command {
 	
     public ActuateHood(boolean actuate) {
     	this.actuate = actuate;
-//        requires(Robot.turret);
+//        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time

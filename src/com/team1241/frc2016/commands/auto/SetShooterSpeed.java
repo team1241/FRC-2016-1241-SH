@@ -3,13 +3,16 @@ package com.team1241.frc2016.commands.auto;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Bryan Kristiono
+ * @since 2016-01-30
  */
 public class SetShooterSpeed extends Command {
-
-    public SetShooterSpeed() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	
+	private double velocity;
+	
+    public SetShooterSpeed(double setVelocity) {
+    	this.velocity = velocity;
+//        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +25,7 @@ public class SetShooterSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
