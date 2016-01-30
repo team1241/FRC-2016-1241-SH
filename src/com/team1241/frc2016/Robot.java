@@ -10,9 +10,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import javax.swing.JComboBox;
 
-import com.team1241.frc2016.autonCommands.NoAuto;
-import com.team1241.frc2016.autonCommands.SimpleAuton;
-import com.team1241.frc2016.commands.DriveDistance;
+import com.team1241.frc2016.commands.auto.NoAuto;
+import com.team1241.frc2016.commands.auto.SimpleAuton;
 import com.team1241.frc2016.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

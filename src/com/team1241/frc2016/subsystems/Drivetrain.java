@@ -1,6 +1,7 @@
 package com.team1241.frc2016.subsystems;
 
 import com.team1241.frc2016.NumberConstants;
+
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
@@ -10,6 +11,7 @@ import com.team1241.frc2016.utilities.PIDController;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -38,9 +40,30 @@ public class Drivetrain extends Subsystem {
     
     //PIDController
     public PIDController drivePID;
+    public PIDController gyroPID;
 
     
 	public Drivetrain() {
+		try {
+			serialPort = new SerialPort(57600, SerialPort.Port.kOnboard);
+			
+			// You can add a second parameter to modify the 
+			// update rate (in hz) from 4 to 100. The default is 100.
+			// If you need to minimize CPU load, you can set it to a
+			// lower value, as shown here, depending upon your needs.
+			
+			// You can also use the IMUAdvanced class for advanced
+			// features.
+			
+			byte update_rate_hz = 50;
+			gyro = new Nav6(serialPort, update_rate_hz);
+		} catch (Exception e) {}
+		if(!gyro.isCalibrating()) {
+			Timer.delay(0.3);
+			gyro.zeroYaw();
+		}
+		
+		
 		//Motors
 		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
 		leftDriveMiddle = new CANTalon(ElectricalConstants.LEFT_DRIVE_MIDDLE);
@@ -72,6 +95,9 @@ public class Drivetrain extends Subsystem {
 		drivePID = new PIDController(NumberConstants.pDrive, 
 									NumberConstants.iDrive, 
 									NumberConstants.dDrive);
+		gyroPID = new PIDController(NumberConstants.pGyro,
+									NumberConstants.iGyro,
+									NumberConstants.dGyro);
 	}
 	
     public void initDefaultCommand() {
@@ -102,11 +128,19 @@ public class Drivetrain extends Subsystem {
     	return (getLeftEncoderDist() + getRightEncoderDist())/2;
     }
     
-    public void driveStraight(double setPoint, double speed) {
-    	double output = drivePID.calcPID(setPoint, getAverageDistance(), 1);
+    public void driveStraight(double setPoint, double speed, double setAngle) {
+    	double output = drivePID.calcPID(setPoint, getAverageDistance(), 5);
+    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
     	
-    	runLeftDrive(output*speed);
-    	runRightDrive(-output*speed);
+    	runLeftDrive(output+angle*speed);
+    	runRightDrive(-output+angle*speed);
+    }
+    
+    public void turnDrive(double setAngle, double speed) {
+    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
+    	
+    	runLeftDrive(angle*speed);
+    	runRightDrive(angle*speed);
     }
     
     /**
@@ -114,6 +148,7 @@ public class Drivetrain extends Subsystem {
      */
     public void reset() {
         resetEncoders();
+      resetGyro();
     }
 
     /**
@@ -241,4 +276,3 @@ public class Drivetrain extends Subsystem {
     	gyro.zeroYaw();
     }
 }
-
