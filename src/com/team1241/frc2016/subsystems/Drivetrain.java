@@ -4,14 +4,16 @@ import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
+import com.team1241.frc2016.utilities.Nav6;
 import com.team1241.frc2016.utilities.PIDController;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The subsystem that is used for the drive train of the robot. It runs the 4 motors in the drive train as well as
+ * The subsystem that is used for the drive train of the robot. It runs the 6 motors in the drive train as well as
  * read the encoder values from the motors.
  * @author Bryan Kristiono
  * @since 2016-10-10
@@ -29,6 +31,9 @@ public class Drivetrain extends Subsystem {
 	//Encoders
 	Encoder leftDriveEncoder;               
     Encoder rightDriveEncoder; 
+    
+    SerialPort serialPort;
+    Nav6 gyro;
     
     //PIDController
     public PIDController drivePID;
