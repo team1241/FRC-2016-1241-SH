@@ -2,11 +2,13 @@
 package com.team1241.frc2016;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
+import javax.swing.JComboBox;
 
 import com.team1241.frc2016.autonCommands.NoAuto;
 import com.team1241.frc2016.autonCommands.SimpleAuton;
@@ -102,5 +104,6 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
+        SmartDashboard.putData("k", (Sendable) new JComboBox());
     }
 }
