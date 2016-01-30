@@ -32,6 +32,7 @@ public class Drivetrain extends Subsystem {
 	Encoder leftDriveEncoder;               
     Encoder rightDriveEncoder; 
     
+    //Gyro
     SerialPort serialPort;
     Nav6 gyro;
     
@@ -65,6 +66,8 @@ public class Drivetrain extends Subsystem {
 				Encoder.EncodingType.k4X);
 		
 		rightDriveEncoder.setDistancePerPulse(ElectricalConstants.driveEncoderDistPerTick);
+		
+		
 		
 		drivePID = new PIDController(NumberConstants.pDrive, 
 									NumberConstants.iDrive, 
@@ -173,6 +176,69 @@ public class Drivetrain extends Subsystem {
     public void resetEncoders() {
         leftDriveEncoder.reset();
         rightDriveEncoder.reset();
+    }
+    
+/************************GYRO FUNCTIONS************************/
+    
+    /**
+     * This function is used to check if the gyro is connected
+     * 
+     * @return Returns true or false depending on the state of the gyro
+     */
+    public boolean gyroConnected(){
+    	return gyro.isConnected();
+    }
+    
+    /**
+     * This function is used to check if the gyro is calibrating
+     * 
+     * @return Returns true or false depending on the state of the gyro
+     */
+    public boolean gyroCalibrating(){
+    	return gyro.isCalibrating();
+    }
+    
+    /**
+     * This function returns the YAW reading from the gyro
+     * 
+     * @return Returns YAW
+     */
+    public double getYaw(){
+    	return gyro.getYaw();
+    }
+    
+    /**
+     * This function returns the PITCH reading from the gyro
+     * 
+     * @return Returns PITCH
+     */
+    public double getPitch(){
+    	return gyro.getPitch();
+    }
+    
+    /**
+     * This function returns the ROLL reading from the gyro
+     * 
+     * @return Returns ROLL
+     */
+    public double getRoll(){
+    	return gyro.getRoll();
+    }
+    
+    /**
+     * This function returns the heading from the gyro
+     * 
+     * @return Returns compass heading
+     */
+    public double getCompassHeading(){
+    	return gyro.getCompassHeading();
+    }
+    
+    /**
+     * Resets the gyro back to zero
+     */
+    public void resetGyro(){
+    	gyro.zeroYaw();
     }
 }
 
