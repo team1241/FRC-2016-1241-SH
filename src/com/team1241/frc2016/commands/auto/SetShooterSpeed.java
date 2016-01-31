@@ -10,7 +10,7 @@ public class SetShooterSpeed extends Command {
 	
 	private double velocity;
 	
-    public SetShooterSpeed(double setVelocity) {
+    public SetShooterSpeed(double velocity) {
     	this.velocity = velocity;
 //        requires(Robot.shooter);
     }

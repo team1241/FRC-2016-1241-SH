@@ -83,42 +83,37 @@ public class Shooter extends Subsystem {
     public void stopShot(){
     	rightShooter.set(0);
     	leftShooter.set(0);
-    	
     }
     
     public double readSpeed(){
-		return 0;
+    	double speed = 0;
+//    	double speedleft = leftShooter.getsp;
+    	double speedRight = 0;
+    	
+    	
+//    	speed = (speedleft + speedRight) / 2; 
+    	return speed;
     	// IDK how to read tachometer values so ill leave it to you felix 
     }
-    /**********************************************SHOOTING METHODS***********************************************/
-
-    public void shootBadder(){
-    	// Prep the Hood
-    	openHood();
-    	
-    	//Let Motors Accelerate to Speed
-//    	setSpeed(velPID.calcVelPID(NumberConstants.badderShot, readSpeed(), 10));
-    	
-    	// Once the PID is satisfied, pop the ball into the shooter then retract
-    	if (velPID.isDone()){
-    		extendPop();
-    		//dont know the best way to insert a delay here, haalp felix
-    		retractPop();
-    	}
-    }
     
-    public void shootFender(){
-    	// Prep the Hood
-    	closeHood();
+    
+    /**********************************************SHOOTING METHOD
+     * @throws InterruptedException ***********************************************/
+    
+    
+    public void shoot(boolean batter) throws InterruptedException{
+    	if (batter) {
+    		openHood();	
+    	} else {
+    		closeHood();
+    	}
     	
-    	//Let Motors Accelerate to Speed
-//    	setSpeed(velPID.calcVelPID(NumberConstants.fenderShot, readSpeed(), 10));
-    	
-    	// Once the PID is satisfied, pop the ball into the shooter then retract
     	if (velPID.isDone()){
     		extendPop();
-    		//dont know the best way to insert a delay here, haalp felix
+    		Thread.sleep(1000);
     		retractPop();
     	}
     }
 }
+
+

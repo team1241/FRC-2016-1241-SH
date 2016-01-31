@@ -56,6 +56,6 @@ public class NumberConstants {
     //**************************OUTPUT VALUES (Shooter)*************************
     //**************************************************************************
 	
-	public static final double badderShot								= 0.00;
-	public static final double fenderShot								= 0.00;
+	public static final int badderShot								= 0;
+	public static final int spyShot									= 0;
 }

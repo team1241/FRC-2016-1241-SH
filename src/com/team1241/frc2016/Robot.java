@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import com.team1241.frc2016.commands.auto.NoAuto;
 import com.team1241.frc2016.commands.auto.SimpleAuton;
 import com.team1241.frc2016.subsystems.Drivetrain;
+import com.team1241.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +29,7 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 public class Robot extends IterativeRobot {
 	//Subsystems
 	public static Drivetrain drive;
-//	public static Shooter shooter;
+	public static Shooter shooter;
 //	public static Intake intake;
 //	public static Conveyor conveyor;
 	
