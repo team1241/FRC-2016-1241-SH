@@ -45,6 +45,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		drive = new Drivetrain();
+		shooter = new Shooter();
 		
         // instantiate the command used for the autonomous period
 		autoChooser = new SendableChooser();
@@ -104,6 +105,6 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
-        SmartDashboard.putData("k", (Sendable) new JComboBox());
+//        SmartDashboard.putData("k", (Sendable) new JComboBox());
     }
 }

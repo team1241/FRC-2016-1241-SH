@@ -3,6 +3,7 @@ package com.team1241.frc2016.subsystems;
 
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.NumberConstants;
+import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.utilities.PIDController;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -43,6 +44,7 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new ShootCommand());
     }
     
     
@@ -68,16 +70,16 @@ public class Shooter extends Subsystem {
 
     public void setSpeed(double shotVal){
     	rightShooter.set(shotVal);
-    	leftShooter.set(-shotVal);
+    	leftShooter.set(shotVal);
     	    	
     }
     
-    public void setRight(double testSpeed){
-    	rightShooter.set(testSpeed);
+    public void setRight(double speed){
+    	rightShooter.set(speed);
     }
     
-    public void setLeft(double testSpeed){
-    	leftShooter.set(testSpeed);
+    public void setLeft(double speed){
+    	leftShooter.set(speed);
     }
     
     public void stopShot(){

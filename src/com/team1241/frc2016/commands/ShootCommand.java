@@ -22,12 +22,27 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	if(Robot.oi.getToolAButton()) {
+    		Robot.shooter.setLeft(-.8);
+    	}
+    	else if(Robot.oi.getToolBButton()) {
+    		Robot.shooter.setRight(-.8);
+    	}
+    	else if(Robot.oi.getToolYButton()) {
+    		Robot.shooter.setLeft(-.75);
+    		Robot.shooter.setRight(-.75);
+    	}
+    	else if(Robot.oi.getToolXButton()) {
+    		Robot.shooter.setLeft(-.8);
+    		Robot.shooter.setRight(-.8);
+    	}
+    	else {
+    		Robot.shooter.setSpeed(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        
     	return false;
     }
 

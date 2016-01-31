@@ -35,8 +35,8 @@ public class Drivetrain extends Subsystem {
     Encoder rightDriveEncoder; 
     
     //Gyro
-    SerialPort serialPort;
-    Nav6 gyro;
+//    SerialPort serialPort;
+//    Nav6 gyro;
     
     //PIDController
     public PIDController drivePID;
@@ -44,24 +44,24 @@ public class Drivetrain extends Subsystem {
 
     
 	public Drivetrain() {
-		try {
-			serialPort = new SerialPort(57600, SerialPort.Port.kOnboard);
-			
-			// You can add a second parameter to modify the 
-			// update rate (in hz) from 4 to 100. The default is 100.
-			// If you need to minimize CPU load, you can set it to a
-			// lower value, as shown here, depending upon your needs.
-			
-			// You can also use the IMUAdvanced class for advanced
-			// features.
-			
-			byte update_rate_hz = 50;
-			gyro = new Nav6(serialPort, update_rate_hz);
-		} catch (Exception e) {}
-		if(!gyro.isCalibrating()) {
-			Timer.delay(0.3);
-			gyro.zeroYaw();
-		}
+//		try {
+//			serialPort = new SerialPort(57600, SerialPort.Port.kOnboard);
+//			
+//			// You can add a second parameter to modify the 
+//			// update rate (in hz) from 4 to 100. The default is 100.
+//			// If you need to minimize CPU load, you can set it to a
+//			// lower value, as shown here, depending upon your needs.
+//			
+//			// You can also use the IMUAdvanced class for advanced
+//			// features.
+//			
+//			byte update_rate_hz = 50;
+//			gyro = new Nav6(serialPort, update_rate_hz);
+//		} catch (Exception e) {}
+//		if(!gyro.isCalibrating()) {
+//			Timer.delay(0.3);
+//			gyro.zeroYaw();
+//		}
 		
 		
 		//Motors
@@ -130,25 +130,25 @@ public class Drivetrain extends Subsystem {
     
     public void driveStraight(double setPoint, double speed, double setAngle) {
     	double output = drivePID.calcPID(setPoint, getAverageDistance(), 5);
-    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
+//    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
     	
-    	runLeftDrive(output+angle*speed);
-    	runRightDrive(-output+angle*speed);
+    	runLeftDrive(output*speed);
+    	runRightDrive(-output*speed);
     }
     
-    public void turnDrive(double setAngle, double speed) {
-    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
-    	
-    	runLeftDrive(angle*speed);
-    	runRightDrive(angle*speed);
-    }
+//    public void turnDrive(double setAngle, double speed) {
+//    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
+//    	
+//    	runLeftDrive(angle*speed);
+//    	runRightDrive(angle*speed);
+//    }
     
     /**
      * Resets the encoder AND gyro to zero
      */
     public void reset() {
         resetEncoders();
-      resetGyro();
+//        resetGyro();
     }
 
     /**
@@ -220,59 +220,59 @@ public class Drivetrain extends Subsystem {
      * 
      * @return Returns true or false depending on the state of the gyro
      */
-    public boolean gyroConnected(){
-    	return gyro.isConnected();
-    }
-    
-    /**
-     * This function is used to check if the gyro is calibrating
-     * 
-     * @return Returns true or false depending on the state of the gyro
-     */
-    public boolean gyroCalibrating(){
-    	return gyro.isCalibrating();
-    }
-    
-    /**
-     * This function returns the YAW reading from the gyro
-     * 
-     * @return Returns YAW
-     */
-    public double getYaw(){
-    	return gyro.getYaw();
-    }
-    
-    /**
-     * This function returns the PITCH reading from the gyro
-     * 
-     * @return Returns PITCH
-     */
-    public double getPitch(){
-    	return gyro.getPitch();
-    }
-    
-    /**
-     * This function returns the ROLL reading from the gyro
-     * 
-     * @return Returns ROLL
-     */
-    public double getRoll(){
-    	return gyro.getRoll();
-    }
-    
-    /**
-     * This function returns the heading from the gyro
-     * 
-     * @return Returns compass heading
-     */
-    public double getCompassHeading(){
-    	return gyro.getCompassHeading();
-    }
-    
-    /**
-     * Resets the gyro back to zero
-     */
-    public void resetGyro(){
-    	gyro.zeroYaw();
-    }
+//    public boolean gyroConnected(){
+//    	return gyro.isConnected();
+//    }
+//    
+//    /**
+//     * This function is used to check if the gyro is calibrating
+//     * 
+//     * @return Returns true or false depending on the state of the gyro
+//     */
+//    public boolean gyroCalibrating(){
+//    	return gyro.isCalibrating();
+//    }
+//    
+//    /**
+//     * This function returns the YAW reading from the gyro
+//     * 
+//     * @return Returns YAW
+//     */
+//    public double getYaw(){
+//    	return gyro.getYaw();
+//    }
+//    
+//    /**
+//     * This function returns the PITCH reading from the gyro
+//     * 
+//     * @return Returns PITCH
+//     */
+//    public double getPitch(){
+//    	return gyro.getPitch();
+//    }
+//    
+//    /**
+//     * This function returns the ROLL reading from the gyro
+//     * 
+//     * @return Returns ROLL
+//     */
+//    public double getRoll(){
+//    	return gyro.getRoll();
+//    }
+//    
+//    /**
+//     * This function returns the heading from the gyro
+//     * 
+//     * @return Returns compass heading
+//     */
+//    public double getCompassHeading(){
+//    	return gyro.getCompassHeading();
+//    }
+//    
+//    /**
+//     * Resets the gyro back to zero
+//     */
+//    public void resetGyro(){
+//    	gyro.zeroYaw();
+//    }
 }
