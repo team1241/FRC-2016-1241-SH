@@ -50,4 +50,12 @@ public class NumberConstants {
 	public static final double pArm 									 = 0.03;
 	public static final double iArm 									 = 0.00;
 	public static final double dArm 									 = 0.00;
+	
+	
+	//**************************************************************************
+    //**************************OUTPUT VALUES (Shooter)*************************
+    //**************************************************************************
+	
+	public static final double badderShot								= 0.00;
+	public static final double fenderShot								= 0.00;
 }
