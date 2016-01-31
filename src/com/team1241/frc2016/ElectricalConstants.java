@@ -18,7 +18,10 @@ public class ElectricalConstants {
 
 	//**************************************************************************
 	//*************************** SHOOTER MOTORS *******************************
-	//**************************************************************************        
+	//**************************************************************************
+	
+	public static final int RIGHT_SHOOTER									= 2;
+	public static final int LEFT_SHOOTER									= 3;
 
 
 	//**************************************************************************
@@ -54,12 +57,12 @@ public class ElectricalConstants {
 	//*************************** Pneumatics ************************************
 	//***************************************************************************
 
-//	public static final int LEFT_INTAKE_SOLENOID_A							= 4;
-//	public static final int LEFT_INTAKE_SOLENOID_B 							= 3;
-//
-//	public static final int RIGHT_INTAKE_SOLENOID_A 						= 7;
-//	public static final int RIGHT_INTAKE_SOLENOID_B 						= 0;
-//
+	public static final int HOOD_SOLENOID_A									= 4;
+	public static final int HOOD_SOLENOID_B 								= 3;
+
+	public static final int POP_UP_SOLENOID									= 7;
+	public static final int POP_DOWN_SOLENOID 								= 0;
+//	
 //	public static final int CONTAINER_ELEVATOR_HOLDER_SOLENOID_A 			= 2; 
 //	public static final int CONTAINER_ELEVATOR_HOLDER_SOLENOID_B			= 5;
 //

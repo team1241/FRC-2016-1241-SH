@@ -27,15 +27,18 @@ public class NumberConstants {
 	public static final double dGyro 									 = 0.00;
 	
 	//**************************************************************************
-    //*************************PID VALUES (ELEVATOR)****************************
+    //*************************PID VALUES (Shooter)*****************************
     //**************************************************************************
-	//Original value = 0.05
 	
-	public static final double pElev 									 = 0.03;
-	public static final double iElev 									 = 0.00;
-	public static final double dElev 									 = 0.00;
+	public static final double pShoot 									 = 0.00;
+	public static final double iShoot 									 = 0.00;
+	public static final double dShoot 									 = 0.00;
+	public static final double sShoot								     = 0.00;
 	
-	public static final double pElevDown								 = 0.03;
-	public static final double iElevDown								 = 0.00;
-	public static final double dElevDown								 = 0.00;
+	//**************************************************************************
+    //**************************OUTPUT VALUES (Shooter)*************************
+    //**************************************************************************
+	
+	public static final double badderShot								= 0.00;
+	public static final double fenderShot								= 0.00;
 }

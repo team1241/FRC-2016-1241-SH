@@ -1,4 +1,7 @@
 package com.team1241.frc2016.utilities;
+
+import com.team1241.frc2016.NumberConstants;
+
 /**
  *
  * @author Team 1241
@@ -12,11 +15,14 @@ public class PIDController {
     double pOut;
     double iOut;
     double dOut;
+    double sVal = NumberConstants.sShoot;
     
     double error;
     double errorSum = 0;
     double lastError = 0;
     double dProcessVar;
+    double processOut;
+    double prevOutput = 0;
     double maxVal = 0;
     double output = 0;
     
@@ -83,6 +89,47 @@ public class PIDController {
         
         return output;
     }
+    
+    public double calcVelPID(double setPoint, double currentValue, double epsilon) {
+        error = setPoint - currentValue;
+        
+        if(Math.abs(error) <= epsilon){
+        	error = 0;
+        	atTarget = true;
+        }
+        //PID needs an initial value to work off of, here it is given a startUp value
+        boolean startUp= false;
+        if(startUp == false)
+        {
+        	output = 0;
+        	startUp= true;
+        }
+        //P 
+        pOut = pGain * error;
+        
+        //I
+        errorSum += error;
+        iOut = iGain * errorSum;
+        
+        //D
+        dProcessVar = (error - lastError);
+        dOut = dGain * dProcessVar;
+        
+        lastError = error;
+        
+        //PID Output
+        output = pOut + iOut + dOut;
+        
+        //Setup to build upon output for next loop
+        prevOutput = output;
+        processOut = output+prevOutput;
+        
+        //Scale output to be between 1 and -1
+       output= (processOut/Math.abs(processOut))*(1-Math.pow(sVal,(Math.abs(processOut))));
+                
+        return output;
+    }
+    
     
     public boolean isDone(){
     	return atTarget;
