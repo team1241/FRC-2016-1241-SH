@@ -2,6 +2,7 @@
 package com.team1241.frc2016;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,7 +10,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import com.team1241.frc2016.commands.auto.NoAuto;
+import com.team1241.frc2016.commands.auto.OuterWorksAuton;
+import com.team1241.frc2016.commands.auto.SetDefence;
 import com.team1241.frc2016.commands.auto.SimpleAuton;
+import com.team1241.frc2016.commands.auto.SpyShotAuton;
 import com.team1241.frc2016.pid.Constants;
 import com.team1241.frc2016.subsystems.Conveyor;
 import com.team1241.frc2016.subsystems.Drivetrain;
@@ -39,8 +43,13 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DataOutput output;
 	
+	Preferences pref;
     Command autonomousCommand;
     public SendableChooser autoChooser;
+    public SendableChooser defenceChooser;
+    
+    public static int defenceLocation;
+    public static int selectedDefence;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -50,6 +59,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		constants = new Constants("pidValues.txt");
 		output = new DataOutput("data.txt");
+		pref = Preferences.getInstance();
 		
 		drive = new Drivetrain();
 		shooter = new Shooter();
@@ -59,7 +69,20 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Auto", new NoAuto());
+		autoChooser.addObject("OuterWorks", new OuterWorksAuton());
+		autoChooser.addObject("SpyShot", new SpyShotAuton());
+		
 		SmartDashboard.putData("Auto Mode", autoChooser);
+		
+		defenceChooser = new SendableChooser();
+		defenceChooser.addObject("Portcullis", new SetDefence(0));
+		defenceChooser.addObject("Cheval de Frise", new SetDefence(1));
+		defenceChooser.addObject("SallyPort", new SetDefence(2));
+		defenceChooser.addObject("DrawBridge", new SetDefence(3));
+		defenceChooser.addDefault("Drive Over (B/D)", new SetDefence(4));
+		
+//		SmartDashboard.putData("Defence Mode", defenceChooser);
+		
     }
 	
 	public void disabledPeriodic() {
@@ -114,6 +137,6 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
-//        SmartDashboard.putData("k", (Sendable) new JComboBox());
+        defenceLocation = pref.getInt("Defense Location", 3);
     }
 }

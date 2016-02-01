@@ -10,10 +10,9 @@ public class Constants {
 		System.out.println("Loading " + fileName);
 		File file = new File("/text/" + fileName);
 		
-		
-		
 		try {
 			Scanner in = new Scanner(file);
+			System.out.println("Found " + fileName);
 			while(in.hasNext()) {
 
 			}
