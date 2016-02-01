@@ -148,6 +148,6 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
-        defenceLocation = pref.getInt("Defense Location", 3);
+        SmartDashboard.putDouble("pot", intake.getPotValue());
     }
 }

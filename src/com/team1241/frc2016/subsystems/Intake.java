@@ -12,22 +12,22 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
  * This class controls the robots Intake. Allows the the intake motor to be run with buttons, and the intake arms with 
  * buttons and a joystick
  * 
- * @author Zubair Waheed the faggg
+ * @author Zubair Waheed
  * @author Taabish Jeshani 
- * @since 2016-01-31
+ * @since 2016-02-02
  */
 public class Intake extends Subsystem {
     
 	//Talons to controls all intake motors
-    CANTalon intake;
-    CANTalon intakeArmRight;
-    CANTalon intakeArmLeft;
+    private CANTalon intake;
+    private CANTalon intakeArmRight;
+    private CANTalon intakeArmLeft;
     
     //PID for arm control
-    PIDController armPID;
+    public PIDController armPID;
     
     //Potentiometer for arm control
-    Potentiometer pot;
+    private Potentiometer pot;
     
     /**Creates an intake object, initializes all its required objects*/
     public Intake(){
@@ -44,7 +44,7 @@ public class Intake extends Subsystem {
        		 					   NumberConstants.iArm,
        		 					   NumberConstants.dArm);
         
-        pot = new AnalogPotentiometer(ElectricalConstants.ARM_POTENTIOMETER, 360);
+        pot = new AnalogPotentiometer(ElectricalConstants.ARM_POTENTIOMETER, 1080, -2);
     }
     
     
@@ -56,6 +56,8 @@ public class Intake extends Subsystem {
     public double getPotValue() {
     	return pot.get();
     }
+    
+    
     
     /**Runs the motor backwards to intake the ball */
     public void runIntakeMotor(double val){
@@ -74,7 +76,7 @@ public class Intake extends Subsystem {
     /**Sets the position of the intake arms*/
     public void setArmPosition(double angle, double speed) {
     	//Set up sensor methods
-//    	double output = armPID.calcPID(angle, 5, 5);
-    	runIntakeArms(angle*speed);
+    	double output = armPID.calcPID(angle, pot.get(), 5);
+    	runIntakeArms(output*speed);
     }
 }
