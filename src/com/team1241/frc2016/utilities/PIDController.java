@@ -19,6 +19,7 @@ public class PIDController {
     double dProcessVar;
     double maxVal = 0;
     double output = 0;
+    double prevOutput = 0;
     
     boolean atTarget = false;
     
@@ -80,6 +81,35 @@ public class PIDController {
         	maxVal = Math.abs(output);
         
         output = output/maxVal;
+        
+        return output;
+    }
+    
+    public double calcPIDVelocity(double setPoint, double currentValue, double epsilon) {
+        error = setPoint - currentValue;
+        
+        if(Math.abs(error) <= epsilon){
+        	error = 0;
+        	atTarget = true;
+        }
+        
+        //P 
+        pOut = pGain * error;
+        
+        //I
+        errorSum += error;
+        iOut = iGain * errorSum;
+        
+        //D
+        dProcessVar = (error - lastError);
+        dOut = dGain * dProcessVar;
+        
+        lastError = error;
+        
+        //PID Output
+        output = prevOutput + pOut + iOut + dOut;
+        
+        prevOutput = output;
         
         return output;
     }

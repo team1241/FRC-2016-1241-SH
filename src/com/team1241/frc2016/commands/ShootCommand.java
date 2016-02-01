@@ -5,7 +5,9 @@ import com.team1241.frc2016.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * The Default command to the Shooter subsystem.
+ * @author Bryan Kristiono
+ * @since 2016-02-01
  */
 public class ShootCommand extends Command {
 
@@ -22,17 +24,11 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.getToolAButton()) {
-    		Robot.shooter.setLeft(-.8);
-    	}
-    	else if(Robot.oi.getToolBButton()) {
-    		Robot.shooter.setRight(-.8);
-    	}
-    	else if(Robot.oi.getToolYButton()) {
+    	if(Robot.oi.getToolLeftTrigger()) {
     		Robot.shooter.setLeft(-.75);
     		Robot.shooter.setRight(-.75);
     	}
-    	else if(Robot.oi.getToolXButton()) {
+    	else if(Robot.oi.getToolRightTrigger()) {
     		Robot.shooter.setLeft(-.8);
     		Robot.shooter.setRight(-.8);
     	}

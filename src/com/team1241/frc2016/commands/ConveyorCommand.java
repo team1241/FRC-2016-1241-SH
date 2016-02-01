@@ -1,15 +1,18 @@
 package com.team1241.frc2016.commands;
 
+import com.team1241.frc2016.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * The Default command for the conveyor subsystem
+ * @author Bryan Kristiono
+ * @since 2016-02-01
  */
 public class ConveyorCommand extends Command {
 
     public ConveyorCommand() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.conveyor);
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +21,15 @@ public class ConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.oi.getToolAButton()) {
+    		Robot.conveyor.runMotor(1);
+    	}
+    	else if(Robot.oi.getToolBButton()) {
+    		Robot.conveyor.runMotor(-1);
+    	}
+    	else {
+    		Robot.conveyor.runMotor(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

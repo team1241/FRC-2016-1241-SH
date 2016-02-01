@@ -25,8 +25,14 @@ public class TankDrive extends Command {
 	 * In this method values from the joystick are sent to the corresponding drives to make the robot move.
 	 */
 	protected void execute() {
-		Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY());
-		Robot.drive.runRightDrive(Robot.oi.getDriveRightY());
+		if(Robot.oi.getDriveLeftTrigger()) {
+			Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY()*0.5);
+			Robot.drive.runRightDrive(Robot.oi.getDriveRightY()*0.5);
+		}
+		else {
+			Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY());
+			Robot.drive.runRightDrive(Robot.oi.getDriveRightY());
+		}
 	}
 
 	protected boolean isFinished() {

@@ -51,7 +51,6 @@ public class Shooter extends Subsystem {
    /**********************************************PNEUMATIC METHODS**********************************************/
     public void closeHood() {
     	hoodPop.set(DoubleSolenoid.Value.kReverse);
-    	
     }
     
     public void openHood(){
