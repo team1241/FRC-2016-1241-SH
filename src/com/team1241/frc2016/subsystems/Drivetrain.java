@@ -5,8 +5,8 @@ import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
+import com.team1241.frc2016.pid.PIDController;
 import com.team1241.frc2016.utilities.Nav6;
-import com.team1241.frc2016.utilities.PIDController;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;

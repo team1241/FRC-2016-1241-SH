@@ -1,7 +1,8 @@
 package com.team1241.frc2016.subsystems;
 import com.team1241.frc2016.*;
 import com.team1241.frc2016.commands.IntakeCommand;
-import com.team1241.frc2016.utilities.PIDController;
+import com.team1241.frc2016.pid.PIDController;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;

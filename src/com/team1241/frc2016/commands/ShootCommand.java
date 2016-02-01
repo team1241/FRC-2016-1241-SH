@@ -26,12 +26,12 @@ public class ShootCommand extends Command {
     protected void execute() {
     	Robot.shooter.turnTurret(Robot.oi.getToolRightX());
     	if(Robot.oi.getToolLeftTrigger()) {
-    		Robot.shooter.setLeft(-.75);
-    		Robot.shooter.setRight(-.75);
+    		Robot.shooter.setLeft(-.71);
+    		Robot.shooter.setRight(-.71);
     	}
     	else if(Robot.oi.getToolRightTrigger()) {
-    		Robot.shooter.setLeft(-.8);
-    		Robot.shooter.setRight(-.8);
+    		Robot.shooter.setLeft(-.735);
+    		Robot.shooter.setRight(-.735);
     	}
     	else {
     		Robot.shooter.setSpeed(0);

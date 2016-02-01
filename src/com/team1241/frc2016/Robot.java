@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-import javax.swing.JComboBox;
-
 import com.team1241.frc2016.commands.auto.NoAuto;
 import com.team1241.frc2016.commands.auto.SimpleAuton;
+import com.team1241.frc2016.pid.Constants;
 import com.team1241.frc2016.subsystems.Conveyor;
 import com.team1241.frc2016.subsystems.Drivetrain;
 import com.team1241.frc2016.subsystems.Intake;
 import com.team1241.frc2016.subsystems.Shooter;
+import com.team1241.frc2016.utilities.DataOutput;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +35,9 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Conveyor conveyor;
 	
+	public static Constants constants;
 	public static OI oi;
+	public static DataOutput output;
 	
     Command autonomousCommand;
     public SendableChooser autoChooser;
@@ -46,6 +48,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
+		constants = new Constants("pidValues.txt");
+		output = new DataOutput("data.txt");
 		
 		drive = new Drivetrain();
 		shooter = new Shooter();

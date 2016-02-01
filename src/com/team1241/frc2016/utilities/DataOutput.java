@@ -22,6 +22,7 @@ public class DataOutput {
         try 
         {
     		output = new PrintWriter (new FileWriter("/text/" + file));
+    		System.out.println("Created file");
         } 
         
         catch (IOException e) 
