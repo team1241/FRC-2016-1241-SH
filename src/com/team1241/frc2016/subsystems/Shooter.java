@@ -142,6 +142,24 @@ public class Shooter extends Subsystem {
     }
     
     /**
+     * This function returns the raw value from the left encoder
+     * 
+     * @return Returns raw value from encoder
+     */
+    public double getTurretEncoderRaw(){
+        return turretEncoder.getRaw();
+    }
+    
+    /**
+     * This function returns the rate the left encoder is moving at in inches/sec
+     * 
+     * @return Returns rate of encoder in inches/sec
+     */
+    public double getTuretEncoderRate(){
+        return turretEncoder.getRate();
+    }
+    
+    /**
      * Initial: 0 radians, facing forwards
      * Derivation: from % of rotation multiplied by 2pi 
      */

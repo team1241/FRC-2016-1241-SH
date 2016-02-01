@@ -1,21 +1,14 @@
 
 package com.team1241.frc2016;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-import com.team1241.frc2016.commands.auto.NoAuto;
-import com.team1241.frc2016.commands.auto.OuterWorksAuton;
-import com.team1241.frc2016.commands.auto.SpyShotAuton;
+import com.team1241.frc2016.commands.auto.*;
+import com.team1241.frc2016.commands.auto.WaitCommand;
 import com.team1241.frc2016.pid.Constants;
-import com.team1241.frc2016.subsystems.Conveyor;
-import com.team1241.frc2016.subsystems.Drivetrain;
-import com.team1241.frc2016.subsystems.Intake;
-import com.team1241.frc2016.subsystems.Shooter;
+import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.DataOutput;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -48,6 +41,8 @@ public class Robot extends IterativeRobot {
     
     public static int defenceLocation;
     public static int selectedDefence;
+    
+//    public P
 
     /**
      * This function is run when the robot is first started up and should be
@@ -149,5 +144,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
         SmartDashboard.putDouble("pot", intake.getPotValue());
+        
+        SmartDashboard.putData("Command", new WaitCommand(2.0));
     }
 }

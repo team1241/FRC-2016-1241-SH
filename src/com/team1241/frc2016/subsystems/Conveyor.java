@@ -20,11 +20,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Conveyor extends Subsystem {
 	//Motor declarations
-	CANTalon conveyorMotor;
+	private CANTalon conveyorMotor;
 	
 	//Pneumatic declarations
-	DoubleSolenoid outtakeBall;
-	DoubleSolenoid holdBall;
+	private DoubleSolenoid outtakeBall;
+	private DoubleSolenoid holdBall;
+	
+	public static boolean hasBall = false;
 	
 	/**
 	 * Constructor for conveyor class
@@ -41,6 +43,10 @@ public class Conveyor extends Subsystem {
 		holdBall = new DoubleSolenoid(ElectricalConstants.POPPER_HOLD_SOLENOID_A,
 										ElectricalConstants.POPPER_HOLD_SOLENOID_B);	
 	}
+	
+	public void initDefaultCommand() {
+        setDefaultCommand(new ConveyorCommand());
+    }
 	
 	/**
 	 * This method runs the intake motor at 50% speed (changes can be made)
@@ -76,8 +82,4 @@ public class Conveyor extends Subsystem {
 	public void retractOutake() {
 		outtakeBall.set(DoubleSolenoid.Value.kReverse);
 	}
-	
-	public void initDefaultCommand() {
-        setDefaultCommand(new ConveyorCommand());
-    }
 }
