@@ -112,6 +112,6 @@ public class ElectricalConstants {
 	public static final double turretEncoderDistPerTick =(Math.PI*2*turretGearRadius)/turretEncoderPulsePerRot;
 	public static final boolean turretEncoderReverse = false;
 	public static final int samplesToAverage = 10;
-	public static final int distanceOfRotation = 10;
+	public static final double distanceOfRotation = turretEncoderDistPerTick*turretPulsePerRotation;
 
 }
