@@ -146,7 +146,7 @@ public class Shooter extends Subsystem {
      * Derivation: from % of rotation multiplied by 2pi 
      */
     public double getTurretAngle() {
-    	double angle = Math.PI * (turretEncoder.get() / ElectricalConstants.driveEncoderPulsePerRot);
+    	double angle = 2*Math.PI * (turretEncoder.get() / ElectricalConstants.driveEncoderPulsePerRot);
     	
     	if (getTurretDirection()) {
     		return angle;
