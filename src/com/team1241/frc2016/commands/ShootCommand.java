@@ -24,6 +24,7 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.shooter.turnTurret(Robot.oi.getToolRightX());
     	if(Robot.oi.getToolLeftTrigger()) {
     		Robot.shooter.setLeft(-.75);
     		Robot.shooter.setRight(-.75);

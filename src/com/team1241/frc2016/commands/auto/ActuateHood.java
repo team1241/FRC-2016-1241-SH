@@ -1,5 +1,7 @@
 package com.team1241.frc2016.commands.auto;
 
+import com.team1241.frc2016.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -12,7 +14,7 @@ public class ActuateHood extends Command {
 	
     public ActuateHood(boolean actuate) {
     	this.actuate = actuate;
-//        requires(Robot.shooter);
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -21,8 +23,12 @@ public class ActuateHood extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (actuate) {}
-    	else {}
+    	if (actuate) {
+    		Robot.shooter.openHood();
+    	}
+    	else {
+    		Robot.shooter.closeHood();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

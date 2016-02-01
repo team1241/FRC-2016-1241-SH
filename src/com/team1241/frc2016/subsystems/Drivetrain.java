@@ -22,21 +22,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
 	//Motors
-	CANTalon leftDriveFront;
-	CANTalon leftDriveMiddle;
-	CANTalon leftDriveBack;
+	private CANTalon leftDriveFront;
+	private CANTalon leftDriveMiddle;
+	private CANTalon leftDriveBack;
 	
-	CANTalon rightDriveFront;
-	CANTalon rightDriveMiddle;
-	CANTalon rightDriveBack;
+	private CANTalon rightDriveFront;
+	private CANTalon rightDriveMiddle;
+	private CANTalon rightDriveBack;
 	
 	//Encoders
-	Encoder leftDriveEncoder;               
-    Encoder rightDriveEncoder; 
+	private Encoder leftDriveEncoder;               
+	private Encoder rightDriveEncoder; 
     
     //Gyro
-    SerialPort serialPort;
-    Nav6 gyro;
+	private SerialPort serialPort;
+	private Nav6 gyro;
     
     //PIDController
     public PIDController drivePID;

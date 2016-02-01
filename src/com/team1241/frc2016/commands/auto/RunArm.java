@@ -1,5 +1,7 @@
 package com.team1241.frc2016.commands.auto;
 
+import com.team1241.frc2016.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -16,7 +18,7 @@ public class RunArm extends Command {
     	this.angle = angle;
     	this.speed = speed;
     	this.timeOut = timeOut;
-//    	requires(Robot.intake);
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -25,11 +27,12 @@ public class RunArm extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.setArmPosition(angle,speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

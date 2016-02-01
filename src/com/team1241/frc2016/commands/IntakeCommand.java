@@ -21,6 +21,8 @@ public class IntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.runIntakeArms(Robot.oi.getToolLeftY());
+    	
     	if(Robot.oi.getToolAButton()) {
     		Robot.intake.runIntakeMotor(1);
     	}

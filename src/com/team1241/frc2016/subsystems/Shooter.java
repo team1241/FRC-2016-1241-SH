@@ -16,18 +16,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *@author Shaqeeb Momen
  */
 public class Shooter extends Subsystem {
-	CANTalon rightShooter;
-	CANTalon leftShooter;
+	private CANTalon rightShooter;
+	private CANTalon leftShooter;
 	
-	DoubleSolenoid popUp;
-	DoubleSolenoid hoodPop;
+	private CANTalon turret;
 	
-	public PIDController velPID;
+	private DoubleSolenoid popUp;
+	private DoubleSolenoid hoodPop;
+	
+	public PIDController shooterPID;
+	public PIDController turretPID;
 	
 	public Shooter(){
 		//Initialize Talons
 		 rightShooter = new CANTalon (ElectricalConstants.RIGHT_SHOOTER_MOTOR);
 		 leftShooter = new CANTalon (ElectricalConstants.LEFT_SHOOTER_MOTOR);
+		 
+		 turret = new CANTalon(ElectricalConstants.TURRET_MOTOR);
 		 
 	     //Initialize Pistons		
 		 popUp = new DoubleSolenoid (ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
@@ -36,9 +41,13 @@ public class Shooter extends Subsystem {
 				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
 		 
 		//Initialize PID	
-		 velPID = new PIDController (NumberConstants.pShooter,
+		 shooterPID = new PIDController (NumberConstants.pShooter,
 								   NumberConstants.iShooter,
 								   NumberConstants.dShooter);
+		 
+		 turretPID = new PIDController(NumberConstants.pTurret,
+				 					NumberConstants.iTurret,
+				 					NumberConstants.dTurret);
 	}
 
     public void initDefaultCommand() {
@@ -70,7 +79,6 @@ public class Shooter extends Subsystem {
     public void setSpeed(double shotVal){
     	rightShooter.set(shotVal);
     	leftShooter.set(shotVal);
-    	    	
     }
     
     public void setRight(double speed){
@@ -81,22 +89,9 @@ public class Shooter extends Subsystem {
     	leftShooter.set(speed);
     }
     
-    public void stopShot(){
-    	rightShooter.set(0);
-    	leftShooter.set(0);
+    public void turnTurret(double val) {
+    	turret.set(val);
     }
-    
-    public double readSpeed(){
-    	double speed = 0;
-//    	double speedleft = leftShooter.getsp;
-    	double speedRight = 0;
-    	
-    	
-//    	speed = (speedleft + speedRight) / 2; 
-    	return speed;
-    	// IDK how to read tachometer values so ill leave it to you felix 
-    }
-    
     
     /**********************************************SHOOTING METHOD
      * @throws InterruptedException ***********************************************/
@@ -109,7 +104,7 @@ public class Shooter extends Subsystem {
     		closeHood();
     	}
     	
-    	if (velPID.isDone()){
+    	if (shooterPID.isDone()){
     		extendPop();
     		Thread.sleep(1000);
     		retractPop();

@@ -1,5 +1,7 @@
 package com.team1241.frc2016.commands.auto;
 
+import com.team1241.frc2016.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -16,7 +18,7 @@ public class TurnTurret extends Command {
     	this.setPoint = setPoint;
     	this.speed = speed;
     	this.timeOut = timeOut;
-//        requires(Robot.shooter);
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +31,7 @@ public class TurnTurret extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

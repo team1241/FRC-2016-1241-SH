@@ -1,5 +1,7 @@
 package com.team1241.frc2016.commands.auto;
 
+import com.team1241.frc2016.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -15,7 +17,7 @@ public class RunIntake extends Command {
 	
     public RunIntake(int direction) {
     	this.direction = direction;
-//    	requires(Robot.intake);
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +26,15 @@ public class RunIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	if(direction==INTAKE) {
+    		Robot.intake.runIntakeMotor(1);
+    	}
+    	else if(direction==OUTTAKE) {
+    		Robot.intake.runIntakeMotor(-1);
+    	}
+    	else {
+    		Robot.intake.runIntakeMotor(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
