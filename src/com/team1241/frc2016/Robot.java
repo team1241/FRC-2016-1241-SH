@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.commands.auto.WaitCommand;
 import com.team1241.frc2016.pid.Constants;
@@ -145,6 +146,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
         SmartDashboard.putDouble("pot", intake.getPotValue());
         
+        SmartDashboard.putDouble("Power", ShootCommand.power);
         SmartDashboard.putData("Command", new WaitCommand(2.0));
     }
 }
