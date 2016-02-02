@@ -27,13 +27,13 @@ public class RunIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(direction==INTAKE) {
-    		Robot.intake.runIntakeMotor(1);
+    		Robot.intake.runIntake(1);
     	}
     	else if(direction==OUTTAKE) {
-    		Robot.intake.runIntakeMotor(-1);
+    		Robot.intake.runIntake(-1);
     	}
     	else {
-    		Robot.intake.runIntakeMotor(0);
+    		Robot.intake.runIntake(0);
     	}
     }
 

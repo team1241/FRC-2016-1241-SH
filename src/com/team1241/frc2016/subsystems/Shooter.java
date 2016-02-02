@@ -159,6 +159,12 @@ public class Shooter extends Subsystem {
         return turretEncoder.getRate();
     }
     
+    public void turnTuuretTo(double setPoint, double power) {
+    	double output = turretPID.calcPID(setPoint, turretEncoder.getRaw(), 5);
+    	
+    	turret.set(output*power);
+    }
+    
     /**
      * Initial: 0 radians, facing forwards
      * Derivation: from % of rotation multiplied by 2pi 

@@ -1,4 +1,4 @@
-package com.team1241.frc2016.commands.auto;
+package com.team1241.frc2016.commands;
 
 import com.team1241.frc2016.Robot;
 

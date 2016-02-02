@@ -20,8 +20,8 @@ public class Intake extends Subsystem {
     
 	//Talons to controls all intake motors
     private CANTalon intake;
-    private CANTalon intakeArmRight;
-    private CANTalon intakeArmLeft;
+    private CANTalon rightArm;
+    private CANTalon leftArm;
     
     //PID for arm control
     public PIDController armPID;
@@ -36,8 +36,8 @@ public class Intake extends Subsystem {
     	intake = new CANTalon(ElectricalConstants.INTAKE_MOTOR);
     	
     	//Motor controllers for the intake arm
-    	intakeArmLeft = new CANTalon(ElectricalConstants.LEFT_ARM_MOTOR);
-    	intakeArmRight = new CANTalon(ElectricalConstants.RIGHT_ARM_MOTOR);
+    	leftArm = new CANTalon(ElectricalConstants.LEFT_ARM_MOTOR);
+    	rightArm = new CANTalon(ElectricalConstants.RIGHT_ARM_MOTOR);
 
     	//PID used for arm control
         armPID = new PIDController(NumberConstants.pArm,
@@ -60,16 +60,24 @@ public class Intake extends Subsystem {
     
     
     /**Runs the motor backwards to intake the ball */
-    public void runIntakeMotor(double val){
+    public void runIntake(double val){
     	intake.set(val);
     }
     
+    public void runLeftArm(double val) {
+    	leftArm.set(val);
+    }
+    
+    public void runRightArm(double val) {
+    	rightArm.set(val);
+    }
+    
     /**Moves the intake arms up from button input*/
-    public void runIntakeArms(double val) {
+    public void runArms(double val) {
     	if(Math.abs(val)>1)
     		val = Math.pow(val, 0);
-    	intakeArmLeft.set(val);
-    	intakeArmRight.set(-val);
+    	leftArm.set(val);
+    	rightArm.set(-val);
     }
     
     
@@ -77,6 +85,6 @@ public class Intake extends Subsystem {
     public void setArmPosition(double angle, double speed) {
     	//Set up sensor methods
     	double output = armPID.calcPID(angle, pot.get(), 5);
-    	runIntakeArms(output*speed);
+    	runArms(output*speed);
     }
 }
