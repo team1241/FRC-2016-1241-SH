@@ -1,28 +1,22 @@
 package com.team1241.frc2016.commands.defence;
 
+import com.team1241.frc2016.NumberConstants;
+import com.team1241.frc2016.commands.auto.*;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * 
  */
 public class AutoPortcullis extends CommandGroup {
     
     public  AutoPortcullis() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    	//Set Robot position
+    	addSequential(new RunArm(NumberConstants.minArmAngle, .8, 1));
+    	addSequential(new DriveCommand(10, .8, 0, 1));
+    	
+    	//Drive under portcullis
+        addSequential(new DriveCommand(100, .8, 0, 1));
+        addParallel(new RunArm(360, 1, 1));
     }
 }

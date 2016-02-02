@@ -26,7 +26,7 @@ public class Conveyor extends Subsystem {
 	private DoubleSolenoid outtakeBall;
 	private DoubleSolenoid holdBall;
 	
-	public static boolean hasBall = false;
+	private boolean contains = false;
 	
 	/**
 	 * Constructor for conveyor class
@@ -81,5 +81,13 @@ public class Conveyor extends Subsystem {
 	 */
 	public void retractOutake() {
 		outtakeBall.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	public void setContains(boolean state) {
+		this.contains = state;
+	}
+	
+	public boolean getContains() {
+		return contains;
 	}
 }

@@ -56,6 +56,10 @@ public class NumberConstants {
     //**************************OUTPUT VALUES (Shooter)*************************
     //**************************************************************************
 	
-	public static final int badderShot								= 0;
-	public static final int spyShot									= 0;
+	public static final int badderShot									= 0;
+	public static final int spyShot										= 0;
+	
+	
+	public static final int maxArmAngle									= 360;
+	public static final int minArmAngle									= 0;
 }
