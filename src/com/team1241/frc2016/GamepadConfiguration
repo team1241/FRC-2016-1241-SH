@@ -1,8 +1,8 @@
 Drive Controller						Manual				Automatic
-X_BUTTON                        =	
-A_BUTTON                        =	
-B_BUTTON                        =	
-Y_BUTTON                        =	
+X_BUTTON                        =	Auto DrawBridge
+A_BUTTON                        =	Auto Portcullis
+B_BUTTON                        =	Auto Cheval
+Y_BUTTON                        =	Auto SallyPort
 LEFT_BUMPER                     =	
 RIGHT_BUMPER                    =	
 LEFT_TRIGGER                    =	50% Drive speed
