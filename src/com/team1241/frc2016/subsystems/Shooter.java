@@ -24,6 +24,7 @@ public class Shooter extends Subsystem {
 	
 	private DoubleSolenoid popUp;
 	private DoubleSolenoid hoodPop;
+	private boolean extendedPopper;
 	
 	public PIDController shooterPID;
 	public PIDController turretPID;
@@ -50,6 +51,7 @@ public class Shooter extends Subsystem {
 				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
 		 hoodPop = new DoubleSolenoid (ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
 				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
+		 extendedPopper = false;
 		 
 		// Initialize PID	
 		 shooterPID = new PIDController (NumberConstants.pShooter,
@@ -79,10 +81,18 @@ public class Shooter extends Subsystem {
     
     public void retractPop(){
     	popUp.set(DoubleSolenoid.Value.kReverse);
+    	extendedPopper = false;
     }
     
     public void extendPop(){
     	popUp.set(DoubleSolenoid.Value.kForward);
+    	extendedPopper = true;
+    }
+    
+    /** 
+     * If the popper if extended, return true. Else false.*/
+    public boolean getExtension() {
+    	return extendedPopper;
     }
     
     /**********************************************MOTOR METHODS**************************************************/
@@ -108,15 +118,16 @@ public class Shooter extends Subsystem {
     	}
     }
     
-    /** @param angle angle is in radians
+    /** @param angle angle is in degrees
      * @param pwr pwr is +/- 0 to 1 
-     * Restriction: -2pi <= x <= 2pi
+     * Restriction: -180 <= x <= 180
      * */
     public void turnTurretToAngle(double angle, double pwr) {
+    	double output = turretPID.calcPID(angle, getTurretAngle(), 3);
     	if (getTurretAngle() <= angle) {
-    		turret.set(pwr);  
-    	} else if (getTurretAngle() >= angle ){
-    		turret.set(-pwr);
+    		turret.set(pwr*output);  
+    	} else if (getTurretAngle() >= angle) {
+    		turret.set(-pwr*output);
     	}
     }
     
@@ -124,10 +135,10 @@ public class Shooter extends Subsystem {
      * If turret goes over the rotational limit, swing it in the opposite direction to the same angle
      * Eg: 370 degrees is the same as 10 degrees */
     public void adjustTurret(double pwr) {
-    	if (getTurretAngle() >= 2*Math.PI) {
-    		turnTurretToAngle(getTurretAngle() - 2*Math.PI, pwr);
-    	} else if (getTurretAngle() <= -2*Math.PI) {
-    		turnTurretToAngle(getTurretAngle() + 2*Math.PI, pwr);
+    	if (getTurretAngle() >= 360) {
+    		turnTurretToAngle(getTurretAngle() - 360, pwr);
+    	} else if (getTurretAngle() <= -360) {
+    		turnTurretToAngle(getTurretAngle() + 360, pwr);
     	}
     }
     
@@ -155,22 +166,22 @@ public class Shooter extends Subsystem {
      * 
      * @return Returns rate of encoder in inches/sec
      */
-    public double getTuretEncoderRate(){
+    public double getTurretEncoderRate(){
         return turretEncoder.getRate();
     }
     
-    public void turnTuuretTo(double setPoint, double power) {
+    public void turnTurretTo(double setPoint, double power) {
     	double output = turretPID.calcPID(setPoint, turretEncoder.getRaw(), 5);
     	
     	turret.set(output*power);
     }
     
     /**
-     * Initial: 0 radians, facing forwards
-     * Derivation: from % of rotation multiplied by 2pi 
+     * Initial: 0 degrees, facing forwards
+     * Derivation: from % of rotation multiplied by 360 
      */
     public double getTurretAngle() {
-    	double angle = 2*Math.PI * (turretEncoder.get() / ElectricalConstants.driveEncoderPulsePerRot);
+    	double angle = 360 * (turretEncoder.get() / ElectricalConstants.driveEncoderPulsePerRot);
     	
     	if (getTurretDirection()) {
     		return angle;
