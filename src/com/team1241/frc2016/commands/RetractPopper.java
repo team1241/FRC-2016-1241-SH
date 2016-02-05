@@ -9,17 +9,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RetractPopper extends Command {
 
-	private double timeout;
-    public RetractPopper(double timeout) {
+    public RetractPopper() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+
     	requires(Robot.shooter);
-    	this.timeout = timeout;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.setTimeout(timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +26,7 @@ public class RetractPopper extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.shooter.getExtension();
+        return true;
     }
 
     // Called once after isFinished returns true

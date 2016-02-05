@@ -7,8 +7,10 @@ import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.pid.PIDController;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -31,6 +33,8 @@ public class Shooter extends Subsystem {
 	
 	private Encoder turretEncoder;
 	
+	private Counter optical;
+	
 	public Shooter(){
 		 // Initialize Talons
 		 rightShooter = new CANTalon (ElectricalConstants.RIGHT_SHOOTER_MOTOR);
@@ -45,6 +49,11 @@ public class Shooter extends Subsystem {
 		 turretEncoder.setDistancePerPulse(ElectricalConstants.turretEncoderDistPerTick);
 		 // TODO: will sampling reduce accuracy in which case we'd need to use k1x/k2x???
 		 turretEncoder.setSamplesToAverage(ElectricalConstants.samplesToAverage);
+		 
+		 optical = new Counter();
+		 optical.setUpSource(ElectricalConstants.SHOOTER_OPTICS);
+		 optical.setUpDownCounterMode();
+		 optical.setDistancePerPulse(1);
 		 
 	     // Initialize Pistons		
 		 popUp = new DoubleSolenoid (ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
@@ -170,10 +179,32 @@ public class Shooter extends Subsystem {
         return turretEncoder.getRate();
     }
     
+    /********************************************** OPTICAL SENSOR METHODS **********************************************/
+    
+    public double getOptic(){
+    	return optical.get();
+    }
+    
+    public double getOpticRate(){
+    	return optical.getRate()*60;
+    }
+    
+    /********************************************** TURRET PID *********************************************************/
+    
     public void turnTurretTo(double setPoint, double power) {
     	double output = turretPID.calcPID(setPoint, turretEncoder.getRaw(), 5);
     	
     	turret.set(output*power);
+    }
+    
+    /********************************************** SHOOTER PID ********************************************************/
+    
+    public void setSpeed(double rpm, double power){
+    	double output = shooterPID.calcPIDVelocity(rpm, getOpticRate(), 50);
+    	
+    	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
+    	
+    	setSpeed(output*power);
     }
     
     /**
@@ -203,24 +234,7 @@ public class Shooter extends Subsystem {
     public void resetTurretEncoder() {
     	turretEncoder.reset();
     }
-        
-    /**********************************************SHOOTING METHOD
-     * @throws InterruptedException ***********************************************/
     
-    
-    public void shoot(boolean batter) throws InterruptedException{
-    	if (batter) {
-    		openHood();	
-    	} else {
-    		closeHood();
-    	}
-    	
-    	if (shooterPID.isDone()){
-    		extendPop();
-    		Thread.sleep(1000);
-    		retractPop();
-    	}
-    }
 }
 
 

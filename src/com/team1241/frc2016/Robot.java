@@ -146,7 +146,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
         SmartDashboard.putDouble("pot", intake.getPotValue());
         
-        SmartDashboard.putDouble("Power", ShootCommand.power);
+        //SmartDashboard.putDouble("Power", ShootCommand.power);
         SmartDashboard.putData("Command", new WaitCommand(2.0));
     }
 }

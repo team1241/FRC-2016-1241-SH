@@ -4,6 +4,7 @@ import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.commands.ConveyorCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,6 +29,8 @@ public class Conveyor extends Subsystem {
 	
 	private boolean contains = false;
 	
+	private Counter optical;
+	
 	/**
 	 * Constructor for conveyor class
 	 */
@@ -41,7 +44,12 @@ public class Conveyor extends Subsystem {
 										   ElectricalConstants.POPPER_RELEASE_SOLENOID_B);
 		
 		holdBall = new DoubleSolenoid(ElectricalConstants.POPPER_HOLD_SOLENOID_A,
-										ElectricalConstants.POPPER_HOLD_SOLENOID_B);	
+										ElectricalConstants.POPPER_HOLD_SOLENOID_B);
+		
+		optical = new Counter();
+		optical.setUpSource(ElectricalConstants.POPPER_OPTICS);
+		optical.setUpDownCounterMode();
+		optical.setDistancePerPulse(1);
 	}
 	
 	public void initDefaultCommand() {
@@ -90,4 +98,10 @@ public class Conveyor extends Subsystem {
 	public boolean getContains() {
 		return contains;
 	}
+	
+	/********************************************** OPTICAL SENSOR METHODS **********************************************/
+    
+    public double getOptic(){
+    	return optical.get();
+    }
 }

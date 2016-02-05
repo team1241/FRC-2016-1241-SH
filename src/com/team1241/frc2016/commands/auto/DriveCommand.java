@@ -14,13 +14,15 @@ public class DriveCommand extends Command {
 	private double speed;
 	private double angle;
 	private double timeOut;
+	private double epsilon;
 	
 
-    public DriveCommand(double setPoint, double speed, double angle, double timeOut) {
+    public DriveCommand(double setPoint, double speed, double angle, double timeOut, double epsilon) {
     	this.distance = setPoint;
     	this.speed = speed;
     	this.angle = angle;
     	this.timeOut = timeOut;
+    	this.epsilon = epsilon;
     	requires(Robot.drive);
     }
 
@@ -32,7 +34,7 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.driveStraight(distance, speed, angle);
+    	Robot.drive.driveStraight(distance, speed, angle, epsilon);
     }
 
     // Make this return true when this Command no longer needs to run execute()

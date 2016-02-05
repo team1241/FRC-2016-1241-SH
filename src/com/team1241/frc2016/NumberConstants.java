@@ -62,4 +62,10 @@ public class NumberConstants {
 	
 	public static final int maxArmAngle									= 360;
 	public static final int minArmAngle									= 0;
+	
+	//**************************************************************************
+	//************************* ShootCommand ***********************************
+	//**************************************************************************
+	
+	public static final double waitForPop								 = 1.00;
 }

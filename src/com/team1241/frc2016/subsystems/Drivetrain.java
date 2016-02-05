@@ -105,10 +105,7 @@ public class Drivetrain extends Subsystem {
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-//    	setDefaultCommand(new CameraTrack());
     	setDefaultCommand(new TankDrive());
-//    	setDefaultCommand(new ArcadeDrive());
     }
     
     public void runLeftDrive(double pwmVal) {
@@ -131,16 +128,16 @@ public class Drivetrain extends Subsystem {
     	return (getLeftEncoderDist() + getRightEncoderDist())/2;
     }
     
-    public void driveStraight(double setPoint, double speed, double setAngle) {
-    	double output = drivePID.calcPID(setPoint, getAverageDistance(), 5);
-    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
+    public void driveStraight(double setPoint, double speed, double setAngle, double epsilon) {
+    	double output = drivePID.calcPID(setPoint, getAverageDistance(), epsilon);
+    	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
     	runLeftDrive(output+angle*speed);
     	runRightDrive(-output+angle*speed);
     }
     
-    public void turnDrive(double setAngle, double speed) {
-    	double angle = gyroPID.calcPID(setAngle, getYaw(), 5);
+    public void turnDrive(double setAngle, double speed, double epsilon) {
+    	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
     	runLeftDrive(angle*speed);
     	runRightDrive(angle*speed);

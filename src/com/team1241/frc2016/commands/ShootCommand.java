@@ -1,8 +1,11 @@
 package com.team1241.frc2016.commands;
 
+import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
+import com.team1241.frc2016.commands.auto.WaitCommand;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * The Default command to the Shooter subsystem.
@@ -12,9 +15,15 @@ import edu.wpi.first.wpilibj.command.Command;
 //4600 FOR OUTERWORKS
 //4400 FOR SPY
 //3800 - 4400 FOR BATTER - OFF BATTER   
-public class ShootCommand extends Command {
+public class ShootCommand extends CommandGroup {
+	
+	public ShootCommand(){
+		addSequential(new ExtendPopper());
+		addSequential(new WaitCommand(NumberConstants.waitForPop));
+		addSequential(new RetractPopper());
+	}
 
-	public static double power;
+	/*public static double power;
     public ShootCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -74,5 +83,5 @@ public class ShootCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }
+    }*/
 }
