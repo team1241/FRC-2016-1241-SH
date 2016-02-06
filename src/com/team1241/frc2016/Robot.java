@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	public static PowerDistributionPanel pdp;
+	
 	//Subsystems
 	public static Drivetrain drive;
 	public static Shooter shooter;
@@ -50,6 +52,8 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	pdp = new PowerDistributionPanel();
+    	
 		oi = new OI();
 		constants = new Constants("pidValues.txt");
 		output = new DataOutput("data.txt");

@@ -71,8 +71,8 @@ public class ElectricalConstants {
 	//****************************** ANALOG SENSORS *****************************
 	//***************************************************************************
 	
-	public static final int SHOOTER_OPTICS									= 0;
-	public static final int POPPER_OPTICS									= 1;
+	public static final int SHOOTER_OPTICS									= 4;
+	public static final int POPPER_OPTICS									= 5;
 	public static final int ARM_POTENTIOMETER								= 3;
 	
 	//***************************************************************************

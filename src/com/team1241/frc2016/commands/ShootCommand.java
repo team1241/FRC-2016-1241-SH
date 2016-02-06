@@ -17,13 +17,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //3800 - 4400 FOR BATTER - OFF BATTER   
 public class ShootCommand extends CommandGroup {
 	
-	public ShootCommand(){
+	/*public ShootCommand(){
 		addSequential(new ExtendPopper());
 		addSequential(new WaitCommand(NumberConstants.waitForPop));
 		addSequential(new RetractPopper());
-	}
+	}*/
 
-	/*public static double power;
+	public static double power;
     public ShootCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -38,7 +38,20 @@ public class ShootCommand extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.turnTurret(Robot.oi.getToolRightX());
+    	
+    	if(Robot.oi.getToolYButton()) {
+    		Robot.shooter.setLeft(.75);
+    		Robot.shooter.setRight(.75);
+    	}
+    	else if(Robot.oi.getToolBButton()) {
+    		Robot.shooter.setLeft(-.75);
+    		Robot.shooter.setRight(-.75);
+    	}
+    	else{
+    		Robot.shooter.setLeft(0);
+    		Robot.shooter.setRight(0);
+    	}
+    	/*Robot.shooter.turnTurret(Robot.oi.getToolRightX());
     	if(Robot.oi.getToolLeftBumper()) {
 //    		Robot.shooter.setLeft(-1);
     		power += 0.005;
@@ -62,12 +75,16 @@ public class ShootCommand extends CommandGroup {
     		Robot.shooter.setRight(-.74);
     	}
     	else if(Robot.oi.getToolYButton()) {
-    		Robot.shooter.setLeft(.4);
-    		Robot.shooter.setRight(.4);
+    		Robot.shooter.setLeft(.75);
+    		Robot.shooter.setRight(.75);
+    	}
+    	else if(Robot.oi.getToolBButton()) {
+    		Robot.shooter.setLeft(-.75);
+    		Robot.shooter.setRight(-.75);
     	}
     	else {
     		Robot.shooter.setSpeed(0);
-    	}
+    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -83,5 +100,5 @@ public class ShootCommand extends CommandGroup {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }*/
+    }
 }
