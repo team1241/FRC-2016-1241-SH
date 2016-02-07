@@ -43,12 +43,9 @@ public class Shooter extends Subsystem {
 		 
 		 // Initialize turret, encoder, and the encoder properties
 		 turret = new CANTalon(ElectricalConstants.TURRET_MOTOR);
-		 // to satisfy the requirements of shooting accurately, use k4x and sample more to reduce jitter
 		 turretEncoder = new Encoder(ElectricalConstants.TURRET_ENCODER_A, ElectricalConstants.TURRET_ENCODER_B,
 				 ElectricalConstants.turretEncoderReverse, Encoder.EncodingType.k4X);
-		 turretEncoder.setDistancePerPulse(ElectricalConstants.turretEncoderDistPerTick);
-		 // TODO: will sampling reduce accuracy in which case we'd need to use k1x/k2x???
-		 turretEncoder.setSamplesToAverage(ElectricalConstants.samplesToAverage);
+		 turretEncoder.setDistancePerPulse(ElectricalConstants.turretEncoderDegPerTick);
 		 
 		 optical = new Counter();
 		 optical.setUpSource(ElectricalConstants.SHOOTER_OPTICS);
@@ -185,7 +182,7 @@ public class Shooter extends Subsystem {
     	return optical.get();
     }
     
-    public double getOpticRate(){
+    public double getRPM(){
     	return optical.getRate()*60;
     }
     
@@ -199,8 +196,8 @@ public class Shooter extends Subsystem {
     
     /********************************************** SHOOTER PID ********************************************************/
     
-    public void setSpeed(double rpm, double power){
-    	double output = shooterPID.calcPIDVelocity(rpm, getOpticRate(), 50);
+    public void setRPM(double rpm, double power){
+    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50);
     	
     	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
     	
@@ -231,7 +228,7 @@ public class Shooter extends Subsystem {
     	turretEncoder.setReverseDirection(direction);
     }
     
-    public void resetTurretEncoder() {
+    public void resetEncoder() {
     	turretEncoder.reset();
     }
     

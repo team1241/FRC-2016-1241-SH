@@ -16,12 +16,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //4400 FOR SPY
 //3800 - 4400 FOR BATTER - OFF BATTER   
 public class ShootCommand extends CommandGroup {
-	
-	/*public ShootCommand(){
-		addSequential(new ExtendPopper());
-		addSequential(new WaitCommand(NumberConstants.waitForPop));
-		addSequential(new RetractPopper());
-	}*/
 
 	public static double power;
     public ShootCommand() {
@@ -94,7 +88,6 @@ public class ShootCommand extends CommandGroup {
 
     // Called once after isFinished returns true
     protected void end() {
-    
     }
 
     // Called when another command which requires one or more of the same

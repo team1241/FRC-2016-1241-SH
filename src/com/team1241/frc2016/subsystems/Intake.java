@@ -6,6 +6,7 @@ import com.team1241.frc2016.pid.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 /**Intake Class
  * 
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
  * 
  * @author Zubair Waheed
  * @author Taabish Jeshani 
+ * @author Bryan Kristiono
  * @since 2016-02-02
  */
 public class Intake extends Subsystem {
@@ -28,6 +30,7 @@ public class Intake extends Subsystem {
     
     //Potentiometer for arm control
     private Potentiometer pot;
+    private Ultrasonic ultra;
     
     /**Creates an intake object, initializes all its required objects*/
     public Intake(){
@@ -45,6 +48,7 @@ public class Intake extends Subsystem {
        		 					   NumberConstants.dArm);
         
         pot = new AnalogPotentiometer(ElectricalConstants.ARM_POTENTIOMETER, 1080, -2);
+        ultra = new Ultrasonic(ElectricalConstants.ULTRASONIC_TRIG, ElectricalConstants.ULTRASONIC_ECHO);
     }
     
     
@@ -86,5 +90,11 @@ public class Intake extends Subsystem {
     	//Set up sensor methods
     	double output = armPID.calcPID(angle, pot.get(), 5);
     	runArms(output*speed);
+    }
+    
+    /*****************UltraSonic Sensor Methods*****************/
+    
+    public double getRange() {
+    	return ultra.getRangeInches();
     }
 }

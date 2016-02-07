@@ -45,7 +45,6 @@ public class Robot extends IterativeRobot {
     public static int defenceLocation;
     public static int selectedDefence;
     
-//    public P
 
     /**
      * This function is run when the robot is first started up and should be

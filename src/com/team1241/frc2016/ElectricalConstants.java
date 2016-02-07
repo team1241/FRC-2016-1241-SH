@@ -68,11 +68,23 @@ public class ElectricalConstants {
 	public static final int TURRET_ENCODER_B                		        = 3;
 
 	//***************************************************************************
+	//***************************** TURRET ENCODERS *****************************
+	//***************************************************************************
+
+	public static final int ULTRASONIC_TRIG									= 4;
+	public static final int ULTRASONIC_ECHO									= 5;
+	
+	//***************************************************************************
+	//***************************** OPTICAL SENSORS *****************************
+	//***************************************************************************
+
+	public static final int SHOOTER_OPTICS									= 6;
+	public static final int POPPER_OPTICS									= 7;
+	
+	//***************************************************************************
 	//****************************** ANALOG SENSORS *****************************
 	//***************************************************************************
 	
-	public static final int SHOOTER_OPTICS									= 4;
-	public static final int POPPER_OPTICS									= 5;
 	public static final int ARM_POTENTIOMETER								= 3;
 	
 	//***************************************************************************
@@ -105,13 +117,9 @@ public class ElectricalConstants {
 	//**************************************************************************
 	//************************ TURRET ENCODER CONSTANTS ************************
 	//**************************************************************************
-	public static final int turretGearRadius = 1;
-	public static final int turretPulsePerRotation = 128; //encoder pulse per rotation
-	public static final double turretGearRatio = 1/1; //ratio between pulley and encoder
+	public static final double turretPulsePerRotation = 1024; //encoder pulse per rotation
+	public static final double turretGearRatio = 216.0/14.0; //ratio between pulley and encoder
 	public static final double turretEncoderPulsePerRot = turretPulsePerRotation*turretGearRatio; //pulse per rotation * gear ratio
-	public static final double turretEncoderDistPerTick =(Math.PI*2*turretGearRadius)/turretEncoderPulsePerRot;
+	public static final double turretEncoderDegPerTick = turretEncoderPulsePerRot/360;
 	public static final boolean turretEncoderReverse = false;
-	public static final int samplesToAverage = 10;
-	public static final double distanceOfRotation = turretEncoderDistPerTick*turretPulsePerRotation;
-
 }

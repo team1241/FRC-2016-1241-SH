@@ -1,22 +1,20 @@
-package com.team1241.frc2016.commands.auto;
+package com.team1241.frc2016.commands;
 
 import com.team1241.frc2016.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * @author Bryan Kristiono
- * @since 2016-01-30
+ *
  */
 public class SetShooterSpeed extends Command {
-	
+
 	private double rpm;
-	private double power;
-	
-    public SetShooterSpeed(double rpm, double power, double timeOut) {
-    	this.rpm = rpm;
-    	this.power = power;
-        requires(Robot.shooter);
+    public SetShooterSpeed(double rpm) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+		this.rpm = rpm;
+    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +23,7 @@ public class SetShooterSpeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.setRPM(rpm, power);
+    	Robot.shooter.setRPM(rpm, 1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
