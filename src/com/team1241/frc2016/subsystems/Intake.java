@@ -92,6 +92,11 @@ public class Intake extends Subsystem {
     	runArms(output*speed);
     }
     
+    public boolean isArmPosTooHigh() {
+    	return getPotValue() > NumberConstants.maxArmAngle;
+    }
+    
+    
     /*****************UltraSonic Sensor Methods*****************/
     
     public double getRange() {
