@@ -22,33 +22,33 @@ public class ElectricalConstants {
 	//****************************** SHOOTER MOTORS *****************************
 	//***************************************************************************        
 	
-	public static final int LEFT_SHOOTER_MOTOR								= 9;
-	public static final int RIGHT_SHOOTER_MOTOR								= 5;
+	public static final int LEFT_SHOOTER_MOTOR								= 10;
+	public static final int RIGHT_SHOOTER_MOTOR								= 4;
 	
 	//***************************************************************************
 	//****************************** TURRET MOTORS ******************************
 	//***************************************************************************
 	
-	public static final int TURRET_MOTOR									= 7;
+	public static final int TURRET_MOTOR									= 8;
 	
 	//***************************************************************************
 	//******************************* INTAKE MOTORS *****************************
 	//***************************************************************************
 	
-	public static final int INTAKE_MOTOR 									= 6;
+	public static final int INTAKE_MOTOR 									= 7;
 	
 	//***************************************************************************
 	//******************************** ARM MOTORS *******************************
 	//***************************************************************************
 	
-	public static final int LEFT_ARM_MOTOR									= 10;
-	public static final int RIGHT_ARM_MOTOR									= 4;
+	public static final int LEFT_ARM_MOTOR									= 9;
+	public static final int RIGHT_ARM_MOTOR									= 5;
 	
 	//***************************************************************************
 	//***************************** CONVEYOR MOTORS *****************************
 	//***************************************************************************
 	
-	public static final int CONVEYOR_MOTOR									= 8;
+	public static final int CONVEYOR_MOTOR									= 6;
 	
 	//***************************************************************************
 	//****************************** DRIVE ENCODERS *****************************
