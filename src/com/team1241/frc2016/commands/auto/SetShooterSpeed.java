@@ -13,7 +13,7 @@ public class SetShooterSpeed extends Command {
 	private double rpm;
 	private double power;
 	
-    public SetShooterSpeed(double rpm, double power, double timeOut) {
+    public SetShooterSpeed(double rpm, double power) {
     	this.rpm = rpm;
     	this.power = power;
         requires(Robot.shooter);
@@ -30,7 +30,8 @@ public class SetShooterSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	//Once boulder is shot
+        return Robot.conveyor.getContains();
     }
 
     // Called once after isFinished returns true
