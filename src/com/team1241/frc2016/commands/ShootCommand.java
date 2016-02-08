@@ -15,23 +15,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //4600 FOR OUTERWORKS
 //4400 FOR SPY
 //3800 - 4400 FOR BATTER - OFF BATTER   
-public class ShootCommand extends CommandGroup {
+public class ShootCommand extends Command {
 
-	public static double power;
     public ShootCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
     	requires(Robot.intake);
-    	power = 0.75;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	// if arm position is too high, put it down before shooting
-    	if (Robot.intake.isArmPosTooHigh()) {
-    		Robot.intake.setArmPosition(0, power);
-    	}
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
