@@ -85,11 +85,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Location", locationChooser);
 		
 		autoChooser = new SendableChooser();
-		autoChooser.addObject("No Auto", new NoAuto());
-		autoChooser.addDefault("OuterWorks", new OuterWorksAuton());
+		autoChooser.addDefault("No Auto", new NoAuto());
 		autoChooser.addObject("SpyShot", new SpyShotAuton());
+		autoChooser.addDefault("OuterWorks", new OuterWorksAuton());
 		
 		SmartDashboard.putData("Autonomous", autoChooser);
+		
+		updateSmartDashboard();
     }
     
 	
@@ -147,9 +149,12 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
         SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
-        SmartDashboard.putDouble("pot", intake.getPotValue());
-        SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
         
-        //SmartDashboard.putDouble("Power", ShootCommand.power);
+        SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
+        SmartDashboard.putNumber("Turret Distance", shooter.getTurretDistance());
+        SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+        SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
+        SmartDashboard.putBoolean("Has a Ball", conveyor.getContains());
+        
     }
 }
