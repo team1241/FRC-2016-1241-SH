@@ -153,6 +153,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
         SmartDashboard.putNumber("Turret Distance", shooter.getTurretDistance());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+        SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+        
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         SmartDashboard.putBoolean("Has a Ball", conveyor.getContains());
         

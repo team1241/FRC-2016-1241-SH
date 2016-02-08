@@ -56,10 +56,6 @@ public class NumberConstants {
     //**************************OUTPUT VALUES (Shooter)*************************
     //**************************************************************************
 	
-	public static final int badderShot									= 0;
-	public static final int spyShot										= 0;
-	
-	
 	public static final int maxArmAngle									= 360;
 	public static final int minArmAngle									= 0;
 	
@@ -67,8 +63,13 @@ public class NumberConstants {
 	//***************************** SHOOTER NUMBERS ****************************
 	//**************************************************************************
 	
-	public static final double waitForPop								 = 1.00;
-
+	public static final int spyShotRPM									= 0;
+	public static final int badderShotRPM								= 0;
+	public static final int barrierShotRPM								= 0;
+	
+	public static final int spyTurretAngle								= 40;
+	
+	public static final double waitForPop								= 1.00;
 
 	//**************************************************************************
 	//***************************** INTAKE NUMBERS *****************************

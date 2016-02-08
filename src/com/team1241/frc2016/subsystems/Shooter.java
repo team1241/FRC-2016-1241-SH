@@ -204,6 +204,14 @@ public class Shooter extends Subsystem {
     	setSpeed(output*power);
     }
     
+    public void setRPM(double rpm){
+    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50);
+    	
+    	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
+    	
+    	setSpeed(output);
+    }
+    
     /**
      * Initial: 0 degrees, facing forwards
      * Derivation: from % of rotation multiplied by 360 
