@@ -21,14 +21,19 @@ public class ConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.4);
+    	
     	if(Robot.oi.getToolAButton()) {
-    		Robot.conveyor.runMotor(1);
+    		Robot.conveyor.runMotor(-1);
+    		Robot.intake.runIntake(1);
     	}
     	else if(Robot.oi.getToolBButton()) {
-    		Robot.conveyor.runMotor(-1);
+    		Robot.conveyor.runMotor(1);
+    		Robot.intake.runIntake(-1);
     	}
     	else {
     		Robot.conveyor.runMotor(0);
+    		Robot.intake.runIntake(0);
     	}
     }
 

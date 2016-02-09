@@ -25,7 +25,7 @@ public class Shooter extends Subsystem {
 	private CANTalon turret;
 	
 	private DoubleSolenoid popUp;
-	private DoubleSolenoid hoodPop;
+	private DoubleSolenoid hood;
 	private boolean extendedPopper;
 	
 	public PIDController shooterPID;
@@ -55,7 +55,7 @@ public class Shooter extends Subsystem {
 	     // Initialize Pistons		
 		 popUp = new DoubleSolenoid (ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
 				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
-		 hoodPop = new DoubleSolenoid (ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
+		 hood = new DoubleSolenoid (ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
 				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
 		 extendedPopper = false;
 		 
@@ -78,11 +78,11 @@ public class Shooter extends Subsystem {
     
    /**********************************************PNEUMATIC METHODS**********************************************/
     public void closeHood() {
-    	hoodPop.set(DoubleSolenoid.Value.kReverse);
+    	hood.set(DoubleSolenoid.Value.kReverse);
     }
     
     public void openHood(){
-    	hoodPop.set(DoubleSolenoid.Value.kForward);
+    	hood.set(DoubleSolenoid.Value.kForward);
     }
     
     public void retractPop(){

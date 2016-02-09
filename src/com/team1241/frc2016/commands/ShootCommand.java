@@ -33,20 +33,32 @@ public class ShootCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	
-    	if(Robot.oi.getToolYButton()) {
+    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX());
+    	if(Robot.oi.getToolLeftTrigger()) {
     		Robot.shooter.setLeft(.75);
-    		Robot.shooter.setRight(.75);
+//    		Robot.shooter.setRight(.75);
     	}
-    	else if(Robot.oi.getToolBButton()) {
+    	else if(Robot.oi.getToolLeftBumper()) {
     		Robot.shooter.setLeft(-.75);
-    		Robot.shooter.setRight(-.75);
+//    		Robot.shooter.setRight(-.75);
     	}
-    	else{
+    	else if(Robot.oi.getToolRightBumper()) {
+    		new ShootSequence();
+    	}
+    	else if(Robot.oi.getToolYButton()) {
+    		Robot.shooter.openHood();
+    	}
+    	else if(Robot.oi.getToolXButton()) {
+    		Robot.conveyor.extendHolder();
+    	}
+    	else {
+    		Robot.conveyor.retractHolder();
+    		Robot.shooter.closeHood();
     		Robot.shooter.setLeft(0);
     		Robot.shooter.setRight(0);
     	}
-    	/*Robot.shooter.turnTurret(Robot.oi.getToolRightX());
+//    	Robot.shooter.turnTurret(Robot.oi.getToolRightX());
+    	/*
     	if(Robot.oi.getToolLeftBumper()) {
 //    		Robot.shooter.setLeft(-1);
     		power += 0.005;

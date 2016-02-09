@@ -13,6 +13,7 @@ public class IntakeCommand extends Command {
 
     public IntakeCommand() {
         requires(Robot.intake);
+        System.out.println("Initialized intake");
     }
 
     // Called just before this Command runs the first time
@@ -21,17 +22,20 @@ public class IntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.runArms(Robot.oi.getToolLeftY());
-    	
-    	if(Robot.oi.getToolAButton()) {
-    		Robot.intake.runIntake(1);
-    	}
-    	else if(Robot.oi.getToolBButton()) {
-    		Robot.intake.runIntake(-1);
-    	}
-    	else {
-    		Robot.intake.runIntake(0);
-    	}
+//    	System.out.println("running");
+//    	Robot.intake.runArms(Robot.oi.getToolLeftY()*0.4);
+//    	
+//    	if(Robot.oi.getToolAButton()) {
+//    		System.out.println("Intaking");
+//    		Robot.intake.runIntake(1);
+//    	}
+//    	else if(Robot.oi.getToolBButton()) {
+//    		System.out.println("outtaking");
+//    		Robot.intake.runIntake(-1);
+//    	}
+//    	else {
+//    		Robot.intake.runIntake(0);
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
