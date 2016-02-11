@@ -35,28 +35,38 @@ public class ShootCommand extends Command {
     	
     	Robot.shooter.turnTurret(-Robot.oi.getToolRightX());
     	if(Robot.oi.getToolLeftTrigger()) {
-    		Robot.shooter.setLeft(.75);
-//    		Robot.shooter.setRight(.75);
-    	}
-    	else if(Robot.oi.getToolLeftBumper()) {
-    		Robot.shooter.setLeft(-.75);
-//    		Robot.shooter.setRight(-.75);
-    	}
-    	else if(Robot.oi.getToolRightBumper()) {
-    		new ShootSequence();
-    	}
-    	else if(Robot.oi.getToolYButton()) {
-    		Robot.shooter.openHood();
-    	}
-    	else if(Robot.oi.getToolXButton()) {
-    		Robot.conveyor.extendHolder();
-    	}
-    	else {
-    		Robot.conveyor.retractHolder();
-    		Robot.shooter.closeHood();
     		Robot.shooter.setLeft(0);
     		Robot.shooter.setRight(0);
     	}
+    	else if(Robot.oi.getToolLeftBumper()) {
+    		Robot.shooter.setLeft(0.84);
+    		Robot.shooter.setRight(-0.84);
+    	 }
+    	
+    	if(Robot.oi.getToolRightTrigger()) {
+    	}
+    	else if(Robot.oi.getToolRightBumper()) {
+    		new ShootSequence().start();
+    	}
+    	else if(Robot.oi.getToolYButton()) {
+//    		new ActuateHood().start();
+//    		Robot.oi.actuateHood();
+    		Robot.shooter.closeHood();
+    	}
+    	else {
+    		Robot.shooter.openHood();
+    	}
+    	if(Robot.oi.getToolXButton()) {
+    		Robot.conveyor.extendHolder();
+//    		Robot.oi.actuateHolder();
+    	}
+    	else {
+    		Robot.conveyor.retractHolder();
+//    		Robot.shooter.openHood();
+    	}
+//    	Robot.oi.actuateHolder();
+//    	Robot.oi.actuateHood();
+    	
 //    	Robot.shooter.turnTurret(Robot.oi.getToolRightX());
     	/*
     	if(Robot.oi.getToolLeftBumper()) {

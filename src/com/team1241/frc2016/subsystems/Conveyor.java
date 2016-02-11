@@ -24,10 +24,10 @@ public class Conveyor extends Subsystem {
 	private CANTalon conveyorMotor;
 	
 	//Pneumatic declarations
-	private DoubleSolenoid outtakeBall;
 	private DoubleSolenoid holdBall;
 	
 	private boolean contains = false;
+	private boolean holdState = false;
 	
 	private Counter optical;
 	
@@ -39,11 +39,8 @@ public class Conveyor extends Subsystem {
 		//Motor 
 		conveyorMotor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
 		
-		//Pistons
-		outtakeBall = new DoubleSolenoid(ElectricalConstants.POPPER_RELEASE_SOLENOID_A,
-										   ElectricalConstants.POPPER_RELEASE_SOLENOID_B);
-		
-		holdBall = new DoubleSolenoid(ElectricalConstants.POPPER_HOLD_SOLENOID_A,
+		//Pistons		
+		holdBall = new DoubleSolenoid(14, ElectricalConstants.POPPER_HOLD_SOLENOID_A,
 										ElectricalConstants.POPPER_HOLD_SOLENOID_B);
 		
 		optical = new Counter();
@@ -68,6 +65,7 @@ public class Conveyor extends Subsystem {
 	 */
 	public void extendHolder() {
 		holdBall.set(DoubleSolenoid.Value.kForward);
+		holdState = true;
 	}
 	
 	/**
@@ -75,20 +73,7 @@ public class Conveyor extends Subsystem {
 	 */
 	public void retractHolder() {
 		holdBall.set(DoubleSolenoid.Value.kReverse);
-	}
-	
-	/**
-	 * This method extends the outtake piston, which will hold the ball in the shooter.
-	 */
-	public void extendOutake() {
-		outtakeBall.set(DoubleSolenoid.Value.kForward);
-	}
-	
-	/**
-	 * This method retracts the outtake piston, which will outtake the ball, in the case of lowgoal. 
-	 */
-	public void retractOutake() {
-		outtakeBall.set(DoubleSolenoid.Value.kReverse);
+		holdState = false;
 	}
 	
 	public void setContains(boolean state) {
@@ -97,6 +82,10 @@ public class Conveyor extends Subsystem {
 	
 	public boolean getContains() {
 		return contains;
+	}
+	
+	public boolean getHoldState() {
+		return holdState;
 	}
 	
 	/********************************************** OPTICAL SENSOR METHODS **********************************************/

@@ -8,21 +8,17 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author Bryan Kristiono
  * @since 2016-01-30
  */
-public class ActuateHood extends Command {
+public class ActuateHolder extends Command {
 
 	private boolean actuate;
 	
-    public ActuateHood(boolean actuate) {
+    public ActuateHolder(boolean actuate) {
     	this.actuate = actuate;
         requires(Robot.shooter);
     }
     
-    public ActuateHood() {
-    	if(Robot.shooter.getHoodState())
-    		this.actuate = false;
-    	else
-    		this.actuate = true;
-//    	this(!Robot.shooter.getHoodState());
+    public ActuateHolder() {
+    	this(!Robot.conveyor.getHoldState());
     }
 
     // Called just before this Command runs the first time
@@ -32,10 +28,10 @@ public class ActuateHood extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (actuate) {
-    		Robot.shooter.openHood();
+    		Robot.conveyor.extendHolder();
     	}
     	else {
-    		Robot.shooter.closeHood();
+    		Robot.conveyor.retractHolder();
     	}
     }
 

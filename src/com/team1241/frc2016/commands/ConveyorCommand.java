@@ -21,7 +21,7 @@ public class ConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.4);
+    	Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.6);
     	
     	if(Robot.oi.getToolAButton()) {
     		Robot.conveyor.runMotor(-1);

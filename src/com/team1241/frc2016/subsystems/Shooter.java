@@ -26,7 +26,7 @@ public class Shooter extends Subsystem {
 	
 	private DoubleSolenoid popUp;
 	private DoubleSolenoid hood;
-	private boolean extendedPopper;
+	private boolean hoodState = false;
 	
 	public PIDController shooterPID;
 	public PIDController turretPID;
@@ -34,6 +34,7 @@ public class Shooter extends Subsystem {
 	private Encoder turretEncoder;
 	
 	private Counter optical;
+	
 	
 	public Shooter(){
 		 // Initialize Talons
@@ -53,11 +54,10 @@ public class Shooter extends Subsystem {
 		 optical.setDistancePerPulse(1);
 		 
 	     // Initialize Pistons		
-		 popUp = new DoubleSolenoid (ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
+		 popUp = new DoubleSolenoid (14, ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
 				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
-		 hood = new DoubleSolenoid (ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
+		 hood = new DoubleSolenoid (14, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
 				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
-		 extendedPopper = false;
 		 
 		// Initialize PID	
 		 shooterPID = new PIDController (NumberConstants.pShooter,
@@ -79,26 +79,24 @@ public class Shooter extends Subsystem {
    /**********************************************PNEUMATIC METHODS**********************************************/
     public void closeHood() {
     	hood.set(DoubleSolenoid.Value.kReverse);
+    	hoodState = false;
     }
     
     public void openHood(){
     	hood.set(DoubleSolenoid.Value.kForward);
+    	hoodState = true;
     }
     
     public void retractPop(){
     	popUp.set(DoubleSolenoid.Value.kReverse);
-    	extendedPopper = false;
     }
     
     public void extendPop(){
     	popUp.set(DoubleSolenoid.Value.kForward);
-    	extendedPopper = true;
     }
     
-    /** 
-     * If the popper if extended, return true. Else false.*/
-    public boolean getExtension() {
-    	return extendedPopper;
+    public boolean getHoodState() {
+    	return hoodState;
     }
     
     /**********************************************MOTOR METHODS**************************************************/

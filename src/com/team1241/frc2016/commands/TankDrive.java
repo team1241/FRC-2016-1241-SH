@@ -26,11 +26,11 @@ public class TankDrive extends Command {
 	 */
 	protected void execute() {
 		if(Robot.oi.getDriveLeftTrigger()) {
-			Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY()*0.6);
+			Robot.drive.runLeftDrive(-Robot.oi.getDriveLeftY()*0.6);
 			Robot.drive.runRightDrive(Robot.oi.getDriveRightY()*0.6);
 		}
 		else {
-			Robot.drive.runLeftDrive(Robot.oi.getDriveLeftY());
+			Robot.drive.runLeftDrive(-Robot.oi.getDriveLeftY());
 			Robot.drive.runRightDrive(Robot.oi.getDriveRightY());
 		}
 	}

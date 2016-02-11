@@ -91,17 +91,19 @@ public class ElectricalConstants {
 	//******************************** PNEUMATICS *******************************
 	//***************************************************************************
 
+	public static final int PCM												= 14;
+
 	public static final int SHOOTER_HOOD_SOLENOID_A							= 3;
 	public static final int SHOOTER_HOOD_SOLENOID_B							= 4;
 	
-	public static final int POPPER_SHOOT_SOLENOID_A							= 2;
-	public static final int POPPER_SHOOT_SOLENOID_B							= 7;
+	public static final int POPPER_SHOOT_SOLENOID_A							= 1;
+	public static final int POPPER_SHOOT_SOLENOID_B							= 6;
 	
-	public static final int POPPER_HOLD_SOLENOID_A							= 5;
-	public static final int POPPER_HOLD_SOLENOID_B							= 6;
+	public static final int POPPER_HOLD_SOLENOID_A							= 2;
+	public static final int POPPER_HOLD_SOLENOID_B							= 5;
 	
-	public static final int POPPER_RELEASE_SOLENOID_A						= 1;
-	public static final int POPPER_RELEASE_SOLENOID_B						= 0;
+//	public static final int POPPER_RELEASE_SOLENOID_A						= 1;
+//	public static final int POPPER_RELEASE_SOLENOID_B						= 0;
 
 	//***************************************************************************
 	//************************* DRIVE ENCODER CONSTANTS *************************
