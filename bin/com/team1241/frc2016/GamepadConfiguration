@@ -1,0 +1,43 @@
+Drive Controller						Manual				Automatic
+X_BUTTON                        =	Auto DrawBridge
+A_BUTTON                        =	Auto Portcullis
+B_BUTTON                        =	Auto Cheval
+Y_BUTTON                        =	Auto SallyPort
+LEFT_BUMPER                     =	
+RIGHT_BUMPER                    =	
+LEFT_TRIGGER                    =	50% Drive speed
+RIGHT_TRIGGER                   =	
+BACK_BUTTON                     =	
+START_BUTTON                    =	
+LEFT_ANALOG_BUTTON              =	
+RIGHT_ANALOG_BUTTON             =	
+   
+LEFT_ANALOG_X                   =	
+LEFT_ANALOG_Y                   =	Left drive motors
+RIGHT_ANALOG_X                  =	
+RIGHT_ANALOG_Y                  =	Right drive motors
+DPAD_X                          =	
+DPAD_Y							=	
+
+
+
+Tool Controller							Manual					Automatic
+X_BUTTON                        =	
+A_BUTTON                        =	Intake&conveyor inwards
+B_BUTTON                        =	Intake&conveyor outwards
+Y_BUTTON                        =	
+LEFT_BUMPER                     =	
+RIGHT_BUMPER                    =	
+LEFT_TRIGGER                    =	Rev up flywheel 71%
+RIGHT_TRIGGER                   =	Rev up flywheel 73.5%
+BACK_BUTTON                     =	
+START_BUTTON                    =	
+LEFT_ANALOG_BUTTON              =	
+RIGHT_ANALOG_BUTTON             =	
+   
+LEFT_ANALOG_X                   =	
+LEFT_ANALOG_Y                   =	Lift intake arms
+RIGHT_ANALOG_X                  =	Turn turret
+RIGHT_ANALOG_Y                  =	
+DPAD_X                          =	
+DPAD_Y							=	
