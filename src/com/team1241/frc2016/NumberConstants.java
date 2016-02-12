@@ -33,7 +33,7 @@ public class NumberConstants {
 	//0.05
 	public static final double pTurret 									 = 0.03;
 	public static final double iTurret 									 = 0.00;
-	public static final double dTurret 									 = 0.00;
+	public static final double dTurret 									 = 0.01;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************

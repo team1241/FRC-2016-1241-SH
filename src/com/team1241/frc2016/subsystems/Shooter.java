@@ -115,11 +115,7 @@ public class Shooter extends Subsystem {
     }
     
     public void turnTurret(double pwr) {
-    	if (isLimitReached()){
-    		adjustTurret(pwr);
-    	} else {
     		turret.set(pwr);
-    	}
     }
     
     /** @param angle angle is in degrees
@@ -127,12 +123,8 @@ public class Shooter extends Subsystem {
      * Restriction: -180 <= x <= 180
      * */
     public void turnTurretToAngle(double angle, double pwr) {
-    	double output = turretPID.calcPID(angle, getTurretAngle(), 3);
-    	if (getTurretAngle() <= angle) {
-    		turret.set(pwr*output);  
-    	} else if (getTurretAngle() >= angle) {
-    		turret.set(-pwr*output);
-    	}
+    	double output = turretPID.calcPID(angle, getTurretAngle(), 0.5);
+    	turret.set(pwr*output);	
     }
     
     /** 
@@ -148,9 +140,13 @@ public class Shooter extends Subsystem {
     
     /********************************************** TURRET ENCODER METHODS **********************************************/
     
-    public boolean isLimitReached() {
-    	return turretEncoder.get() > ElectricalConstants.driveEncoderPulsePerRot;
+    public void reset() {
+    	turretEncoder.reset();
     }
+//    
+//    public boolean isLimitReached() {
+//    	return turretEncoder.get() > ElectricalConstants.driveEncoderPulsePerRot;
+//    }
     
     public double getTurretDistance() {
     	return turretEncoder.getDistance();
@@ -161,7 +157,7 @@ public class Shooter extends Subsystem {
      * 
      * @return Returns raw value from encoder
      */
-    public double getTurretEncoderRaw(){
+    public double getTurretRaw(){
         return turretEncoder.getRaw();
     }
     
@@ -199,7 +195,7 @@ public class Shooter extends Subsystem {
     	
     	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
     	
-    	setSpeed(output*power);
+    	setSpeed(-output*power);
     }
     
     public void setRPM(double rpm){
@@ -207,7 +203,7 @@ public class Shooter extends Subsystem {
     	
     	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
     	
-    	setSpeed(output);
+    	setSpeed(-output);
     }
     
     /**
@@ -215,13 +211,7 @@ public class Shooter extends Subsystem {
      * Derivation: from % of rotation multiplied by 360 
      */
     public double getTurretAngle() {
-    	double angle = 360 * (turretEncoder.get() / ElectricalConstants.driveEncoderPulsePerRot);
-    	
-    	if (getTurretDirection()) {
-    		return angle;
-    	} else {
-    		return -angle;
-    	}
+    	return turretEncoder.getRaw() / ElectricalConstants.turretEncoderDegPerTick;
     }
     
     /** true for "up", false for "down" */

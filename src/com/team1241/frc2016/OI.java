@@ -19,8 +19,8 @@ public class OI {
 
 	Joystick drivePad;
 	Joystick toolPad;
-	JoystickButton yButton;
-	JoystickButton xButton;
+	public JoystickButton yButton;
+	public JoystickButton xButton;
 
 	/**
 	 * Initializes the joystick objects 

@@ -54,11 +54,11 @@ public class ElectricalConstants {
 	//****************************** DRIVE ENCODERS *****************************
 	//***************************************************************************
 	
-	public static final int LEFT_DRIVE_ENCODER_A                            = 0;
-	public static final int LEFT_DRIVE_ENCODER_B                            = 1;
+	public static final int LEFT_DRIVE_ENCODER_A                            = 9;
+	public static final int LEFT_DRIVE_ENCODER_B                            = 8;
 	
-	public static final int RIGHT_DRIVE_ENCODER_A                           = 8;
-	public static final int RIGHT_DRIVE_ENCODER_B                           = 9;
+	public static final int RIGHT_DRIVE_ENCODER_A                           = 1;
+	public static final int RIGHT_DRIVE_ENCODER_B                           = 0;
 	
 	//***************************************************************************
 	//***************************** TURRET ENCODERS *****************************
@@ -71,15 +71,15 @@ public class ElectricalConstants {
 	//***************************** TURRET ENCODERS *****************************
 	//***************************************************************************
 
-	public static final int ULTRASONIC_TRIG									= 4;
-	public static final int ULTRASONIC_ECHO									= 5;
+	public static final int ULTRASONIC_TRIG									= 6;
+	public static final int ULTRASONIC_ECHO									= 7;
 	
 	//***************************************************************************
 	//***************************** OPTICAL SENSORS *****************************
 	//***************************************************************************
 
-	public static final int SHOOTER_OPTICS									= 6;
-	public static final int POPPER_OPTICS									= 7;
+	public static final int SHOOTER_OPTICS									= 4;
+	public static final int POPPER_OPTICS									= 5;
 	
 	//***************************************************************************
 	//****************************** ANALOG SENSORS *****************************
@@ -114,14 +114,14 @@ public class ElectricalConstants {
 	public static final double driveEncoderPulsePerRot = drivePulsePerRotation*driveGearRatio; //pulse per rotation * gear ratio
 	public static final double driveEncoderDistPerTick =(Math.PI*2*driveWheelRadius)/driveEncoderPulsePerRot;
 	public static final boolean leftDriveTrainEncoderReverse = false;
-	public static final boolean rightDriveTrainEncoderReverse = false;
+	public static final boolean rightDriveTrainEncoderReverse = true;
 
 	//**************************************************************************
 	//************************ TURRET ENCODER CONSTANTS ************************
 	//**************************************************************************
-	public static final double turretPulsePerRotation = 1024; //encoder pulse per rotation
+	public static final double turretPulsePerRotation = 1024.0; //encoder pulse per rotation
 	public static final double turretGearRatio = 216.0/14.0; //ratio between pulley and encoder
 	public static final double turretEncoderPulsePerRot = turretPulsePerRotation*turretGearRatio; //pulse per rotation * gear ratio
-	public static final double turretEncoderDegPerTick = turretEncoderPulsePerRot/360;
-	public static final boolean turretEncoderReverse = false;
+	public static final double turretEncoderDegPerTick = turretEncoderPulsePerRot/90.0;
+	public static final boolean turretEncoderReverse = true;
 }

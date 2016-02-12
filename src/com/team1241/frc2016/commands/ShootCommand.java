@@ -21,7 +21,6 @@ public class ShootCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
-    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -33,29 +32,39 @@ public class ShootCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX());
+    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+    	
     	if(Robot.oi.getToolLeftTrigger()) {
     		Robot.shooter.setLeft(0);
     		Robot.shooter.setRight(0);
     	}
     	else if(Robot.oi.getToolLeftBumper()) {
     		Robot.shooter.setLeft(0.84);
-    		Robot.shooter.setRight(-0.84);
+    		Robot.shooter.setRight(0.84);
+    		//new SetShooterSpeed(500, 0.25).start();
     	 }
     	
-    	if(Robot.oi.getToolRightTrigger()) {
-    	}
+//    	Robot.oi.yButton.whenPressed(new ActuateHood());
+//    	Robot.oi.xButton.whenPressed(new ActuateHolder());
+    	
+//    	if(Robot.oi.getToolRightTrigger()) {
+//    		new TurnTurretToAngle(90, 1, 10).start();
+//    	}
+//    	else if (Robot.oi.getToolYButton()) {
+//    		new TurnTurretToAngle(-90, 1, 10).start();
+//    	} 	
     	else if(Robot.oi.getToolRightBumper()) {
     		new ShootSequence().start();
     	}
     	else if(Robot.oi.getToolYButton()) {
 //    		new ActuateHood().start();
-//    		Robot.oi.actuateHood();
+//    		Robot.oi.actuateHood();	
     		Robot.shooter.closeHood();
     	}
     	else {
     		Robot.shooter.openHood();
     	}
+    	
     	if(Robot.oi.getToolXButton()) {
     		Robot.conveyor.extendHolder();
 //    		Robot.oi.actuateHolder();
@@ -64,44 +73,6 @@ public class ShootCommand extends Command {
     		Robot.conveyor.retractHolder();
 //    		Robot.shooter.openHood();
     	}
-//    	Robot.oi.actuateHolder();
-//    	Robot.oi.actuateHood();
-    	
-//    	Robot.shooter.turnTurret(Robot.oi.getToolRightX());
-    	/*
-    	if(Robot.oi.getToolLeftBumper()) {
-//    		Robot.shooter.setLeft(-1);
-    		power += 0.005;
-    		try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
-    	}
-    	else if(Robot.oi.getToolRightBumper()) {
-//    		Robot.shooter.setRight(-1);
-    		power -=0.005;
-    		try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
-    	}
-    	else if(Robot.oi.getToolLeftTrigger()) {
-    		Robot.shooter.setLeft(-power);
-    		Robot.shooter.setRight(-power);
-    	}
-    	else if(Robot.oi.getToolRightTrigger()) {
-    		Robot.shooter.setLeft(-.74);
-    		Robot.shooter.setRight(-.74);
-    	}
-    	else if(Robot.oi.getToolYButton()) {
-    		Robot.shooter.setLeft(.75);
-    		Robot.shooter.setRight(.75);
-    	}
-    	else if(Robot.oi.getToolBButton()) {
-    		Robot.shooter.setLeft(-.75);
-    		Robot.shooter.setRight(-.75);
-    	}
-    	else {
-    		Robot.shooter.setSpeed(0);
-    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

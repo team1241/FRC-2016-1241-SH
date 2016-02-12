@@ -37,6 +37,10 @@ public class Robot extends IterativeRobot {
 	public static DataOutput output;
 	
 	Preferences pref;
+	double pShooter;
+	double iShooter;
+	double dShooter;
+	
     Command autonomousCommand;
     public SendableChooser autoChooser;
     public SendableChooser defenceChooser;
@@ -121,6 +125,13 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	if(autonomousCommand!=null)
     		autonomousCommand.cancel();
+    	shooter.reset();
+    	
+    	pShooter = pref.getDouble("pShooter", 1.0);
+    	iShooter = pref.getDouble("iShooter", 0.0);
+    	dShooter = pref.getDouble("dShooter", 0.0);
+    	
+    	Robot.shooter.shooterPID.changePIDGains(pShooter, iShooter, dShooter);
     }
 
     /**
@@ -147,16 +158,22 @@ public class Robot extends IterativeRobot {
     }
     
     public void updateSmartDashboard() {
-    	SmartDashboard.putNumber("LeftDrive Encoder", Math.round(drive.getLeftEncoderDist()));
-        SmartDashboard.putNumber("RightDrive Encoder", Math.round(drive.getRightEncoderDist()));
+    	SmartDashboard.putNumber("LeftDrive Encoder", drive.getLeftEncoderDist());
+        SmartDashboard.putNumber("RightDrive Encoder", drive.getRightEncoderDist());
         
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
-        SmartDashboard.putNumber("Turret Distance", shooter.getTurretDistance());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+        SmartDashboard.putNumber("Shooter Count", shooter.getOptic());
         SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+        
+        SmartDashboard.putBoolean("Hood", shooter.getHoodState());
+        SmartDashboard.putBoolean("Holders", conveyor.getHoldState());
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         SmartDashboard.putBoolean("Has a Ball", conveyor.getContains());
         
+        SmartDashboard.putNumber("pShooter", shooter.shooterPID.getPGain());
+        SmartDashboard.putNumber("iShooter", shooter.shooterPID.getIGain());
+        SmartDashboard.putNumber("dShooter", shooter.shooterPID.getDGain());
     }
 }

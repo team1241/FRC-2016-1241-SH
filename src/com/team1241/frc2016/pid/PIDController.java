@@ -76,11 +76,8 @@ public class PIDController {
         //PID Output
         output = pOut + iOut + dOut;
         
-        //Scale output to be between 1 and -1
-        if(maxVal < Math.abs(output))
-        	maxVal = Math.abs(output);
-        
-        output = output/maxVal;
+      //Scale output to be between 1 and -1
+        output = output/Math.abs(output)*(1 - Math.pow(0.1,(Math.abs(output))));
         
         return output;
     }
@@ -116,5 +113,17 @@ public class PIDController {
     
     public boolean isDone(){
     	return atTarget;
+    }
+    
+    public double getPGain() {
+    	return pGain;
+    }
+    
+    public double getIGain() {
+    	return iGain;
+    }
+    
+    public double getDGain() {
+    	return dGain;
     }
 }	
