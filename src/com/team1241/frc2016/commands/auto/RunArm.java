@@ -18,7 +18,6 @@ public class RunArm extends Command {
     	this.angle = angle;
     	this.speed = speed;
     	this.timeOut = timeOut;
-    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -33,7 +32,7 @@ public class RunArm extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut()||Robot.intake.armPID.isDone();
+        return isTimedOut() || Robot.intake.armPID.isDone();
     }
 
     // Called once after isFinished returns true

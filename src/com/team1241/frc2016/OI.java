@@ -267,14 +267,14 @@ public class OI {
 			return joy;
 	}
 
-	public boolean getToolDPadX() 
+	public double getToolDPadX() 
 	{
-		return toolPad.getRawButton(GamepadConstants.DPAD_X);
+		return toolPad.getPOVCount();
 	}
 
-	public boolean getToolDPadY() 
+	public double getToolDPadY() 
 	{
-		return toolPad.getRawButton(GamepadConstants.DPAD_Y);
+		return toolPad.getPOV(GamepadConstants.DPAD_Y);
 	}
 
 	/** 

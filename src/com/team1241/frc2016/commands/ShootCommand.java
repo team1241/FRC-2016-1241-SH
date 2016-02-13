@@ -3,6 +3,7 @@ package com.team1241.frc2016.commands;
 import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
 import com.team1241.frc2016.commands.auto.WaitCommand;
+import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -17,10 +18,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //3800 - 4400 FOR BATTER - OFF BATTER   
 public class ShootCommand extends Command {
 
+	private SetShooterSpeed badder;
+	private SetShooterSpeed outer;
+	ToggleBoolean toggleTurret;
     public ShootCommand() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.shooter);
+    	toggleTurret = new ToggleBoolean();
+    	badder = new SetShooterSpeed(NumberConstants.badderShotRPM);
+    	outer = new SetShooterSpeed(NumberConstants.spyShotRPM);
     }
 
     // Called just before this Command runs the first time
@@ -32,47 +37,42 @@ public class ShootCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+//    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+    	toggleTurret.set(Robot.oi.getToolYButton());
     	
-    	if(Robot.oi.getToolLeftTrigger()) {
-    		Robot.shooter.setLeft(0);
-    		Robot.shooter.setRight(0);
+    	if(toggleTurret.get()) {
+    		new TurnTurretToAngle(-43, 1, 10).start();
     	}
-    	else if(Robot.oi.getToolLeftBumper()) {
-    		Robot.shooter.setLeft(0.84);
-    		Robot.shooter.setRight(0.84);
-    		//new SetShooterSpeed(500, 0.25).start();
-    	 }
+    	else {
+    		new TurnTurretToAngle(0, 1, 10).start();
+    	} 	
     	
-//    	Robot.oi.yButton.whenPressed(new ActuateHood());
-//    	Robot.oi.xButton.whenPressed(new ActuateHolder());
-    	
-//    	if(Robot.oi.getToolRightTrigger()) {
-//    		new TurnTurretToAngle(90, 1, 10).start();
-//    	}
-//    	else if (Robot.oi.getToolYButton()) {
-//    		new TurnTurretToAngle(-90, 1, 10).start();
-//    	} 	
-    	else if(Robot.oi.getToolRightBumper()) {
+    	if (Robot.oi.getToolLeftTrigger()) {
+    		outer.start();
+    		badder.cancel();
+    	}
+    	else if (Robot.oi.getToolLeftBumper()) { 
+    		outer.cancel();
+    		badder.start();
+    	}
+    	else if(Robot.oi.getToolRightTrigger()) {
     		new ShootSequence().start();
     	}
-    	else if(Robot.oi.getToolYButton()) {
-//    		new ActuateHood().start();
-//    		Robot.oi.actuateHood();	
-    		Robot.shooter.closeHood();
+    	else if(Robot.oi.getToolRightBumper()) {
+    		Robot.shooter.setSpeed(0);
+    		outer.cancel();
+    		badder.cancel();
     	}
-    	else {
-    		Robot.shooter.openHood();
-    	}
+
     	
-    	if(Robot.oi.getToolXButton()) {
-    		Robot.conveyor.extendHolder();
-//    		Robot.oi.actuateHolder();
-    	}
-    	else {
-    		Robot.conveyor.retractHolder();
+//    	else if(Robot.oi.getToolYButton()) {
+////    		new ActuateHood().start();
+////    		Robot.oi.actuateHood();	
+//    		Robot.shooter.closeHood();
+//    	}
+//    	else {
 //    		Robot.shooter.openHood();
-    	}
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -11,6 +11,7 @@ import com.team1241.frc2016.commands.auto.WaitCommand;
 import com.team1241.frc2016.pid.Constants;
 import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.DataOutput;
+import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,9 +38,9 @@ public class Robot extends IterativeRobot {
 	public static DataOutput output;
 	
 	Preferences pref;
-	double pShooter;
-	double iShooter;
-	double dShooter;
+	double pArm;
+	double iArm;
+	double dArm;
 	
     Command autonomousCommand;
     public SendableChooser autoChooser;
@@ -48,6 +49,8 @@ public class Robot extends IterativeRobot {
     
     public static int defenceLocation;
     public static int selectedDefence;
+    
+    ToggleBoolean toggle = new ToggleBoolean();
     
 
     /**
@@ -127,11 +130,11 @@ public class Robot extends IterativeRobot {
     		autonomousCommand.cancel();
     	shooter.reset();
     	
-    	pShooter = pref.getDouble("pShooter", 1.0);
-    	iShooter = pref.getDouble("iShooter", 0.0);
-    	dShooter = pref.getDouble("dShooter", 0.0);
+    	pArm = pref.getDouble("pArm", 0.0);
+    	iArm = pref.getDouble("iArm", 0.0);
+    	dArm = pref.getDouble("dArm", 0.0);
     	
-    	Robot.shooter.shooterPID.changePIDGains(pShooter, iShooter, dShooter);
+    	Robot.intake.armPID.changePIDGains(pArm, iArm, dArm);
     }
 
     /**
@@ -148,6 +151,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         LiveWindow.run();
         updateSmartDashboard();
+        
+        toggle.set(oi.getToolLeftAnalogButton());
     }
     
     /**
@@ -163,17 +168,19 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
-        SmartDashboard.putNumber("Shooter Count", shooter.getOptic());
+        SmartDashboard.putNumber("DPAD", oi.getToolDPadX());
         SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
+        SmartDashboard.putBoolean("Analog Stick", toggle.get());
         
         SmartDashboard.putBoolean("Hood", shooter.getHoodState());
         SmartDashboard.putBoolean("Holders", conveyor.getHoldState());
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         SmartDashboard.putBoolean("Has a Ball", conveyor.getContains());
+        SmartDashboard.putBoolean("Popper", conveyor.getOptic());
         
-        SmartDashboard.putNumber("pShooter", shooter.shooterPID.getPGain());
-        SmartDashboard.putNumber("iShooter", shooter.shooterPID.getIGain());
-        SmartDashboard.putNumber("dShooter", shooter.shooterPID.getDGain());
+        SmartDashboard.putNumber("pArm", intake.armPID.getPGain());
+        SmartDashboard.putNumber("iArm", intake.armPID.getIGain());
+        SmartDashboard.putNumber("dArm", intake.armPID.getDGain());
     }
 }

@@ -1,6 +1,9 @@
 package com.team1241.frc2016.commands;
 
 import com.team1241.frc2016.Robot;
+import com.team1241.frc2016.commands.auto.AutoHolder;
+import com.team1241.frc2016.commands.auto.WaitCommand;
+import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,7 +14,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ConveyorCommand extends Command {
 
+	ToggleBoolean toggle;
+	
     public ConveyorCommand() {
+    	toggle = new ToggleBoolean();
         requires(Robot.conveyor);
     }
 
@@ -21,19 +27,31 @@ public class ConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.6);
+    	if(Robot.conveyor.getOptic()) {
+    		Robot.conveyor.setContains(false);
+    	}
+    	else {
+    		Robot.conveyor.setContains(true);
+    		new AutoHolder().start();
+    	}
+    	
+    	toggle.set(Robot.oi.getToolBButton());
+    	
+    	if(toggle.get()) {
+    		Robot.conveyor.extendHolder();
+    	}
+    	else {
+    		Robot.conveyor.retractHolder();
+    	}
     	
     	if(Robot.oi.getToolAButton()) {
     		Robot.conveyor.runMotor(-1);
-//    		Robot.intake.runIntake(1);
     	}
-    	else if(Robot.oi.getToolBButton()) {
+    	else if(Robot.oi.getToolXButton()) {
     		Robot.conveyor.runMotor(1);
-//    		Robot.intake.runIntake(-1);
     	}
     	else {
     		Robot.conveyor.runMotor(0);
-//    		Robot.intake.runIntake(0);
     	}
     }
 

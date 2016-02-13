@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *The Subsystem that is used for firing the balls from a flywheel. It uses the 2 motors on the turret head,
@@ -195,7 +196,8 @@ public class Shooter extends Subsystem {
     	
     	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
     	
-    	setSpeed(-output*power);
+    	SmartDashboard.putNumber("PID Output", output);
+    	setSpeed(output*power);
     }
     
     public void setRPM(double rpm){
@@ -203,7 +205,7 @@ public class Shooter extends Subsystem {
     	
     	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
     	
-    	setSpeed(-output);
+    	setSpeed(output);
     }
     
     /**

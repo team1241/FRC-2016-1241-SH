@@ -1,8 +1,12 @@
 package com.team1241.frc2016.commands;
 
+import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
+import com.team1241.frc2016.commands.auto.RunArm;
+import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Default command for the intake subsystem.
@@ -10,8 +14,17 @@ import edu.wpi.first.wpilibj.command.Command;
  * @since 2016-02-01
  */
 public class IntakeCommand extends Command {
+	
+	ToggleBoolean toggle;
+	RunArm up;
+	RunArm down;
+	private boolean pressed = false;
+	private boolean isStarted = false;
 
     public IntakeCommand() {
+    	toggle = new ToggleBoolean();
+    	up = new RunArm(NumberConstants.minArmAngle, 0.5, 3);
+    	down = new RunArm(NumberConstants.maxArmAngle,0.5,3);
         requires(Robot.intake);
     }
 
@@ -21,14 +34,29 @@ public class IntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.6);
+    	if (Robot.oi.getToolLeftAnalogButton()) {
+    		toggle.set(true);
+    		pressed = true;
+    	}
+    	
+    	if(Robot.oi.getToolLeftY()!=0) {
+    		pressed = false;
+    		Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.6);
+    	}
+    	else if(toggle.get() && pressed){
+    		up.cancel();
+    		down.start();
+    		isStarted = true;
+    	}
+    	else if(isStarted && pressed){
+    		down.cancel();
+    		up.start();
+    	}
     	
     	if(Robot.oi.getToolAButton()) {
-//    		System.out.println("Intaking");
     		Robot.intake.runIntake(1);
     	}
-    	else if(Robot.oi.getToolBButton()) {
-//    		System.out.println("outtaking");
+    	else if(Robot.oi.getToolXButton()) {
     		Robot.intake.runIntake(-1);
     	}
     	else {

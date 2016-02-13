@@ -44,6 +44,7 @@ public class PIDController {
     	resetDerivative();
     	atTarget = false;
     	maxVal = 0;
+    	prevOutput = 0;
     }
     
     public void changePIDGains(double kP, double kI, double kD) {
@@ -89,6 +90,8 @@ public class PIDController {
         	error = 0;
         	atTarget = true;
         }
+        else
+        	atTarget = false;
         
         //P 
         pOut = pGain * error;
@@ -107,6 +110,9 @@ public class PIDController {
         output = prevOutput + pOut + iOut + dOut;
         
         prevOutput = output;
+        
+        if(output < 0)
+        	output = 0;
         
         return output;
     }

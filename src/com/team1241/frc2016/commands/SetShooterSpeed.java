@@ -14,11 +14,15 @@ public class SetShooterSpeed extends Command {
     public SetShooterSpeed(double rpm, double power) {
 		this.rpm = rpm;
 		this.power = power;
-    	requires(Robot.shooter);
+    }
+    
+    public SetShooterSpeed(double rpm) {
+    	this(rpm, 1);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooter.shooterPID.resetPID();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,16 +32,17 @@ public class SetShooterSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.oi.getDriveStartButton();
+        return Robot.oi.getToolStartButton();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.shooter.setSpeed(0);
+    	Robot.shooter.shooterPID.resetPID();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.shooter.shooterPID.resetPID();
     }
 }
