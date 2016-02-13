@@ -41,7 +41,7 @@ public class IntakeCommand extends Command {
     	
     	if(Robot.oi.getToolLeftY()!=0) {
     		pressed = false;
-    		Robot.intake.runArms(-Robot.oi.getToolLeftY()*0.6);
+    		Robot.intake.runArms(Robot.oi.getToolLeftY()*0.6);
     	}
     	else if(toggle.get() && pressed){
     		up.cancel();

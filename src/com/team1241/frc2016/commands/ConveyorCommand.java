@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ConveyorCommand extends Command {
 
 	ToggleBoolean toggle;
+	private boolean auto = true;
 	
     public ConveyorCommand() {
     	toggle = new ToggleBoolean();
@@ -27,20 +28,21 @@ public class ConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.conveyor.getOptic()) {
-    		Robot.conveyor.setContains(false);
-    	}
-    	else {
-    		Robot.conveyor.setContains(true);
+    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getHoldState()) {
     		new AutoHolder().start();
     	}
     	
-    	toggle.set(Robot.oi.getToolBButton());
-    	
-    	if(toggle.get()) {
+    	if(Robot.oi.getToolBButton()) {
+    		toggle.set(true);
+    		auto = false;
+    	}
+    	else { 
+    		auto = true;
+    	}
+    	if(!auto && toggle.get()) {
     		Robot.conveyor.extendHolder();
     	}
-    	else {
+    	else if(!auto && !toggle.get()) {
     		Robot.conveyor.retractHolder();
     	}
     	

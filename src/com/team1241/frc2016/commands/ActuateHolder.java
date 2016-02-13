@@ -14,7 +14,6 @@ public class ActuateHolder extends Command {
 	
     public ActuateHolder(boolean actuate) {
     	this.actuate = actuate;
-        requires(Robot.shooter);
     }
     
     public ActuateHolder() {

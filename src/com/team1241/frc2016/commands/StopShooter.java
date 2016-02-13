@@ -5,38 +5,23 @@ import com.team1241.frc2016.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * @author Bryan Kristiono
- * @since 2016-01-30
+ *
  */
-public class ActuateHood extends Command {
+public class StopShooter extends Command {
 
-	private boolean actuate;
-	
-    public ActuateHood(boolean actuate) {
-    	this.actuate = actuate;
-        requires(Robot.shooter);
-    }
-    
-    public ActuateHood() {
-    	if(Robot.shooter.getHoodState())
-    		this.actuate = false;
-    	else
-    		this.actuate = true;
-//    	this(!Robot.shooter.getHoodState());
+    public StopShooter() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooter.stopShooter = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (actuate) {
-    		Robot.shooter.openHood();
-    	}
-    	else {
-    		Robot.shooter.closeHood();
-    	}
+    	Robot.shooter.setSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,10 +31,12 @@ public class ActuateHood extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.shooter.setSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.shooter.setSpeed(0);
     }
 }

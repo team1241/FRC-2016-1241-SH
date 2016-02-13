@@ -51,7 +51,7 @@ public class ShootCommand extends Command {
     		outer.start();
     		badder.cancel();
     	}
-    	else if (Robot.oi.getToolLeftBumper()) { 
+    	else if (Robot.oi.getToolLeftBumper()) {
     		outer.cancel();
     		badder.start();
     	}

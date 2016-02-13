@@ -172,11 +172,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
         SmartDashboard.putBoolean("Analog Stick", toggle.get());
         
-        SmartDashboard.putBoolean("Hood", shooter.getHoodState());
         SmartDashboard.putBoolean("Holders", conveyor.getHoldState());
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
-        SmartDashboard.putBoolean("Has a Ball", conveyor.getContains());
         SmartDashboard.putBoolean("Popper", conveyor.getOptic());
         
         SmartDashboard.putNumber("pArm", intake.armPID.getPGain());

@@ -45,6 +45,7 @@ public class Conveyor extends Subsystem {
 										ElectricalConstants.POPPER_HOLD_SOLENOID_B);
 		
 		optical = new DigitalInput(ElectricalConstants.POPPER_OPTICS);
+		retractHolder();
 	}
 	
 	public void initDefaultCommand() {

@@ -1,7 +1,5 @@
 package com.team1241.frc2016;
 
-import com.team1241.frc2016.commands.ActuateHolder;
-import com.team1241.frc2016.commands.ActuateHood;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -31,14 +29,6 @@ public class OI {
 		toolPad = new Joystick (GamepadConstants.TOOL_USB_PORT);
 		yButton = new JoystickButton(toolPad, GamepadConstants.Y_BUTTON);
 		xButton = new JoystickButton(toolPad, GamepadConstants.X_BUTTON);
-	}
-	
-	public void actuateHolder() {
-		xButton.whenPressed(new ActuateHolder());
-	}
-	
-	public void actuateHood() {
-		yButton.whenPressed(new ActuateHood());
 	}
 
 	//***************************************************************************

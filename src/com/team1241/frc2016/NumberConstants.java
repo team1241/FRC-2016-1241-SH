@@ -64,12 +64,13 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	public static final int spyShotRPM									= 4500;
-	public static final int badderShotRPM								= 4600;
-//	public static final int outerShotRPM								= 4700;
+	public static final int badderShotRPM								= 4200;
 	
-	public static final int spyTurretAngle								= 40;
+	public static final int spyTurretAngle								= 75;
 	
 	public static final double waitForPop								= 1.00;
+	public static final double waitForHolder							= 3.00;
+	public static final double waitForHolderClose						= 0.75;
 	public static final double waitForSpeed								= 3.00;
 
 	//**************************************************************************

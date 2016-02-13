@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
 	
 	private DoubleSolenoid popUp;
 	private DoubleSolenoid hood;
-	private boolean hoodState = false;
+	public boolean stopShooter = false;
 	
 	public PIDController shooterPID;
 	public PIDController turretPID;
@@ -68,6 +68,8 @@ public class Shooter extends Subsystem {
 		 turretPID = new PIDController(NumberConstants.pTurret,
 				 					NumberConstants.iTurret,
 				 					NumberConstants.dTurret);
+		 
+		 retractPop();
 	}
 
     public void initDefaultCommand() {
@@ -80,12 +82,10 @@ public class Shooter extends Subsystem {
    /**********************************************PNEUMATIC METHODS**********************************************/
     public void closeHood() {
     	hood.set(DoubleSolenoid.Value.kReverse);
-    	hoodState = false;
     }
     
     public void openHood(){
     	hood.set(DoubleSolenoid.Value.kForward);
-    	hoodState = true;
     }
     
     public void retractPop(){
@@ -94,10 +94,6 @@ public class Shooter extends Subsystem {
     
     public void extendPop(){
     	popUp.set(DoubleSolenoid.Value.kForward);
-    }
-    
-    public boolean getHoodState() {
-    	return hoodState;
     }
     
     /**********************************************MOTOR METHODS**************************************************/
