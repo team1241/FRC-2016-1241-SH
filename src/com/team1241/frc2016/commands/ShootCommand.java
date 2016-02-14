@@ -47,12 +47,12 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.getToolRightX() != 0) {
-    		auto = false;
-    		startAngle.cancel();
-    		spyAngle.cancel();
-    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
-    	}
+//    	if(Robot.oi.getToolRightX() != 0) {
+//    		auto = false;
+//    		startAngle.cancel();
+//    		spyAngle.cancel();
+//    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+//    	}
     	
     	if(Robot.oi.getToolYButton()) {
     		toggleTurret.set(true);
@@ -69,23 +69,26 @@ public class ShootCommand extends Command {
     	} 	
     	
     	if (Robot.oi.getToolLeftTrigger()) {
-    		Robot.conveyor.setContains(false);
+    		badderRPM.cancel();
+    		outerRPM.cancel();
     		spyRPM.start();
     	}
     	else if (Robot.oi.getToolLeftBumper()) {
-    		Robot.conveyor.setContains(false);
+    		outerRPM.cancel();
+    		spyRPM.cancel();
     		badderRPM.start();
     	}
     	else if(Robot.oi.getToolRightBumper()) {
-    		Robot.conveyor.setContains(false);
+    		badderRPM.cancel();
+    		spyRPM.cancel();
     		outerRPM.start();    		
     	}
     	else if(Robot.oi.getToolRightTrigger()) {
     		new ShootSequence().start();
-    		Robot.conveyor.setContains(false);
+//    		Robot.conveyor.setContains(false);
     	}
     	else if(Robot.oi.getToolBackButton()) {
-    		Robot.conveyor.setContains(false);
+    		Robot.shooter.setShooterState(false);
     	}
     }
 

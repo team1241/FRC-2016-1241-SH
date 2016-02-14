@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
 	
 	private DoubleSolenoid popUp;
 	private DoubleSolenoid hood;
-	public boolean stopShooter = false;
+	private boolean shooterState;
 	
 	public PIDController shooterPID;
 	public PIDController turretPID;
@@ -69,7 +69,15 @@ public class Shooter extends Subsystem {
 				 					NumberConstants.iTurret,
 				 					NumberConstants.dTurret);
 		 
-		 retractPop();
+		 shooterState = false;
+	}
+	
+	public void setShooterState(boolean state) {
+		shooterState = state;
+	}
+	
+	public boolean getShooterState() {
+		return shooterState;
 	}
 
     public void initDefaultCommand() {
@@ -183,16 +191,10 @@ public class Shooter extends Subsystem {
     
     /********************************************** SHOOTER PID ********************************************************/
     
-    public void setRPM(double rpm, double power){
-    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50);
-    	
-    	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
-    	
-    	setSpeed(output*power);
-    }
-    
     public void setRPM(double rpm){
-    	setRPM(rpm, 1);
+    	double output = shooterPID.calcPID(rpm, getRPM(), 50);
+//    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
+    	setSpeed(output+rpm*NumberConstants.kForward);
     }
     
     /**

@@ -37,9 +37,11 @@ public class ConveyorCommand extends Command {
     		toggle.set(true);
     		auto = false;
     	}
-    	else { 
+    	else {
     		auto = true;
     	}
+    	
+    	
     	if(!auto && toggle.get()) {
     		Robot.conveyor.extendHolder();
     		Robot.conveyor.setContains(true);

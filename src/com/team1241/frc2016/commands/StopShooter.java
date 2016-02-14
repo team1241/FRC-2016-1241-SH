@@ -16,7 +16,8 @@ public class StopShooter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.stopShooter = true;
+    	Robot.shooter.setShooterState(false);
+    	Robot.conveyor.setContains(false);
     }
 
     // Called repeatedly when this Command is scheduled to run

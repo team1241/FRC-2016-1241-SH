@@ -131,12 +131,13 @@ public class Robot extends IterativeRobot {
     	
     	shooter.retractPop();
     	conveyor.retractHolder();
+    	conveyor.setContains(false);
     	
     	kp = pref.getDouble("kp", 0.0);
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
+    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     }
@@ -156,25 +157,19 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
-        if(Robot.oi.getDriveStartButton()) {
-        	shooter.setSpeed(power);
-        }
-        else if(Robot.oi.getDriveBackButton()) {
-        	shooter.setSpeed(0);
-        }
         
-        if(Robot.oi.getDriveXButton()) {
-        	new AutoDrawbridge().start();
-        }
-        else if(Robot.oi.getDriveAButton()) {
-        	new AutoPortcullis().start();
-        }
-        else if(Robot.oi.getDriveBButton()) {
-        	new AutoCheval().start();
-        }
-        else if(Robot.oi.getDriveYButton()) {
-        	new AutoSallyPort().start();
-        }
+//        if(Robot.oi.getDriveXButton()) {
+//        	new AutoDrawbridge().start();
+//        }
+//        else if(Robot.oi.getDriveAButton()) {
+//        	new AutoPortcullis().start();
+//        }
+//        else if(Robot.oi.getDriveBButton()) {
+//        	new AutoCheval().start();
+//        }
+//        else if(Robot.oi.getDriveYButton()) {
+//        	new AutoSallyPort().start();
+//        }
     }
     
     /**
@@ -189,17 +184,23 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("RightDrive Encoder", drive.getRightEncoderDist());
         SmartDashboard.putNumber("Gyro", drive.getYaw());
         
+        SmartDashboard.putBoolean("ShooterState", shooter.getShooterState());
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
         SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
         
         SmartDashboard.putBoolean("Holders", conveyor.getHoldState());
-        SmartDashboard.putBoolean("Popper", !conveyor.getOptic());
+        SmartDashboard.putBoolean("Detects Ball", !conveyor.getOptic());
+        SmartDashboard.putBoolean("Contains Ball", conveyor.getContains());
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         
         SmartDashboard.putNumber("p", drive.drivePID.getPGain());
         SmartDashboard.putNumber("i", drive.drivePID.getIGain());
         SmartDashboard.putNumber("d", drive.drivePID.getDGain());
+        
+        SmartDashboard.putNumber("power", power);
+        
+//        System.out.println("PID " + shooter.shooterPID.getPGain() + "," + shooter.shooterPID.getIGain() + "," + shooter.shooterPID.getDGain());
     }
 }

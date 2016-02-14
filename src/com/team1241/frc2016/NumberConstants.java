@@ -14,9 +14,9 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//0.05
-	public static final double pDrive 									 = 0.01;
+	public static final double pDrive 									 = 0.05;
 	public static final double iDrive 									 = 0.00;
-	public static final double dDrive 									 = 0.00;
+	public static final double dDrive 									 = 0.008;
 	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
@@ -39,9 +39,11 @@ public class NumberConstants {
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	public static final double pShooter									 = 0.000009;
+	public static final double pShooter									 = 0.000001;
 	public static final double iShooter									 = 0.00;
 	public static final double dShooter									 = 0.00;
+	
+	public static final double kForward									 = 1.0/5582.0;
 	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
@@ -66,8 +68,8 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	public static final int outerShotRPM								= 4800;
-	public static final int spyShotRPM									= 4500;
-	public static final int badderShotRPM								= 4200;
+	public static final int spyShotRPM									= 4350;
+	public static final int badderShotRPM								= 4500;
 	
 	public static final int spyShotAngle								= -78;
 	
