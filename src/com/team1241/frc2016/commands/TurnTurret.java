@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnTurretToAngle extends Command {
+public class TurnTurret extends Command {
 
 	private double angle;
 	private double power;
 	private double timeout;
-    public TurnTurretToAngle(double angle, double power, double timeout) {
+    public TurnTurret(double angle, double power, double timeout) {
     	requires(Robot.shooter);
     	this.power = power;
     	this.angle = angle;

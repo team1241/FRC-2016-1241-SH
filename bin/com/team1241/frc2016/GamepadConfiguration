@@ -22,22 +22,22 @@ DPAD_Y							=
 
 
 Tool Controller							Manual					Automatic
-X_BUTTON                        =	
-A_BUTTON                        =	Intake&conveyor inwards
-B_BUTTON                        =	Intake&conveyor outwards
-Y_BUTTON                        =	
-LEFT_BUMPER                     =	
-RIGHT_BUMPER                    =	
-LEFT_TRIGGER                    =	Rev up flywheel 71%
-RIGHT_TRIGGER                   =	Rev up flywheel 73.5%
+X_BUTTON                        =	outtake
+A_BUTTON                        =	intake
+B_BUTTON                        =	holder toggle
+Y_BUTTON                        =	turret toggle
+LEFT_BUMPER                     =	badderShot rev up
+RIGHT_BUMPER                    =	stop rev up
+LEFT_TRIGGER                    =	spyShot rev up
+RIGHT_TRIGGER                   =	shoot sequence
 BACK_BUTTON                     =	
 START_BUTTON                    =	
 LEFT_ANALOG_BUTTON              =	
 RIGHT_ANALOG_BUTTON             =	
    
 LEFT_ANALOG_X                   =	
-LEFT_ANALOG_Y                   =	Lift intake arms
-RIGHT_ANALOG_X                  =	Turn turret
+LEFT_ANALOG_Y                   =	Move intake arms
+RIGHT_ANALOG_X                  =	
 RIGHT_ANALOG_Y                  =	
 DPAD_X                          =	
 DPAD_Y							=	

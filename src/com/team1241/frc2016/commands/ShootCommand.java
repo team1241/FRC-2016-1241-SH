@@ -18,9 +18,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //3800 - 4400 FOR BATTER - OFF BATTER   
 public class ShootCommand extends Command {
 
-	private SetShooterSpeed badder;
-	private SetShooterSpeed outer;
-	private SetShooterSpeed spy;
+	private SetShooterSpeed badderRPM;
+	private SetShooterSpeed outerRPM;
+	private SetShooterSpeed spyRPM;
+	
+	private TurnTurret spyAngle;
+	private TurnTurret startAngle;
 	ToggleBoolean toggleTurret;
 	private boolean auto = true;
 	
@@ -28,9 +31,12 @@ public class ShootCommand extends Command {
     public ShootCommand() {
     	requires(Robot.shooter);
     	toggleTurret = new ToggleBoolean();
-    	badder = new SetShooterSpeed(NumberConstants.badderShotRPM);
-    	outer = new SetShooterSpeed(NumberConstants.outerShotRPM);
-    	spy = new SetShooterSpeed(NumberConstants.spyShotRPM);
+    	badderRPM = new SetShooterSpeed(NumberConstants.badderShotRPM);
+    	outerRPM = new SetShooterSpeed(NumberConstants.outerShotRPM);
+    	spyRPM = new SetShooterSpeed(NumberConstants.spyShotRPM);
+    	
+    	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 10);
+    	startAngle = new TurnTurret(0, 1, 10);
     }
 
     // Called just before this Command runs the first time
@@ -41,57 +47,46 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.oi.getToolRightX() != 0) {
+    		auto = false;
+    		startAngle.cancel();
+    		spyAngle.cancel();
+    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+    	}
     	
-//    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
     	if(Robot.oi.getToolYButton()) {
     		toggleTurret.set(true);
-    		auto = false;
-    	}
-    	else
     		auto = true;
+    	}
     	
     	if(toggleTurret.get() && auto) {
-    		new TurnTurretToAngle(NumberConstants.spyShotAngle, 1, 10).start();
+    		startAngle.cancel();
+    		spyAngle.start();
     	}
     	else if(!toggleTurret.get() && auto) {
-    		new TurnTurretToAngle(0, 1, 10).start();
+    		spyAngle.cancel();
+    		startAngle.start();
     	} 	
     	
     	if (Robot.oi.getToolLeftTrigger()) {
-    		badder.cancel();
-    		outer.cancel();
-    		spy.start();
+    		Robot.conveyor.setContains(false);
+    		spyRPM.start();
     	}
     	else if (Robot.oi.getToolLeftBumper()) {
-    		outer.cancel();
-    		spy.cancel();
-    		badder.start();
+    		Robot.conveyor.setContains(false);
+    		badderRPM.start();
     	}
     	else if(Robot.oi.getToolRightBumper()) {
-    		spy.cancel();
-    		badder.cancel();
-    		outer.start();    		
+    		Robot.conveyor.setContains(false);
+    		outerRPM.start();    		
     	}
     	else if(Robot.oi.getToolRightTrigger()) {
     		new ShootSequence().start();
     		Robot.conveyor.setContains(false);
     	}
     	else if(Robot.oi.getToolBackButton()) {
-    		Robot.shooter.setSpeed(0);
-    		spy.cancel();
-    		outer.cancel();
-    		badder.cancel();
+    		Robot.conveyor.setContains(false);
     	}
-
-    	
-//    	else if(Robot.oi.getToolYButton()) {
-////    		new ActuateHood().start();
-////    		Robot.oi.actuateHood();	
-//    		Robot.shooter.closeHood();
-//    	}
-//    	else {
-//    		Robot.shooter.openHood();
-//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -71,10 +71,9 @@ public class NumberConstants {
 	
 	public static final int spyShotAngle								= -78;
 	
-	public static final double waitForPop								= 1.00;
-	public static final double waitForHolder							= 1.50;
+	public static final double waitForPop								= 0.75;
+	public static final double waitForHolder							= 1.00;
 	public static final double waitForHolderClose						= 0.50;
-//	public static final double waitForSpeed								= 3.00;
 
 	//**************************************************************************
 	//***************************** INTAKE NUMBERS *****************************

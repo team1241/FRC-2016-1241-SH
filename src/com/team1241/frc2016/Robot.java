@@ -1,14 +1,11 @@
-
 package com.team1241.frc2016;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.commands.auto.*;
-import com.team1241.frc2016.commands.auto.WaitCommand;
-import com.team1241.frc2016.commands.defence.AutoDrawbridge;
+import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.pid.Constants;
 import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.DataOutput;
@@ -42,6 +39,7 @@ public class Robot extends IterativeRobot {
 	double kp;
 	double ki;
 	double kd;
+	double power;
 	
     Command autonomousCommand;
     public SendableChooser autoChooser;
@@ -130,13 +128,17 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	if(autonomousCommand!=null)
     		autonomousCommand.cancel();
-    	shooter.reset();
+    	
+    	shooter.retractPop();
+    	conveyor.retractHolder();
     	
     	kp = pref.getDouble("kp", 0.0);
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
     	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
+    	
+    	power = pref.getDouble("power", 0.0);
     }
 
     /**
@@ -154,10 +156,25 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
-        if(Robot.oi.getDriveBackButton()) {
+        if(Robot.oi.getDriveStartButton()) {
+        	shooter.setSpeed(power);
+        }
+        else if(Robot.oi.getDriveBackButton()) {
+        	shooter.setSpeed(0);
+        }
+        
+        if(Robot.oi.getDriveXButton()) {
         	new AutoDrawbridge().start();
         }
-//        oi.drive();
+        else if(Robot.oi.getDriveAButton()) {
+        	new AutoPortcullis().start();
+        }
+        else if(Robot.oi.getDriveBButton()) {
+        	new AutoCheval().start();
+        }
+        else if(Robot.oi.getDriveYButton()) {
+        	new AutoSallyPort().start();
+        }
     }
     
     /**
@@ -174,19 +191,15 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
-        SmartDashboard.putNumber("DPAD", oi.getToolDPadX());
         SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
-        SmartDashboard.putBoolean("Analog Stick", toggle.get());
         
         SmartDashboard.putBoolean("Holders", conveyor.getHoldState());
+        SmartDashboard.putBoolean("Popper", !conveyor.getOptic());
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
-        SmartDashboard.putBoolean("Popper", conveyor.getOptic());
         
         SmartDashboard.putNumber("p", drive.drivePID.getPGain());
         SmartDashboard.putNumber("i", drive.drivePID.getIGain());
         SmartDashboard.putNumber("d", drive.drivePID.getDGain());
-        
-        SmartDashboard.putBoolean("BackButton", oi.getDriveBackButton());
     }
 }

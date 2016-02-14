@@ -4,7 +4,7 @@ import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
 import com.team1241.frc2016.commands.SetShooterSpeed;
 import com.team1241.frc2016.commands.ShootSequence;
-import com.team1241.frc2016.commands.TurnTurretToAngle;
+import com.team1241.frc2016.commands.TurnTurret;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -18,7 +18,7 @@ public class SpyShotAuton extends CommandGroup {
 		addSequential(new RunArm(NumberConstants.minArmAngle, 1, 1.5));
 
 		// Turn turret to target
-		addParallel(new TurnTurretToAngle(NumberConstants.spyShotAngle, 1, 1));
+		addParallel(new TurnTurret(NumberConstants.spyShotAngle, 1, 1));
 
 		//shoots the boulder
 		addParallel(new SetShooterSpeed(NumberConstants.spyShotRPM, 1));

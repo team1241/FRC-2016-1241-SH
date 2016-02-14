@@ -18,8 +18,7 @@ public class IntakeCommand extends Command {
 	ToggleBoolean toggle;
 	RunArm up;
 	RunArm down;
-	private boolean pressed = false;
-	private boolean isStarted = false;
+	private boolean auto = false;
 
     public IntakeCommand() {
     	toggle = new ToggleBoolean();
@@ -36,19 +35,20 @@ public class IntakeCommand extends Command {
     protected void execute() {
     	if (Robot.oi.getToolLeftAnalogButton()) {
     		toggle.set(true);
-    		pressed = true;
+    		auto = true;
     	}
     	
     	if(Robot.oi.getToolLeftY()!=0) {
-    		pressed = false;
+    		auto = false;
+    		up.cancel();
+    		down.cancel();
     		Robot.intake.runArms(Robot.oi.getToolLeftY()*0.6);
     	}
-    	else if(toggle.get() && pressed){
+    	else if(toggle.get() && auto){
     		up.cancel();
     		down.start();
-    		isStarted = true;
     	}
-    	else if(isStarted && pressed){
+    	else if(!toggle.get() && auto){
     		down.cancel();
     		up.start();
     	}

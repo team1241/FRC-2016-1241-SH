@@ -112,7 +112,7 @@ public class Shooter extends Subsystem {
     }
     
     public void turnTurret(double pwr) {
-    		turret.set(pwr);
+    	turret.set(pwr);
     }
     
     /** @param angle angle is in degrees
@@ -140,10 +140,6 @@ public class Shooter extends Subsystem {
     public void reset() {
     	turretEncoder.reset();
     }
-//    
-//    public boolean isLimitReached() {
-//    	return turretEncoder.get() > ElectricalConstants.driveEncoderPulsePerRot;
-//    }
     
     public double getTurretDistance() {
     	return turretEncoder.getDistance();
@@ -192,16 +188,11 @@ public class Shooter extends Subsystem {
     	
     	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
     	
-    	SmartDashboard.putNumber("PID Output", output);
     	setSpeed(output*power);
     }
     
     public void setRPM(double rpm){
-    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50);
-    	
-    	output = output/Math.abs(output)*(1 - Math.pow(0.2,(Math.abs(output))));
-    	
-    	setSpeed(output);
+    	setRPM(rpm, 1);
     }
     
     /**
