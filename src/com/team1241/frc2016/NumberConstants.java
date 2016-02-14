@@ -39,11 +39,16 @@ public class NumberConstants {
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	public static final double pShooter									 = 0.000001;
-	public static final double iShooter									 = 0.00;
+	//Practive
+	//0.001
+	public static final double pShooter									 = 0.001;
+	//6.25E-5
+	public static final double iShooter									 = 0.00000625;
 	public static final double dShooter									 = 0.00;
 	
 	public static final double kForward									 = 1.0/5582.0;
+	
+	//Competition
 	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
@@ -59,7 +64,7 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Arm all the way down
-	public static final int downArmAngle									= 300;
+	public static final int downArmAngle								= 300;
 	//Arm all the way up
 	public static final int upArmAngle									= 53;
 	
@@ -67,8 +72,9 @@ public class NumberConstants {
 	//***************************** SHOOTER NUMBERS ****************************
 	//**************************************************************************
 	
+	//Practice
 	public static final int outerShotRPM								= 4800;
-	public static final int spyShotRPM									= 4350;
+	public static final int spyShotRPM									= 4250;
 	public static final int badderShotRPM								= 4500;
 	
 	public static final int spyShotAngle								= -78;
@@ -76,6 +82,9 @@ public class NumberConstants {
 	public static final double waitForPop								= 0.75;
 	public static final double waitForHolder							= 1.00;
 	public static final double waitForHolderClose						= 0.50;
+	
+	//Competition
+	
 
 	//**************************************************************************
 	//***************************** INTAKE NUMBERS *****************************

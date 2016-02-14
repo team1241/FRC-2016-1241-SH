@@ -11,17 +11,18 @@ public class ToggleBoolean {
 	Timer timer = new Timer();
 	
 	public ToggleBoolean(){
-		timer.start();
 	}
 	
 	public void set(boolean state){
-		if(timer.get() > 0.5)
+		if(timer.get() > 0.5){
 			waited = true;
+			timer.stop();
+		}
 		
 		if(state && waited){
 			toggle = !toggle;
 			waited = false;
-			timer.reset();
+			timer.start();
 		}
 	}
 	

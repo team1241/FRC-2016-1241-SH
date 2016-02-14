@@ -69,16 +69,19 @@ public class ShootCommand extends Command {
     	} 	
     	
     	if (Robot.oi.getToolLeftTrigger()) {
+    		Robot.shooter.setShooterState(true);
     		badderRPM.cancel();
     		outerRPM.cancel();
     		spyRPM.start();
     	}
     	else if (Robot.oi.getToolLeftBumper()) {
+    		Robot.shooter.setShooterState(true);
     		outerRPM.cancel();
     		spyRPM.cancel();
     		badderRPM.start();
     	}
     	else if(Robot.oi.getToolRightBumper()) {
+    		Robot.shooter.setShooterState(true);
     		badderRPM.cancel();
     		spyRPM.cancel();
     		outerRPM.start();    		

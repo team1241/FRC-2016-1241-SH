@@ -57,8 +57,10 @@ public class PIDController {
         error = setPoint - currentValue;
         
         if(Math.abs(error) <= epsilon){
-        	error = 0;
         	atTarget = true;
+        }
+        else{
+        	atTarget = false;
         }
         
         //P 
@@ -78,8 +80,8 @@ public class PIDController {
         output = pOut + iOut + dOut;
         
       //Scale output to be between 1 and -1
-        if(output!=0)
-        	output = output/Math.abs(output)*(1 - Math.pow(0.1,(Math.abs(output))));
+        if(output!=0.0)
+        	output = output/Math.abs(output)*(1.0 - Math.pow(0.1,(Math.abs(output))));
         
         return output;
     }
@@ -88,18 +90,20 @@ public class PIDController {
         error = setPoint - currentValue;
         
         if(Math.abs(error) <= epsilon){
-        	error = 0;
         	atTarget = true;
         }
-        else
+        else{
         	atTarget = false;
+        }
         
         //P 
         pOut = pGain * error;
         
         //I
-        errorSum += error;
-        iOut = iGain * errorSum;
+        if(currentValue >= setPoint*0.5){
+	        errorSum += error;
+	        iOut = iGain * errorSum;
+        }
         
         //D
         dProcessVar = (error - lastError);
@@ -108,12 +112,11 @@ public class PIDController {
         lastError = error;
         
         //PID Output
-        output = prevOutput + pOut + iOut + dOut;
+        output = pOut + iOut + dOut;
         
-        prevOutput = output;
-        
-        if(output < 0)
-        	output = 0;
+      //Scale output to be between 1 and -1
+        if(output!=0.0)
+        	output = output/Math.abs(output)*(1.0 - Math.pow(0.1,(Math.abs(output))));
         
         return output;
     }
