@@ -11,12 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoPortcullis extends CommandGroup {
     
     public  AutoPortcullis() {
-    	//Set Robot position
-    	addSequential(new RunArm(NumberConstants.minArmAngle, .8, 1));
-    	addSequential(new DriveCommand(10, .8, 0, 1, 1));
-    	
+    	addSequential(new RunArm(NumberConstants.downArmAngle-50, 1, 5));
     	//Drive under portcullis
-        addSequential(new DriveCommand(100, .8, 0, 1, 1));
-        addParallel(new RunArm(360, 1, 1));
+        addParallel(new DriveCommand(100, .3, 0, 5));
+        addSequential(new RunArm(NumberConstants.upArmAngle, 1, 5));
     }
 }

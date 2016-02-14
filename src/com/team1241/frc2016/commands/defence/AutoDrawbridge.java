@@ -17,10 +17,10 @@ public class AutoDrawbridge extends CommandGroup {
         addSequential(new RunArm(150, 0.5, 5));
         
         //Bring down drawbridge
-        addParallel(new DriveCommand(-50, .5, 0, 8, 1));
-        addSequential(new RunArm(NumberConstants.maxArmAngle, 0.5, 5));
+        addParallel(new DriveCommand(-50, .5, 0, 5));
+        addSequential(new RunArm(NumberConstants.downArmAngle, 0.5, 5));
         
         //Go over drawbridge
-        addSequential(new DriveCommand(150, 1, 0, 1, 3));
+        addSequential(new DriveCommand(150, 1, 0, 1));
     }
 }

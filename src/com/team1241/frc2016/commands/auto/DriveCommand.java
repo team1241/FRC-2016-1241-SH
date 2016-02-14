@@ -15,7 +15,10 @@ public class DriveCommand extends Command {
 	private double angle;
 	private double timeOut;
 	private double epsilon;
-	
+
+	public DriveCommand(double setPoint, double speed, double angle, double timeOut) {
+		this(setPoint, speed, angle, timeOut, 1);
+	}
 
     public DriveCommand(double setPoint, double speed, double angle, double timeOut, double epsilon) {
     	this.distance = setPoint;

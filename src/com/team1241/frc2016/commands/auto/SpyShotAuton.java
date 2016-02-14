@@ -15,7 +15,7 @@ public class SpyShotAuton extends CommandGroup {
 
 	public  SpyShotAuton() {
 		// lower arm
-		addSequential(new RunArm(NumberConstants.minArmAngle, 1, 1.5));
+		addSequential(new RunArm(NumberConstants.upArmAngle, 1, 1.5));
 
 		// Turn turret to target
 		addParallel(new TurnTurret(NumberConstants.spyShotAngle, 1, 1));

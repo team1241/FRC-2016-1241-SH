@@ -11,15 +11,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoCheval extends CommandGroup {
     
     public  AutoCheval() {
-        //Set robot position
-    	addSequential(new RunArm(NumberConstants.maxArmAngle, .8, 1));
+        //Bring down Cheval
+    	addSequential(new RunArm(NumberConstants.downArmAngle, .8, 1));
     	
-    	//Bring down cheval
-    	addSequential(new DriveCommand(10, .8, 0, 1, 1));
-    	addParallel(new RunArm(NumberConstants.minArmAngle, .8, 1));
-    	
-    	//Drive over cheval
-    	addSequential(new DriveCommand(20, .8, 0, 1, 1));
-    	addParallel(new RunArm(NumberConstants.minArmAngle+20, .8, 1));
+    	//Drives over the cheval
+    	addParallel(new DriveCommand(10, .8, 0, 1, 1));
+    	addParallel(new RunArm(NumberConstants.downArmAngle-20, .8, 1));
+
     }
 }

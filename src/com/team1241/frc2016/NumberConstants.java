@@ -57,9 +57,9 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Arm all the way down
-	public static final int maxArmAngle									= 300;
+	public static final int downArmAngle									= 300;
 	//Arm all the way up
-	public static final int minArmAngle									= 53;
+	public static final int upArmAngle									= 53;
 	
 	//**************************************************************************
 	//***************************** SHOOTER NUMBERS ****************************

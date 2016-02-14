@@ -12,7 +12,7 @@ public class AutoSallyPort extends CommandGroup {
     
     public  AutoSallyPort() {
         //Set Robot position
-    	addSequential(new RunArm(NumberConstants.maxArmAngle, 1, 1));
+    	addSequential(new RunArm(NumberConstants.downArmAngle, 1, 1));
     	addParallel(new DriveCommand(10, .8, 0, 1, 1));
     }
 }

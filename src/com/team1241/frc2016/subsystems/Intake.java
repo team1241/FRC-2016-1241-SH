@@ -94,7 +94,7 @@ public class Intake extends Subsystem {
     }
     
     public boolean isArmPosTooHigh() {
-    	return getPotValue() > NumberConstants.maxArmAngle;
+    	return getPotValue() > NumberConstants.downArmAngle;
     }
     
     
