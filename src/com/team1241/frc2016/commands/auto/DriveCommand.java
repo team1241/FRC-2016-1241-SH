@@ -39,7 +39,7 @@ public class DriveCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.drive.drivePID.isDone() || isTimedOut();
+    	return isTimedOut();//Robot.drive.drivePID.isDone() || isTimedOut();
     }
 
     // Called once after isFinished returns true

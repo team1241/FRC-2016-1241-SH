@@ -4,6 +4,7 @@ import com.team1241.frc2016.commands.IntakeCommand;
 import com.team1241.frc2016.pid.PIDController;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -29,7 +30,7 @@ public class Intake extends Subsystem {
     public PIDController armPID;
     
     //Potentiometer for arm control
-    private Potentiometer pot;
+    private AnalogInput pot;
     private Ultrasonic ultra;
     
     /**Creates an intake object, initializes all its required objects*/
@@ -47,7 +48,7 @@ public class Intake extends Subsystem {
        		 					   NumberConstants.iArm,
        		 					   NumberConstants.dArm);
         
-        pot = new AnalogPotentiometer(ElectricalConstants.ARM_POTENTIOMETER, 1080, -2);
+        pot = new AnalogInput(ElectricalConstants.ARM_POTENTIOMETER);
         ultra = new Ultrasonic(ElectricalConstants.ULTRASONIC_TRIG, ElectricalConstants.ULTRASONIC_ECHO);
     }
     
@@ -58,7 +59,7 @@ public class Intake extends Subsystem {
     
     /**************** Potentiometer methods *****************/
     public double getPotValue() {
-    	return pot.get();
+    	return pot.getVoltage()/5.0*1080.0;
     }
     
     
@@ -88,7 +89,7 @@ public class Intake extends Subsystem {
     /**Sets the position of the intake arms*/
     public void setArmPosition(double angle, double speed) {
     	//Set up sensor methods
-    	double output = armPID.calcPID(angle, pot.get(), 5);
+    	double output = armPID.calcPID(angle, getPotValue(), 5);
     	runArms(output*speed);
     }
     

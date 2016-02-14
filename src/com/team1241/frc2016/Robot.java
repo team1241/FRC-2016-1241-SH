@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.commands.auto.WaitCommand;
+import com.team1241.frc2016.commands.defence.AutoDrawbridge;
 import com.team1241.frc2016.pid.Constants;
 import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.DataOutput;
@@ -38,9 +39,9 @@ public class Robot extends IterativeRobot {
 	public static DataOutput output;
 	
 	Preferences pref;
-	double pArm;
-	double iArm;
-	double dArm;
+	double kp;
+	double ki;
+	double kd;
 	
     Command autonomousCommand;
     public SendableChooser autoChooser;
@@ -104,6 +105,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		updateSmartDashboard();
 	}
 
     public void autonomousInit() {
@@ -130,11 +132,11 @@ public class Robot extends IterativeRobot {
     		autonomousCommand.cancel();
     	shooter.reset();
     	
-    	pArm = pref.getDouble("pArm", 0.0);
-    	iArm = pref.getDouble("iArm", 0.0);
-    	dArm = pref.getDouble("dArm", 0.0);
+    	kp = pref.getDouble("kp", 0.0);
+    	ki = pref.getDouble("ki", 0.0);
+    	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.intake.armPID.changePIDGains(pArm, iArm, dArm);
+    	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
     }
 
     /**
@@ -152,7 +154,10 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
-        toggle.set(oi.getToolLeftAnalogButton());
+        if(Robot.oi.getDriveBackButton()) {
+        	new AutoDrawbridge().start();
+        }
+//        oi.drive();
     }
     
     /**
@@ -165,6 +170,7 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", drive.getLeftEncoderDist());
         SmartDashboard.putNumber("RightDrive Encoder", drive.getRightEncoderDist());
+        SmartDashboard.putNumber("Gyro", drive.getYaw());
         
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
@@ -177,8 +183,10 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         SmartDashboard.putBoolean("Popper", conveyor.getOptic());
         
-        SmartDashboard.putNumber("pArm", intake.armPID.getPGain());
-        SmartDashboard.putNumber("iArm", intake.armPID.getIGain());
-        SmartDashboard.putNumber("dArm", intake.armPID.getDGain());
+        SmartDashboard.putNumber("p", drive.drivePID.getPGain());
+        SmartDashboard.putNumber("i", drive.drivePID.getIGain());
+        SmartDashboard.putNumber("d", drive.drivePID.getDGain());
+        
+        SmartDashboard.putBoolean("BackButton", oi.getDriveBackButton());
     }
 }

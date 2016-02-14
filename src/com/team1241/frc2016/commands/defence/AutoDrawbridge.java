@@ -11,18 +11,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoDrawbridge extends CommandGroup {
     
     public  AutoDrawbridge() {
-        //Bring arm over the drawbridge
-    	addSequential(new RunArm(NumberConstants.maxArmAngle, 1, 1));
-        addSequential(new DriveCommand(10,1,0,1,1));
+    	//Robot has to start with bumpers bud up with drawbridge and arms up
         
         //Bring arm down
-        addSequential(new RunArm(NumberConstants.maxArmAngle-10, 1, 1));
+        addSequential(new RunArm(150, 0.5, 5));
         
         //Bring down drawbridge
-        addSequential(new RunArm(NumberConstants.minArmAngle, 1, 1));
-        addParallel(new DriveCommand(-20, .8, 0, 1, 1));
+        addParallel(new DriveCommand(-50, .5, 0, 8, 1));
+        addSequential(new RunArm(NumberConstants.maxArmAngle, 0.5, 5));
         
         //Go over drawbridge
-        addSequential(new DriveCommand(50, 1, 0, 1, 1));
+        addSequential(new DriveCommand(150, 1, 0, 1, 3));
     }
 }

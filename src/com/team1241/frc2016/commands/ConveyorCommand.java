@@ -28,7 +28,8 @@ public class ConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getHoldState()) {
+    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getContains()) {
+    		Robot.conveyor.setContains(true);
     		new AutoHolder().start();
     	}
     	
@@ -41,9 +42,11 @@ public class ConveyorCommand extends Command {
     	}
     	if(!auto && toggle.get()) {
     		Robot.conveyor.extendHolder();
+    		Robot.conveyor.setContains(true);
     	}
     	else if(!auto && !toggle.get()) {
     		Robot.conveyor.retractHolder();
+    		Robot.conveyor.setContains(false);
     	}
     	
     	if(Robot.oi.getToolAButton()) {

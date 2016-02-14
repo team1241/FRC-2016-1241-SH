@@ -17,7 +17,6 @@ public class RunIntake extends Command {
 	
     public RunIntake(int direction) {
     	this.direction = direction;
-    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -28,12 +27,15 @@ public class RunIntake extends Command {
     protected void execute() {
     	if(direction==INTAKE) {
     		Robot.intake.runIntake(1);
+    		Robot.conveyor.runMotor(-1);
     	}
     	else if(direction==OUTTAKE) {
     		Robot.intake.runIntake(-1);
+    		Robot.conveyor.runMotor(1);
     	}
     	else {
     		Robot.intake.runIntake(0);
+    		Robot.conveyor.runMotor(0);
     	}
     }
 

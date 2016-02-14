@@ -78,7 +78,8 @@ public class PIDController {
         output = pOut + iOut + dOut;
         
       //Scale output to be between 1 and -1
-        output = output/Math.abs(output)*(1 - Math.pow(0.1,(Math.abs(output))));
+        if(output!=0)
+        	output = output/Math.abs(output)*(1 - Math.pow(0.1,(Math.abs(output))));
         
         return output;
     }

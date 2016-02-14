@@ -1,6 +1,8 @@
 package com.team1241.frc2016;
 
 
+import com.team1241.frc2016.commands.auto.DriveCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -27,7 +29,7 @@ public class OI {
 	{
 		drivePad = new Joystick (GamepadConstants.DRIVE_USB_PORT);
 		toolPad = new Joystick (GamepadConstants.TOOL_USB_PORT);
-		yButton = new JoystickButton(toolPad, GamepadConstants.Y_BUTTON);
+		yButton = new JoystickButton(drivePad, GamepadConstants.BACK_BUTTON);
 		xButton = new JoystickButton(toolPad, GamepadConstants.X_BUTTON);
 	}
 
@@ -361,6 +363,10 @@ public class OI {
 	public boolean getToolRightAnalogButton()
 	{
 		return toolPad.getRawButton(GamepadConstants.RIGHT_ANALOG_BUTTON);
+	}
+	
+	public void drive(){
+		yButton.whenPressed(new DriveCommand(100, 1, 0, 5, 5));
 	}
 }
 

@@ -1,7 +1,7 @@
 package com.team1241.frc2016.subsystems;
 
 import com.team1241.frc2016.NumberConstants;
-
+import com.team1241.frc2016.Robot;
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.TankDrive;
@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The subsystem that is used for the drive train of the robot. It runs the 6 motors in the drive train as well as
@@ -24,11 +25,11 @@ public class Drivetrain extends Subsystem {
 	//Motors
 	private CANTalon leftDriveFront;
 	private CANTalon leftDriveMiddle;
-	private CANTalon leftDriveBack;
+//	private CANTalon leftDriveBack;
 	
 	private CANTalon rightDriveFront;
 	private CANTalon rightDriveMiddle;
-	private CANTalon rightDriveBack;
+//	private CANTalon rightDriveBack;
 	
 	//Encoders
 	private Encoder leftDriveEncoder;               
@@ -70,11 +71,11 @@ public class Drivetrain extends Subsystem {
 		//Motors
 		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
 		leftDriveMiddle = new CANTalon(ElectricalConstants.LEFT_DRIVE_MIDDLE);
-		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
+//		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		
 		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
 		rightDriveMiddle = new CANTalon(ElectricalConstants.RIGHT_DRIVE_MIDDLE);
-		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
+//		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		
 		
 		//Encoders
@@ -113,7 +114,7 @@ public class Drivetrain extends Subsystem {
     		pwmVal = Math.pow(pwmVal, 0);
     	leftDriveFront.set(pwmVal);
     	leftDriveMiddle.set(pwmVal);
-    	leftDriveBack.set(pwmVal);
+//    	leftDriveBack.set(pwmVal);
     }
     
     public void runRightDrive(double pwmVal) {
@@ -121,7 +122,7 @@ public class Drivetrain extends Subsystem {
     		pwmVal = Math.pow(pwmVal, 0);
     	rightDriveFront.set(pwmVal);
     	rightDriveMiddle.set(pwmVal);
-    	rightDriveBack.set(pwmVal);
+//    	rightDriveBack.set(pwmVal);
     }
     
     public double getAverageDistance(){
@@ -132,12 +133,18 @@ public class Drivetrain extends Subsystem {
     	double output = drivePID.calcPID(setPoint, getAverageDistance(), epsilon);
     	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
-    	runLeftDrive(output+angle*speed);
-    	runRightDrive(-output+angle*speed);
+    	SmartDashboard.putNumber("drive pid", output);
+    	System.out.println("angle" + angle);
+    	SmartDashboard.putNumber("drive angle", angle);
+    	
+    	runLeftDrive((output+angle)*speed);
+    	runRightDrive((-output+angle)*speed);
     }
     
     public void turnDrive(double setAngle, double speed, double epsilon) {
     	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
+    	
+    	
     	
     	runLeftDrive(angle*speed);
     	runRightDrive(angle*speed);

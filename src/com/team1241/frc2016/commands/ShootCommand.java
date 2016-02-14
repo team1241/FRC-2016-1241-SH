@@ -20,12 +20,17 @@ public class ShootCommand extends Command {
 
 	private SetShooterSpeed badder;
 	private SetShooterSpeed outer;
+	private SetShooterSpeed spy;
 	ToggleBoolean toggleTurret;
+	private boolean auto = true;
+	
+	
     public ShootCommand() {
     	requires(Robot.shooter);
     	toggleTurret = new ToggleBoolean();
     	badder = new SetShooterSpeed(NumberConstants.badderShotRPM);
-    	outer = new SetShooterSpeed(NumberConstants.spyShotRPM);
+    	outer = new SetShooterSpeed(NumberConstants.outerShotRPM);
+    	spy = new SetShooterSpeed(NumberConstants.spyShotRPM);
     }
 
     // Called just before this Command runs the first time
@@ -38,28 +43,42 @@ public class ShootCommand extends Command {
     protected void execute() {
     	
 //    	Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
-    	toggleTurret.set(Robot.oi.getToolYButton());
-    	
-    	if(toggleTurret.get()) {
-    		new TurnTurretToAngle(-43, 1, 10).start();
+    	if(Robot.oi.getToolYButton()) {
+    		toggleTurret.set(true);
+    		auto = false;
     	}
-    	else {
+    	else
+    		auto = true;
+    	
+    	if(toggleTurret.get() && auto) {
+    		new TurnTurretToAngle(NumberConstants.spyShotAngle, 1, 10).start();
+    	}
+    	else if(!toggleTurret.get() && auto) {
     		new TurnTurretToAngle(0, 1, 10).start();
     	} 	
     	
     	if (Robot.oi.getToolLeftTrigger()) {
-    		outer.start();
     		badder.cancel();
+    		outer.cancel();
+    		spy.start();
     	}
     	else if (Robot.oi.getToolLeftBumper()) {
     		outer.cancel();
+    		spy.cancel();
     		badder.start();
+    	}
+    	else if(Robot.oi.getToolRightBumper()) {
+    		spy.cancel();
+    		badder.cancel();
+    		outer.start();    		
     	}
     	else if(Robot.oi.getToolRightTrigger()) {
     		new ShootSequence().start();
+    		Robot.conveyor.setContains(false);
     	}
-    	else if(Robot.oi.getToolRightBumper()) {
+    	else if(Robot.oi.getToolBackButton()) {
     		Robot.shooter.setSpeed(0);
+    		spy.cancel();
     		outer.cancel();
     		badder.cancel();
     	}
