@@ -1,4 +1,7 @@
 package com.team1241.frc2016.pid;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author Team 1241
@@ -20,6 +23,11 @@ public class PIDController {
     double maxVal = 0;
     double output = 0;
     double prevOutput = 0;
+    
+    double previousValue = 0;
+    double previousAverage = 0;
+    double currentAverage;
+    double average;
     
     boolean atTarget = false;
     
@@ -89,7 +97,8 @@ public class PIDController {
     public double calcPIDVelocity(double setPoint, double currentValue, double epsilon) {
         error = setPoint - currentValue;
         
-        if(Math.abs(error) <= epsilon){
+        
+        if(Math.abs(setPoint-average) <= epsilon){
         	atTarget = true;
         }
         else{
@@ -100,9 +109,13 @@ public class PIDController {
         pOut = pGain * error;
         
         //I
-        if(currentValue >= setPoint*0.5){
+        if(currentValue >= setPoint*0.60){
 	        errorSum += error;
 	        iOut = iGain * errorSum;
+	        
+	        currentAverage = (previousValue+currentValue)/2;
+	        average = (currentAverage+previousAverage)/2;
+	        SmartDashboard.putNumber("average", average);
         }
         
         //D
@@ -110,6 +123,8 @@ public class PIDController {
         dOut = dGain * dProcessVar;
         
         lastError = error;
+        previousValue = currentValue;
+        previousAverage = currentAverage;
         
         //PID Output
         output = pOut + iOut + dOut;

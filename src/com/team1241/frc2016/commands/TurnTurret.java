@@ -13,7 +13,7 @@ public class TurnTurret extends Command {
 	private double power;
 	private double timeout;
     public TurnTurret(double angle, double power, double timeout) {
-    	requires(Robot.shooter);
+//    	requires(Robot.shooter);
     	this.power = power;
     	this.angle = angle;
     	this.timeout = timeout;
@@ -22,11 +22,13 @@ public class TurnTurret extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	setTimeout(timeout);
+    	System.out.println("INSIDE INIT");
     	Robot.shooter.turretPID.resetPID();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	System.out.println("INSIDE");
     	Robot.shooter.turnTurretToAngle(angle, power);
     }
 

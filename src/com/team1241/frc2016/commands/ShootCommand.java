@@ -35,8 +35,8 @@ public class ShootCommand extends Command {
     	outerRPM = new SetShooterSpeed(NumberConstants.outerShotRPM);
     	spyRPM = new SetShooterSpeed(NumberConstants.spyShotRPM);
     	
-    	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 10);
-    	startAngle = new TurnTurret(0, 1, 10);
+    	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 5);
+    	startAngle = new TurnTurret(0, 1, 5);
     }
 
     // Called just before this Command runs the first time
@@ -58,14 +58,16 @@ public class ShootCommand extends Command {
     		toggleTurret.set(true);
     		auto = true;
     	}
-    	
-    	if(toggleTurret.get() && auto) {
+    	if(toggleTurret.get()) {
     		startAngle.cancel();
     		spyAngle.start();
+    		System.out.println("INSIDE IF");
+  //  		new TurnTurret(NumberConstants.spyShotAngle, 1, 5).start();
     	}
-    	else if(!toggleTurret.get() && auto) {
+    	else if(!toggleTurret.get()) {
     		spyAngle.cancel();
     		startAngle.start();
+//    		new TurnTurret(0, 1, 5).start();
     	} 	
     	
     	if (Robot.oi.getToolLeftTrigger()) {

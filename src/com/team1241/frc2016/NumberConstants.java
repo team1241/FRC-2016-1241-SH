@@ -73,14 +73,14 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	//Practice
-	public static final int outerShotRPM								= 4800;
-	public static final int spyShotRPM									= 4250;
+	public static final int outerShotRPM								= 4600;
+	public static final int spyShotRPM									= 4200;
 	public static final int badderShotRPM								= 4500;
 	
 	public static final int spyShotAngle								= -78;
 	
 	public static final double waitForPop								= 0.75;
-	public static final double waitForHolder							= 1.00;
+	public static final double waitForHolder							= 0.15;
 	public static final double waitForHolderClose						= 0.50;
 	
 	//Competition
