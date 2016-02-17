@@ -41,7 +41,7 @@ public class Conveyor extends Subsystem {
 		conveyorMotor = new CANTalon(ElectricalConstants.CONVEYOR_MOTOR);
 		
 		//Pistons		
-		holdBall = new DoubleSolenoid(14, ElectricalConstants.POPPER_HOLD_SOLENOID_A,
+		holdBall = new DoubleSolenoid(ElectricalConstants.PCM, ElectricalConstants.POPPER_HOLD_SOLENOID_A,
 										ElectricalConstants.POPPER_HOLD_SOLENOID_B);
 		
 		optical = new DigitalInput(ElectricalConstants.POPPER_OPTICS);

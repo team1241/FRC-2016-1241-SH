@@ -11,11 +11,9 @@ public class ElectricalConstants {
 	//***************************************************************************     
 	
 	public static final int LEFT_DRIVE_FRONT                                = 11;
-	public static final int LEFT_DRIVE_MIDDLE								= 12;
 	public static final int LEFT_DRIVE_BACK                                 = 13;
 	
 	public static final int RIGHT_DRIVE_FRONT                               = 3;
-	public static final int RIGHT_DRIVE_MIDDLE								= 2;
 	public static final int RIGHT_DRIVE_BACK                                = 1;
 	
 	//***************************************************************************

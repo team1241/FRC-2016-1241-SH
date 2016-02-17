@@ -24,12 +24,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drivetrain extends Subsystem {
 	//Motors
 	private CANTalon leftDriveFront;
-	private CANTalon leftDriveMiddle;
-//	private CANTalon leftDriveBack;
+//	private CANTalon leftDriveMiddle;
+	private CANTalon leftDriveBack;
 	
 	private CANTalon rightDriveFront;
-	private CANTalon rightDriveMiddle;
-//	private CANTalon rightDriveBack;
+//	private CANTalon rightDriveMiddle;
+	private CANTalon rightDriveBack;
 	
 	//Encoders
 	private Encoder leftDriveEncoder;               
@@ -70,12 +70,12 @@ public class Drivetrain extends Subsystem {
 		
 		//Motors
 		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
-		leftDriveMiddle = new CANTalon(ElectricalConstants.LEFT_DRIVE_MIDDLE);
-//		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
+//		leftDriveMiddle = new CANTalon(ElectricalConstants.LEFT_DRIVE_MIDDLE);
+		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		
 		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
-		rightDriveMiddle = new CANTalon(ElectricalConstants.RIGHT_DRIVE_MIDDLE);
-//		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
+//		rightDriveMiddle = new CANTalon(ElectricalConstants.RIGHT_DRIVE_MIDDLE);
+		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		
 		
 		//Encoders
@@ -113,16 +113,16 @@ public class Drivetrain extends Subsystem {
     	if(Math.abs(pwmVal)>1)
     		pwmVal = Math.pow(pwmVal, 0);
     	leftDriveFront.set(pwmVal);
-    	leftDriveMiddle.set(pwmVal);
-//    	leftDriveBack.set(pwmVal);
+//    	leftDriveMiddle.set(pwmVal);
+    	leftDriveBack.set(pwmVal);
     }
     
     public void runRightDrive(double pwmVal) {
     	if(Math.abs(pwmVal)>1)
     		pwmVal = Math.pow(pwmVal, 0);
     	rightDriveFront.set(pwmVal);
-    	rightDriveMiddle.set(pwmVal);
-//    	rightDriveBack.set(pwmVal);
+//    	rightDriveMiddle.set(pwmVal);
+    	rightDriveBack.set(pwmVal);
     }
     
     public double getAverageDistance(){

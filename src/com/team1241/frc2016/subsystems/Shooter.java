@@ -55,9 +55,9 @@ public class Shooter extends Subsystem {
 		 optical.setDistancePerPulse(1);
 		 
 	     // Initialize Pistons		
-		 popUp = new DoubleSolenoid (14, ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
+		 popUp = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
 				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
-		 hood = new DoubleSolenoid (14, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
+		 hood = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
 				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
 		 
 		// Initialize PID	
