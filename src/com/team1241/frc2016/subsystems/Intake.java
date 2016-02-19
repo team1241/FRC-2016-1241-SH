@@ -81,7 +81,7 @@ public class Intake extends Subsystem {
     public void runArms(double val) {
     	if(Math.abs(val)>1)
     		val = Math.pow(val, 0);
-    	leftArm.set(-val);
+//    	leftArm.set(-val);
     	rightArm.set(val);
     }
     

@@ -24,11 +24,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drivetrain extends Subsystem {
 	//Motors
 	private CANTalon leftDriveFront;
-//	private CANTalon leftDriveMiddle;
 	private CANTalon leftDriveBack;
 	
 	private CANTalon rightDriveFront;
-//	private CANTalon rightDriveMiddle;
 	private CANTalon rightDriveBack;
 	
 	//Encoders

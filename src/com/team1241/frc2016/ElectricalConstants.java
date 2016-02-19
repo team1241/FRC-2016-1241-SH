@@ -10,24 +10,24 @@ public class ElectricalConstants {
 	//****************************** DRIVE MOTORS *******************************
 	//***************************************************************************     
 	
-	public static final int LEFT_DRIVE_FRONT                                = 11;
-	public static final int LEFT_DRIVE_BACK                                 = 13;
+	public static final int LEFT_DRIVE_FRONT                                = 10;
+	public static final int LEFT_DRIVE_BACK                                 = 11;
 	
-	public static final int RIGHT_DRIVE_FRONT                               = 3;
+	public static final int RIGHT_DRIVE_FRONT                               = 2;
 	public static final int RIGHT_DRIVE_BACK                                = 1;
 	
 	//***************************************************************************
 	//****************************** SHOOTER MOTORS *****************************
 	//***************************************************************************        
 	
-	public static final int LEFT_SHOOTER_MOTOR								= 10;
-	public static final int RIGHT_SHOOTER_MOTOR								= 4;
+	public static final int LEFT_SHOOTER_MOTOR								= 5;
+	public static final int RIGHT_SHOOTER_MOTOR								= 6;
 	
 	//***************************************************************************
 	//****************************** TURRET MOTORS ******************************
 	//***************************************************************************
 	
-	public static final int TURRET_MOTOR									= 8;
+	public static final int TURRET_MOTOR									= 7;
 	
 	//***************************************************************************
 	//******************************* INTAKE MOTORS *****************************
@@ -39,8 +39,8 @@ public class ElectricalConstants {
 	//******************************** ARM MOTORS *******************************
 	//***************************************************************************
 	
-	public static final int LEFT_ARM_MOTOR									= 9;
-	public static final int RIGHT_ARM_MOTOR									= 5;
+	public static final int LEFT_ARM_MOTOR									= 8;
+	public static final int RIGHT_ARM_MOTOR									= 4;
 	
 	//***************************************************************************
 	//***************************** CONVEYOR MOTORS *****************************

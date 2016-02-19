@@ -182,7 +182,7 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", drive.getLeftEncoderDist());
         SmartDashboard.putNumber("RightDrive Encoder", drive.getRightEncoderDist());
-        SmartDashboard.putNumber("Gyro", drive.getYaw());
+//        SmartDashboard.putNumber("Gyro", drive.getYaw());
         
         SmartDashboard.putBoolean("ShooterState", shooter.getShooterState());
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
