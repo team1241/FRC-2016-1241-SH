@@ -44,6 +44,9 @@ public class IntakeCommand extends Command {
     		down.cancel();
     		Robot.intake.runArms(Robot.oi.getToolLeftY()*0.6);
     	}
+    	else if(!auto) {
+    		Robot.intake.runArms(0);
+    	}
 //    	else if(toggle.get() && auto){
 //    		up.cancel();
 //    		down.start();
