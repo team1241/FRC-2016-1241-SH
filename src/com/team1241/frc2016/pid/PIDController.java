@@ -25,9 +25,9 @@ public class PIDController {
     double prevOutput = 0;
     
     double previousValue = 0;
-    double previousAverage = 0;
-    double currentAverage;
-    double average;
+//    double previousAverage = 0;
+//    double currentAverage;
+//    double average;
     
     boolean atTarget = false;
     
@@ -98,7 +98,7 @@ public class PIDController {
         error = setPoint - currentValue;
         
         
-        if(Math.abs(setPoint-average) <= epsilon){
+        if(Math.abs(error) <= epsilon){
         	atTarget = true;
         }
         else{
@@ -109,13 +109,15 @@ public class PIDController {
         pOut = pGain * error;
         
         //I
-        if(currentValue >= setPoint*0.60){
+        
+        //0.60
+        if(currentValue >= setPoint*0.6){
 	        errorSum += error;
 	        iOut = iGain * errorSum;
 	        
-	        currentAverage = (previousValue+currentValue)/2;
-	        average = (currentAverage+previousAverage)/2;
-	        SmartDashboard.putNumber("average", average);
+//	        currentAverage = (previousValue+currentValue)/2;
+//	        average = (currentAverage+previousAverage)/2;
+//	        SmartDashboard.putNumber("average", average);
         }
         
         //D
@@ -124,7 +126,7 @@ public class PIDController {
         
         lastError = error;
         previousValue = currentValue;
-        previousAverage = currentAverage;
+//        previousAverage = currentAverage;
         
         //PID Output
         output = pOut + iOut + dOut;

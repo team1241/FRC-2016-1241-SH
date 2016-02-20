@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.pid.Constants;
@@ -49,6 +50,8 @@ public class Robot extends IterativeRobot {
     public static int defenceLocation;
     public static int selectedDefence;
     
+    CameraServer server;
+    
     ToggleBoolean toggle = new ToggleBoolean();
     
 
@@ -68,6 +71,12 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		intake = new Intake();
 		conveyor = new Conveyor();
+		
+		// Camera Server
+		
+		server = CameraServer.getInstance();
+        server.setQuality(50);
+        server.startAutomaticCapture("cam0");
 		
         // instantiate the command used for the autonomous period
 		
@@ -137,7 +146,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
+    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     }
@@ -157,6 +166,10 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
+        if(Robot.oi.getDriveAButton()) {
+        	new CameraTrack().start();
+        }
+//        Robot.shooter.setSpeed(power);
         
 //        if(Robot.oi.getDriveXButton()) {
 //        	new AutoDrawbridge().start();
@@ -182,7 +195,7 @@ public class Robot extends IterativeRobot {
     public void updateSmartDashboard() {
     	SmartDashboard.putNumber("LeftDrive Encoder", drive.getLeftEncoderDist());
         SmartDashboard.putNumber("RightDrive Encoder", drive.getRightEncoderDist());
-//        SmartDashboard.putNumber("Gyro", drive.getYaw());
+        SmartDashboard.putNumber("Gyro", drive.getYaw());
         
         SmartDashboard.putBoolean("ShooterState", shooter.getShooterState());
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
@@ -200,6 +213,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("d", drive.drivePID.getDGain());
         
         SmartDashboard.putNumber("power", power);
+        SmartDashboard.putNumber("X", shooter.getXCoordinates());
+        SmartDashboard.putNumber("pixel", shooter.pixelToDegree(shooter.getXCoordinates()));
+        SmartDashboard.putNumber("Change in Degree",shooter.getTurretAngle() - shooter.pixelToDegree(shooter.getXCoordinates()));
         
 //        System.out.println("PID " + shooter.shooterPID.getPGain() + "," + shooter.shooterPID.getIGain() + "," + shooter.shooterPID.getDGain());
     }

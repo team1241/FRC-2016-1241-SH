@@ -76,8 +76,8 @@ public class ElectricalConstants {
 	//***************************** OPTICAL SENSORS *****************************
 	//***************************************************************************
 
-	public static final int SHOOTER_OPTICS									= 4;
-	public static final int POPPER_OPTICS									= 5;
+	public static final int SHOOTER_OPTICS									= 5;
+	public static final int POPPER_OPTICS									= 4;
 	
 	//***************************************************************************
 	//****************************** ANALOG SENSORS *****************************
@@ -89,16 +89,16 @@ public class ElectricalConstants {
 	//******************************** PNEUMATICS *******************************
 	//***************************************************************************
 
-	public static final int PCM												= 14;
+	public static final int PCM												= 12;
 
-	public static final int SHOOTER_HOOD_SOLENOID_A							= 3;
-	public static final int SHOOTER_HOOD_SOLENOID_B							= 4;
+//	public static final int SHOOTER_HOOD_SOLENOID_A							= 1;
+//	public static final int SHOOTER_HOOD_SOLENOID_B							= 6;
 	
-	public static final int POPPER_SHOOT_SOLENOID_A							= 1;
-	public static final int POPPER_SHOOT_SOLENOID_B							= 6;
+	public static final int POPPER_SHOOT_SOLENOID_A							= 6;
+	public static final int POPPER_SHOOT_SOLENOID_B							= 1;
 	
-	public static final int POPPER_HOLD_SOLENOID_A							= 2;
-	public static final int POPPER_HOLD_SOLENOID_B							= 5;
+	public static final int POPPER_HOLD_SOLENOID_A							= 5;
+	public static final int POPPER_HOLD_SOLENOID_B							= 2;
 	
 //	public static final int POPPER_RELEASE_SOLENOID_A						= 1;
 //	public static final int POPPER_RELEASE_SOLENOID_B						= 0;
@@ -121,5 +121,5 @@ public class ElectricalConstants {
 	public static final double turretGearRatio = 216.0/14.0; //ratio between pulley and encoder
 	public static final double turretEncoderPulsePerRot = turretPulsePerRotation*turretGearRatio; //pulse per rotation * gear ratio
 	public static final double turretEncoderDegPerTick = turretEncoderPulsePerRot/90.0;
-	public static final boolean turretEncoderReverse = true;
+	public static final boolean turretEncoderReverse = false;
 }

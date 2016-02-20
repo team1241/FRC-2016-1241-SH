@@ -22,8 +22,8 @@ public class IntakeCommand extends Command {
 
     public IntakeCommand() {
     	toggle = new ToggleBoolean();
-    	up = new RunArm(NumberConstants.upArmAngle, 0.5, 3);
-    	down = new RunArm(NumberConstants.downArmAngle,0.5,3);
+    	up = new RunArm(NumberConstants.upArmAngle, 1.0, 3);
+    	down = new RunArm(NumberConstants.downArmAngle,1.0,3);
         requires(Robot.intake);
     }
 
@@ -47,14 +47,17 @@ public class IntakeCommand extends Command {
     	else if(!auto) {
     		Robot.intake.runArms(0);
     	}
-//    	else if(toggle.get() && auto){
-//    		up.cancel();
-//    		down.start();
-//    	}
-//    	else if(!toggle.get() && auto){
-//    		down.cancel();
-//    		up.start();
-//    	}
+    	
+    	//
+    	else if(toggle.get() && auto){
+    		up.cancel();
+    		down.start();
+    	}
+    	else if(!toggle.get() && auto){
+    		down.cancel();
+    		up.start();
+    	}
+    	//
     	
     	if(Robot.oi.getToolAButton()) {
     		Robot.intake.runIntake(1);

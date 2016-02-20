@@ -5,7 +5,9 @@ import com.team1241.frc2016.commands.auto.AutoHolder;
 import com.team1241.frc2016.commands.auto.WaitCommand;
 import com.team1241.frc2016.utilities.ToggleBoolean;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Default command for the conveyor subsystem
@@ -16,21 +18,36 @@ public class ConveyorCommand extends Command {
 
 	ToggleBoolean toggle;
 	private boolean auto = true;
+	Timer timer;
+	boolean started = false;
 	
     public ConveyorCommand() {
     	toggle = new ToggleBoolean();
+    	timer = new Timer();
         requires(Robot.conveyor);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	timer.stop();
     }
 
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getContains()) {
+    	if(!Robot.conveyor.getOptic() && started == false) {
+    		timer.start();
+    		started = true;
+    	}
+    	SmartDashboard.putNumber("timer", timer.get());
+    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getContains() && timer.get()>0.5) {
+    		timer.reset();
+    		timer.stop();
     		Robot.conveyor.setContains(true);
     		new AutoHolder().start();
+    	}
+    	if(Robot.conveyor.getContains()) {
+    		started = false;
     	}
     	
     	if(Robot.oi.getToolBButton()) {
@@ -52,10 +69,10 @@ public class ConveyorCommand extends Command {
     	}
     	
     	if(Robot.oi.getToolAButton()) {
-    		Robot.conveyor.runMotor(-1);
+    		Robot.conveyor.runMotor(1);
     	}
     	else if(Robot.oi.getToolXButton()) {
-    		Robot.conveyor.runMotor(1);
+    		Robot.conveyor.runMotor(-1);
     	}
     	else {
     		Robot.conveyor.runMotor(0);

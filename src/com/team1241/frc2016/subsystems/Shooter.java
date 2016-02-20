@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -26,16 +27,18 @@ public class Shooter extends Subsystem {
 	private CANTalon turret;
 	
 	private DoubleSolenoid popUp;
-	private DoubleSolenoid hood;
+//	private DoubleSolenoid hood;
 	private boolean shooterState;
 	
 	public PIDController shooterPID;
 	public PIDController turretPID;
+	public PIDController cameraPID;
 	
 	private Encoder turretEncoder;
 	
 	private Counter optical;
 	
+	private double[] targetNum = new double[8];
 	
 	public Shooter(){
 		 // Initialize Talons
@@ -57,8 +60,8 @@ public class Shooter extends Subsystem {
 	     // Initialize Pistons		
 		 popUp = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
 				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
-		 hood = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
-				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
+//		 hood = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
+//				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
 		 
 		// Initialize PID	
 		 shooterPID = new PIDController (NumberConstants.pShooter,
@@ -69,7 +72,19 @@ public class Shooter extends Subsystem {
 				 					NumberConstants.iTurret,
 				 					NumberConstants.dTurret);
 		 
+		 cameraPID = new PIDController(NumberConstants.pCamera,
+				 					NumberConstants.iCamera,
+				 					NumberConstants.dCamera);
+		 
 		 shooterState = false;
+		 
+		 NetworkTable server = NetworkTable.getTable("SmartDashboard");
+	     try{
+	        targetNum = server.getNumberArray("MEQ_COORDINATES");
+	     }
+	     catch(Exception ex){
+	    	 System.out.println("Unable to get coordinates");
+	     }
 	}
 	
 	public void setShooterState(boolean state) {
@@ -83,18 +98,18 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ShootCommand());
+//    	setDefaultCommand(new ShootCommand());
     }
     
     
    /**********************************************PNEUMATIC METHODS**********************************************/
-    public void closeHood() {
-    	hood.set(DoubleSolenoid.Value.kReverse);
-    }
-    
-    public void openHood(){
-    	hood.set(DoubleSolenoid.Value.kForward);
-    }
+//    public void closeHood() {
+//    	hood.set(DoubleSolenoid.Value.kReverse);
+//    }
+//    
+//    public void openHood(){
+//    	hood.set(DoubleSolenoid.Value.kForward);
+//    }
     
     public void retractPop(){
     	popUp.set(DoubleSolenoid.Value.kReverse);
@@ -107,8 +122,8 @@ public class Shooter extends Subsystem {
     /**********************************************MOTOR METHODS**************************************************/
 
     public void setSpeed(double shotVal){
-    	rightShooter.set(shotVal);
-    	leftShooter.set(shotVal);
+    	rightShooter.set(-shotVal);
+    	leftShooter.set(-shotVal);
     }
     
     public void setRight(double speed){
@@ -132,6 +147,11 @@ public class Shooter extends Subsystem {
     	turret.set(pwr*output);	
     }
     
+    public void turnTurretCamera(double angle, double pwr) {
+    	double output = cameraPID.calcPID(angle, getTurretAngle(), 0.5);
+    	turret.set(pwr*output);	
+    }
+    
     /** 
      * If turret goes over the rotational limit, swing it in the opposite direction to the same angle
      * Eg: 370 degrees is the same as 10 degrees */
@@ -141,6 +161,23 @@ public class Shooter extends Subsystem {
     	} else if (getTurretAngle() <= -360) {
     		turnTurretToAngle(getTurretAngle() + 360, pwr);
     	}
+    }
+    
+    /** @param pixel pixel is in degrees
+     * @param pwr pwr is +/- 0 to 1 
+     * Restriction: 0 <= x <= 640
+     * */
+    public void turnTurretToPixel(double pixel, double pwr) {
+    	double output = cameraPID.calcPIDVelocity(0, pixel, 0.5);
+    	turret.set(-(pwr*output));	
+    }
+    
+    /*public double pixelToDegree(double pixel) {
+    	return 0.105807*pixel-37.4135;
+    }*/
+    
+    public double pixelToDegree(double pixel){
+    	return Math.toDegrees(Math.atan(((pixel-320)*Math.tan(Math.toRadians(31.81)))/320));
     }
     
     /********************************************** TURRET ENCODER METHODS **********************************************/
@@ -171,6 +208,29 @@ public class Shooter extends Subsystem {
         return turretEncoder.getRate();
     }
     
+    public void updateCoordinates(){
+    	NetworkTable server = NetworkTable.getTable("SmartDashboard");
+	     try{
+	        targetNum = server.getNumberArray("MEQ_COORDINATES");
+	     }
+	     catch(Exception ex){
+	    	 System.out.println("Unable to get coordinates");
+	     }
+    }
+    
+    public double[] getCoordinates(){
+    	return targetNum;
+    }
+    
+    public double getXCoordinates(){
+    	updateCoordinates();
+//    	System.out.println(targetNum[0]);
+    	if(targetNum.length == 8)
+    		return (targetNum[0]+targetNum[2]+targetNum[4]+targetNum[6])/4;
+    	else
+    		return -1;
+    }
+    
     /********************************************** OPTICAL SENSOR METHODS **********************************************/
     
     public double getOptic(){
@@ -192,9 +252,9 @@ public class Shooter extends Subsystem {
     /********************************************** SHOOTER PID ********************************************************/
     
     public void setRPM(double rpm){
-    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 20);
-    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
-    	setSpeed(output+rpm*NumberConstants.kForward);
+    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 30);
+//    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
+    	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
     
     /**

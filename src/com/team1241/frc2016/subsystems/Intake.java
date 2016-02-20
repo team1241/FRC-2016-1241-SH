@@ -90,7 +90,7 @@ public class Intake extends Subsystem {
     public void setArmPosition(double angle, double speed) {
     	//Set up sensor methods
     	double output = armPID.calcPID(angle, getPotValue(), 5);
-    	runArms(output*speed);
+    	runArms(-output*speed);
     }
     
     public boolean isArmPosTooHigh() {

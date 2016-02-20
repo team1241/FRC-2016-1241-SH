@@ -18,7 +18,7 @@ public class SpyShotAuton extends CommandGroup {
 		addSequential(new RunArm(NumberConstants.upArmAngle, 1, 1.5));
 
 		// Turn turret to target
-		addParallel(new TurnTurret(NumberConstants.spyShotAngle, 1, 1));
+		addParallel(new TurnTurret(NumberConstants.spyShotAngle, 1, 1, false));
 
 		//shoots the boulder
 		addParallel(new SetShooterSpeed(NumberConstants.spyShotRPM));

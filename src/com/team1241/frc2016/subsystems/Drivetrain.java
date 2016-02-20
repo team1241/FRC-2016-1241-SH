@@ -142,8 +142,6 @@ public class Drivetrain extends Subsystem {
     public void turnDrive(double setAngle, double speed, double epsilon) {
     	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
-    	
-    	
     	runLeftDrive(angle*speed);
     	runRightDrive(angle*speed);
     }
@@ -244,7 +242,7 @@ public class Drivetrain extends Subsystem {
      * @return Returns YAW
      */
     public double getYaw(){
-    	return gyro.getYaw();
+    	return gyro.getYaw()/88.5*90;
     }
     
     /**
