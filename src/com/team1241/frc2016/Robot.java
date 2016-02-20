@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
 		
 		updateSmartDashboard();
     }
-    
+     
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -146,7 +146,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
+    	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     }
@@ -167,14 +167,14 @@ public class Robot extends IterativeRobot {
         updateSmartDashboard();
         
         if(Robot.oi.getDriveAButton()) {
-        	new CameraTrack().start();
+        	new DriveCommand(150, 1, 0, 10).start();
         }
 //        Robot.shooter.setSpeed(power);
         
 //        if(Robot.oi.getDriveXButton()) {
 //        	new AutoDrawbridge().start();
 //        }
-//        else if(Robot.oi.getDriveAButton()) {
+//        if(Robot.oi.getDriveAButton()) {
 //        	new AutoPortcullis().start();
 //        }
 //        else if(Robot.oi.getDriveBButton()) {

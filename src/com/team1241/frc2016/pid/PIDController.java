@@ -94,6 +94,39 @@ public class PIDController {
         return output;
     }
     
+    public double calcPIDDrive(double setPoint, double currentValue, double epsilon) {
+        error = setPoint - currentValue;
+        
+        if(Math.abs(error) <= epsilon){
+        	atTarget = true;
+        }
+        else{
+        	atTarget = false;
+        }
+        
+        //P 
+        pOut = pGain * error;
+        
+        //I
+        errorSum += error;
+        iOut = iGain * errorSum;
+        
+        //D
+        dProcessVar = (error - lastError);
+        dOut = dGain * dProcessVar;
+        
+        lastError = error;
+        
+        //PID Output
+        output = pOut + iOut + dOut;
+        
+      //Scale output to be between 1 and -1
+        if(output!=0.0)
+        	output = output/Math.abs(output)*(1.0 - Math.pow(0.6,(Math.abs(output))));
+        
+        return output;
+    }
+    
     public double calcPIDVelocity(double setPoint, double currentValue, double epsilon) {
         error = setPoint - currentValue;
         

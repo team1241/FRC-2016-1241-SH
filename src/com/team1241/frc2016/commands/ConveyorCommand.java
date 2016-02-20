@@ -49,6 +49,11 @@ public class ConveyorCommand extends Command {
     	if(Robot.conveyor.getContains()) {
     		started = false;
     	}
+    	if(Robot.conveyor.getOptic() && started==true) {
+    		timer.stop();
+    		started = false;
+    	}
+    	
     	
     	if(Robot.oi.getToolBButton()) {
     		toggle.set(true);

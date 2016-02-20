@@ -25,7 +25,7 @@ public class ShootCommand extends Command {
 	private TurnTurret spyAngle;
 	private TurnTurret startAngle;
 	ToggleBoolean toggleTurret;
-	private boolean auto = true;
+	private boolean auto = false;
 	
 	
     public ShootCommand() {
@@ -47,27 +47,29 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	if(Robot.oi.getToolRightX() != 0) {
-//    		auto = false;
-//    		startAngle.cancel();
-//    		spyAngle.cancel();
-//    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
-//    	}
-    	
     	if(Robot.oi.getToolYButton()) {
     		toggleTurret.set(true);
     		auto = true;
     	}
-    	if(toggleTurret.get()) {
+    	if(toggleTurret.get() && auto && Math.abs(Robot.oi.getToolRightX()) < 0.05) {
     		startAngle.cancel();
     		spyAngle.start();
   //  		new TurnTurret(NumberConstants.spyShotAngle, 1, 5).start();
     	}
-    	else if(!toggleTurret.get()) {
+    	else if(!toggleTurret.get() && auto && Math.abs(Robot.oi.getToolRightX()) < 0.05) {
     		spyAngle.cancel();
     		startAngle.start();
 //    		new TurnTurret(0, 1, 5).start();
     	} 	
+    	else if(Math.abs(Robot.oi.getToolRightX()) > 0.05) {
+    		auto = false;
+    		spyAngle.cancel();
+    		startAngle.cancel();
+    		Robot.shooter.turnTurret(Robot.oi.getToolRightX()*0.5);
+    	}
+    	else {
+    		Robot.shooter.turnTurret(0);
+    	}
     	
     	if (Robot.oi.getToolLeftTrigger()) {
     		Robot.shooter.setShooterState(true);

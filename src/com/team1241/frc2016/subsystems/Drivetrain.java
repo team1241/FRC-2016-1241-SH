@@ -128,12 +128,10 @@ public class Drivetrain extends Subsystem {
     }
     
     public void driveStraight(double setPoint, double speed, double setAngle, double epsilon) {
-    	double output = drivePID.calcPID(setPoint, getAverageDistance(), epsilon);
+    	double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), epsilon);
     	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
-    	SmartDashboard.putNumber("drive pid", output);
-    	System.out.println("angle" + angle);
-    	SmartDashboard.putNumber("drive angle", angle);
+    	System.out.println("drive pid" + output);
     	
     	runLeftDrive((output+angle)*speed);
     	runRightDrive((-output+angle)*speed);
