@@ -17,7 +17,7 @@ public class OuterWorksAuton extends CommandGroup {
     	this.crossDefence();
     	
     	//Drive curve towards the tower
-    	this.driveCurve();
+    	addSequential(new AutoCourtyard(Robot.defenceLocation));
     }
     
     private void crossDefence() {
@@ -35,26 +35,7 @@ public class OuterWorksAuton extends CommandGroup {
         	addSequential(new AutoDrawbridge());
         }
         else if (defence==4) {
-//        	addSequential(new AutoPortcullis());
-        }
-    }
-    
-    private void driveCurve() {
-    	int location = Robot.defenceLocation;
-    	if(location==0) {
-        	addSequential(new DriveCommand(1,1,1,1));
-        }
-        else if(location==1) {
-        	addSequential(new DriveCommand(1,1,1,1));
-        }
-        else if(location==2) {
-        	addSequential(new DriveCommand(1,1,1,1));
-        }
-        else if(location==3) {
-        	addSequential(new DriveCommand(1,1,1,1));
-        }
-        else if (location==4) {
-        	addSequential(new DriveCommand(1,1,1,1));
+        	addSequential(new AutoDriveOver());
         }
     }
 }
