@@ -48,7 +48,7 @@ public class Conveyor extends Subsystem {
 	}
 	
 	public void initDefaultCommand() {
-        setDefaultCommand(new ConveyorCommand());
+//        setDefaultCommand(new ConveyorCommand());
     }
 	
 	/**

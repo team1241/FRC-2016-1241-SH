@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import com.team1241.frc2016.commands.CameraTrack;
+import com.team1241.frc2016.commands.ConveyorCommand;
 import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.pid.Constants;
@@ -102,7 +103,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Auto", new NoAuto());
 		autoChooser.addObject("SpyShot", new SpyShotAuton());
-		autoChooser.addDefault("OuterWorks", new OuterWorksAuton());
+//		autoChooser.addDefault("OuterWorks", new OuterWorksAuton());
 		
 		SmartDashboard.putData("Autonomous", autoChooser);
 		
@@ -117,10 +118,15 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	conveyor.extendHolder();
+    	drive.reset();
+    	
     	defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
-    	autonomousCommand = (Command) autoChooser.getSelected();
+    	autonomousCommand = (Command) new OuterWorksAuton(defenceLocation, selectedDefence);
     	autonomousCommand.start();
+    	
+//    	new AutoCourtyard(4).start();
     }
 
     /**
@@ -128,6 +134,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateSmartDashboard();
     }
 
     public void teleopInit() {
@@ -142,11 +149,13 @@ public class Robot extends IterativeRobot {
     	conveyor.retractHolder();
     	conveyor.setContains(false);
     	
+    	new ConveyorCommand().start();
+    	
     	kp = pref.getDouble("kp", 0.0);
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
+//    	Robot.intake.armPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     }
@@ -167,7 +176,7 @@ public class Robot extends IterativeRobot {
         updateSmartDashboard();
         
         if(Robot.oi.getDriveAButton()) {
-        	new DriveCommand(150, 1, 0, 10).start();
+        	new AutoCourtyard(1).start();
         }
 //        Robot.shooter.setSpeed(power);
         
@@ -180,9 +189,9 @@ public class Robot extends IterativeRobot {
 //        else if(Robot.oi.getDriveBButton()) {
 //        	new AutoCheval().start();
 //        }
-//        else if(Robot.oi.getDriveYButton()) {
-//        	new AutoSallyPort().start();
-//        }
+        /*if(Robot.oi.getDriveYButton()) {
+        	new DrivePath("0,0","22.6,40","48,0","48,96",5,1).start();
+        }*/
     }
     
     /**

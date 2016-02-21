@@ -10,18 +10,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class OuterWorksAuton extends CommandGroup {
     
-    public  OuterWorksAuton() {
+    public  OuterWorksAuton(int defenceLoc, int defence) {
         //drive in front of defense
     	
+    	System.out.println(Robot.selectedDefence +","+ Robot.defenceLocation);
     	//Cross the defence
-    	this.crossDefence();
-    	
-    	//Drive curve towards the tower
-    	addSequential(new AutoCourtyard(Robot.defenceLocation));
-    }
-    
-    private void crossDefence() {
-    	int defence = Robot.selectedDefence;
     	if(defence==0) {
         	addSequential(new AutoPortcullis());
         }
@@ -37,5 +30,8 @@ public class OuterWorksAuton extends CommandGroup {
         else if (defence==4) {
         	addSequential(new AutoDriveOver());
         }
+    	
+    	//Drive curve towards the tower
+    	addSequential(new AutoCourtyard(defenceLoc));
     }
 }

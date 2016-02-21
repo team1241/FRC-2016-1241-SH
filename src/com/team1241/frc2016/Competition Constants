@@ -16,9 +16,9 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Competition
-	public static final double pDrive 									 = 0.01;
-	public static final double iDrive 									 = 0.00;
-	public static final double dDrive 									 = 0.008;
+	public static final double pDrive 									 = 0.00041;
+	public static final double iDrive 									 = 0.0000008;
+	public static final double dDrive 									 = 0.00;
 	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
@@ -64,7 +64,7 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Competition
-	public static final double pArm 									 = 0.002;
+	public static final double pArm 									 = 0.006;
 	public static final double iArm 									 = 0.00;
 	public static final double dArm 									 = 0.00;
 	
@@ -73,7 +73,7 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Competition
-	public static final int downArmAngle								= 490;
+	public static final int downArmAngle								= 500;
 	//Arm all the way up
 	public static final int upArmAngle									= 790;
 	
