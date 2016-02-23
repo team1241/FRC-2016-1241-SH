@@ -38,8 +38,8 @@ public class AutoCourtyard extends CommandGroup {
 		}
 		else if(location==4) {
 			addParallel(new RunArm(NumberConstants.downArmAngle+30, 1, 5));
-			addSequential(new DriveCommand(165, 1,0,5));
-			addSequential(new TurnTurret(63, 1, 5, false));
+			addParallel(new DriveCommand(165, 1,0,5));
+			addSequential(new TurnTurret(60, 1, 5, false));
 			
 			addParallel(new SetShooterSpeed(4000));
 			addSequential(new AutoShoot());

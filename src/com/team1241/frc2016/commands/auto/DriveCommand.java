@@ -31,7 +31,7 @@ public class DriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.resetEncoders();
+    	Robot.drive.reset();
     	setTimeout(this.timeOut);
     }
 
@@ -50,6 +50,7 @@ public class DriveCommand extends Command {
     	Robot.drive.runLeftDrive(0);
     	Robot.drive.runRightDrive(0);
     	Robot.drive.drivePID.resetPID();
+    	Robot.drive.gyroPID.resetPID();
     }
 
     // Called when another command which requires one or more of the same
@@ -58,5 +59,6 @@ public class DriveCommand extends Command {
     	Robot.drive.runLeftDrive(0);
 		Robot.drive.runRightDrive(0);
 		Robot.drive.drivePID.resetPID();
+		Robot.drive.gyroPID.resetPID();
     }
 }

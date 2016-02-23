@@ -101,9 +101,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Location", locationChooser);
 		
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("No Auto", new NoAuto());
-		autoChooser.addObject("SpyShot", new SpyShotAuton());
-//		autoChooser.addDefault("OuterWorks", new OuterWorksAuton());
+		autoChooser.addDefault("No Auto", 0);
+		autoChooser.addObject("SpyShot", 1);
+		autoChooser.addDefault("OuterWorks", 2);
 		
 		SmartDashboard.putData("Autonomous", autoChooser);
 		
@@ -123,7 +123,17 @@ public class Robot extends IterativeRobot {
     	
     	defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
-    	autonomousCommand = (Command) new OuterWorksAuton(defenceLocation, selectedDefence);
+    	switch((int)autoChooser.getSelected()) {
+    	case 0:
+    		autonomousCommand = (Command) new NoAuto();
+    		break;
+    	case 1:
+    		autonomousCommand = (Command) new SpyShotAuton();
+    		break;
+    	case 2:
+    		autonomousCommand = (Command) new OuterWorksAuton(defenceLocation, selectedDefence);
+    		break;
+    	}
     	autonomousCommand.start();
     	
 //    	new AutoCourtyard(4).start();
@@ -176,7 +186,7 @@ public class Robot extends IterativeRobot {
         updateSmartDashboard();
         
         if(Robot.oi.getDriveAButton()) {
-        	new AutoCourtyard(1).start();
+        	new DriveCommand(50,1,-1,1).start();
         }
 //        Robot.shooter.setSpeed(power);
         
@@ -216,10 +226,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("Contains Ball", conveyor.getContains());
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
-        
-        SmartDashboard.putNumber("p", drive.drivePID.getPGain());
-        SmartDashboard.putNumber("i", drive.drivePID.getIGain());
-        SmartDashboard.putNumber("d", drive.drivePID.getDGain());
         
         SmartDashboard.putNumber("power", power);
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
