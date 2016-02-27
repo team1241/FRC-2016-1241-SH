@@ -127,7 +127,7 @@ public class PIDController {
         return output;
     }
     
-    public double calcPIDVelocity(double setPoint, double currentValue, double epsilon) {
+    public double calcPIDVelocity(double setPoint, double currentValue, double epsilon, double iStart) {
         error = setPoint - currentValue;
         
         
@@ -144,13 +144,16 @@ public class PIDController {
         //I
         
         //0.60
-        if(currentValue >= setPoint*0.6){
+        if(currentValue >= setPoint*iStart){
 	        errorSum += error;
 	        iOut = iGain * errorSum;
 	        
 //	        currentAverage = (previousValue+currentValue)/2;
 //	        average = (currentAverage+previousAverage)/2;
 //	        SmartDashboard.putNumber("average", average);
+        }
+        else{
+        	iOut = 0;
         }
         
         //D

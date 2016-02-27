@@ -3,6 +3,7 @@ package com.team1241.frc2016;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.ConveyorCommand;
@@ -136,7 +137,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         updateSmartDashboard();
     }
-
+    
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
@@ -158,6 +159,7 @@ public class Robot extends IterativeRobot {
 //    	Robot.intake.armPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
+    	
     }
 
     /**
@@ -176,8 +178,9 @@ public class Robot extends IterativeRobot {
         updateSmartDashboard();
         
         if(Robot.oi.getDriveAButton()) {
-        	new AutoCourtyard(1).start();
+        	new CameraTrack().start();
         }
+        
 //        Robot.shooter.setSpeed(power);
         
 //        if(Robot.oi.getDriveXButton()) {
@@ -223,9 +226,10 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("power", power);
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
-        SmartDashboard.putNumber("pixel", shooter.pixelToDegree(shooter.getXCoordinates()));
+        SmartDashboard.putNumber("degree", shooter.pixelToDegree(shooter.getXCoordinates()));
+        SmartDashboard.putNumber("distance", shooter.getDistanceToTarget());
+        SmartDashboard.putNumber("Target width", shooter.targetWidthPixels());
         SmartDashboard.putNumber("Change in Degree",shooter.getTurretAngle() - shooter.pixelToDegree(shooter.getXCoordinates()));
-        
 //        System.out.println("PID " + shooter.shooterPID.getPGain() + "," + shooter.shooterPID.getIGain() + "," + shooter.shooterPID.getDGain());
     }
 }

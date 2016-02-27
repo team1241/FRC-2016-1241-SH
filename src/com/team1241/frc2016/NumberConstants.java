@@ -43,9 +43,9 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Competition
-	public static final double pCamera 									 = 0.025;
-	public static final double iCamera 									 = 0.00;
-	public static final double dCamera 									 = 0.005;
+	public static final double pCamera 									 = 0.03;
+	public static final double iCamera 									 = 0.0003;
+	public static final double dCamera 									 = 0.000;
 	
 	
 	//**************************************************************************

@@ -98,7 +98,7 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ShootCommand());
+    	//setDefaultCommand(new ShootCommand());
     }
     
     
@@ -148,7 +148,7 @@ public class Shooter extends Subsystem {
     }
     
     public void turnTurretCamera(double angle, double pwr) {
-    	double output = cameraPID.calcPID(angle, getTurretAngle(), 0.5);
+    	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.7);
     	turret.set(pwr*output);	
     }
     
@@ -168,7 +168,7 @@ public class Shooter extends Subsystem {
      * Restriction: 0 <= x <= 640
      * */
     public void turnTurretToPixel(double pixel, double pwr) {
-    	double output = cameraPID.calcPIDVelocity(0, pixel, 0.5);
+    	double output = cameraPID.calcPIDVelocity(0, pixel, 0.5, 0.8);
     	turret.set(-(pwr*output));	
     }
     
@@ -231,6 +231,18 @@ public class Shooter extends Subsystem {
     		return -1;
     }
     
+    public double targetWidthPixels(){
+    	updateCoordinates();
+    	if(targetNum.length == 8)
+    		return ((targetNum[0]-targetNum[2]) + (targetNum[6]-targetNum[4]))/2;
+    	else
+    		return -1;
+    }
+    
+    public double getDistanceToTarget(){
+    	return 20*640/(2*targetWidthPixels()*Math.tan(Math.toRadians(31.81)));
+    }
+    
     /********************************************** OPTICAL SENSOR METHODS **********************************************/
     
     public double getOptic(){
@@ -252,7 +264,7 @@ public class Shooter extends Subsystem {
     /********************************************** SHOOTER PID ********************************************************/
     
     public void setRPM(double rpm){
-    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 30);
+    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 30, 0.6);
 //    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
     	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
