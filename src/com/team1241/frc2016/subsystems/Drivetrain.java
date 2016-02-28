@@ -131,7 +131,11 @@ public class Drivetrain extends Subsystem {
     	double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), epsilon);
     	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
-    	System.out.println("drive pid" + output);
+    	System.out.println("drive pid" + output + "gyro pid" + angle + "," + getYaw());
+    	SmartDashboard.putNumber("drivePID", output);
+    	SmartDashboard.putNumber("gyroPID", angle);
+    	SmartDashboard.putNumber("LeftDrive", (output+angle)*speed);
+    	SmartDashboard.putNumber("RightDrive", (-output+angle)*speed);
     	
     	runLeftDrive((output+angle)*speed);
     	runRightDrive((-output+angle)*speed);

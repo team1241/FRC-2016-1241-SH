@@ -51,21 +51,19 @@ public class ShootCommand extends Command {
     		toggleTurret.set(true);
     		auto = true;
     	}
-    	if(toggleTurret.get() && auto && Math.abs(Robot.oi.getToolRightX()) < 0.05) {
-    		startAngle.cancel();
-    		spyAngle.start();
-  //  		new TurnTurret(NumberConstants.spyShotAngle, 1, 5).start();
-    	}
-    	else if(!toggleTurret.get() && auto && Math.abs(Robot.oi.getToolRightX()) < 0.05) {
-    		spyAngle.cancel();
-    		startAngle.start();
-//    		new TurnTurret(0, 1, 5).start();
-    	} 	
-    	else if(Math.abs(Robot.oi.getToolRightX()) > 0.05) {
+    	if(Math.abs(Robot.oi.getToolRightX()) > 0.05) {
     		auto = false;
     		spyAngle.cancel();
     		startAngle.cancel();
-    		Robot.shooter.turnTurret(Robot.oi.getToolRightX()*0.5);
+    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+    	}
+    	else if(toggleTurret.get() && auto) {
+    		startAngle.cancel();
+    		spyAngle.start();
+    	}
+    	else if(!toggleTurret.get() && auto) {
+    		spyAngle.cancel();
+    		startAngle.start();
     	}
     	else {
     		Robot.shooter.turnTurret(0);
