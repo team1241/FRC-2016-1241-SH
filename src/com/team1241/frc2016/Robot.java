@@ -166,7 +166,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-//    	Robot.intake.armPID.changePIDGains(kp, ki, kd);
+    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     	
@@ -187,9 +187,9 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
-        if(Robot.oi.getDriveAButton()) {
+        /*if(Robot.oi.getDriveAButton()) {
         	new CameraTrack().start();
-        }
+        }*/
         
 //        Robot.shooter.setSpeed(power);
         

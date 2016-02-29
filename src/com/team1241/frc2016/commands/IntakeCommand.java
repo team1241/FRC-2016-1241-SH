@@ -38,26 +38,25 @@ public class IntakeCommand extends Command {
     		auto = true;
     	}
     	
-    	if(Robot.oi.getToolLeftY()!=0) {
-    		auto = false;
-    		up.cancel();
-    		down.cancel();
+//    	if(Robot.oi.getToolLeftY()!=0) {
+//    		auto = false;
+//    		up.cancel();
+//    		down.cancel();
     		Robot.intake.runArms(Robot.oi.getToolLeftY()*0.6);
-    	}
-    	else if(!auto) {
-    		Robot.intake.runArms(0);
-    	}
-    	
-    	//
-    	else if(toggle.get() && auto){
-    		up.cancel();
-    		down.start();
-    	}
-    	else if(!toggle.get() && auto){
-    		down.cancel();
-    		up.start();
-    	}
-    	//
+//    	}
+//    	else if(!auto) {
+//    		Robot.intake.runArms(0);
+//    	}
+//    	
+//    	//
+//    	else if(toggle.get() && auto){
+//    		up.cancel();
+//    		down.start();
+//    	}
+//    	else if(!toggle.get() && auto){
+//    		down.cancel();
+//    		up.start();
+//    	}
     	
     	if(Robot.oi.getToolAButton()) {
     		Robot.intake.runIntake(1);

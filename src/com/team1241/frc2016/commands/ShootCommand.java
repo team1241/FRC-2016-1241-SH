@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author Bryan Kristiono
  * @since 2016-02-01
  */
-//4600 FOR OUTERWORKS
-//4400 FOR SPY
-//3800 - 4400 FOR BATTER - OFF BATTER   
 public class ShootCommand extends Command {
 
 	private SetShooterSpeed badderRPM;
@@ -23,7 +20,10 @@ public class ShootCommand extends Command {
 	private SetShooterSpeed spyRPM;
 	
 	private TurnTurret spyAngle;
+	private TurnTurret backAngle;
 	private TurnTurret startAngle;
+	private CameraTrack track;
+	
 	ToggleBoolean toggleTurret;
 	private boolean auto = false;
 	
@@ -36,7 +36,10 @@ public class ShootCommand extends Command {
     	spyRPM = new SetShooterSpeed(NumberConstants.spyShotRPM);
     	
     	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 5, false);
+    	backAngle = new TurnTurret(NumberConstants.backAngle, 1, 5, false);
     	startAngle = new TurnTurret(0, 1, 5, false);
+    	
+    	track = new CameraTrack();
     }
 
     // Called just before this Command runs the first time
@@ -47,6 +50,14 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Robot.oi.getToolRightAnalogButton()) {
+    		spyAngle.cancel();
+    		startAngle.cancel();
+    		track.cancel();
+    		backAngle.start();
+    		auto = false;
+    	}
+    	
     	if(Robot.oi.getToolYButton()) {
     		toggleTurret.set(true);
     		auto = true;
@@ -55,18 +66,32 @@ public class ShootCommand extends Command {
     		auto = false;
     		spyAngle.cancel();
     		startAngle.cancel();
+    		track.cancel();
+    		backAngle.cancel();
     		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
     	}
     	else if(toggleTurret.get() && auto) {
+    		track.cancel();
     		startAngle.cancel();
+    		backAngle.cancel();
     		spyAngle.start();
     	}
     	else if(!toggleTurret.get() && auto) {
+    		track.cancel();
     		spyAngle.cancel();
+    		backAngle.cancel();
     		startAngle.start();
     	}
     	else {
     		Robot.shooter.turnTurret(0);
+    	}
+    	
+    	if(Robot.oi.getToolStartButton()){
+    		spyAngle.cancel();
+    		startAngle.cancel();
+    		backAngle.cancel();
+    		track.start();
+    		auto = false;
     	}
     	
     	if (Robot.oi.getToolLeftTrigger()) {

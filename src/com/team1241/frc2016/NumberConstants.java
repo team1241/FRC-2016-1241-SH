@@ -15,79 +15,84 @@ public class NumberConstants {
     //*************************** PID VALUES (DRIVE) ***************************
     //**************************************************************************
 	
-	//Competition
-	public static final double pDrive 									 = 0.041;
-	public static final double iDrive 									 = 0.0000008;
-	public static final double dDrive 									 = 0.00;
+	//Practice
+	public static final double pDrive 									 = 0.05;
+	public static final double iDrive 									 = 0.00;
+	public static final double dDrive 									 = 0.008;
 	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************
 	
-	//Competition
-	public static final double pGyro 									 = 0.02;
-	public static final double iGyro 									 = 0.00;
+	//Practice
+	public static final double pGyro 									 = 0.05;
+	public static final double iGyro 									 =0.0001;
 	public static final double dGyro 									 = 0.00;
 	
 	//**************************************************************************
     //*************************** PID VALUES (TURRET) **************************
     //**************************************************************************
 	
-	//Competition
-	public static final double pTurret 									 = 0.025;
+	//Practice
+	public static final double pTurret 									 = 0.03;
 	public static final double iTurret 									 = 0.00;
-	public static final double dTurret 									 = 0.005;
-	
+	public static final double dTurret 									 = 0.01;
+
 	//**************************************************************************
     //*************************** PID VALUES (CAMERA) **************************
     //**************************************************************************
 	
-	//Competition
+	//Practice
 	public static final double pCamera 									 = 0.03;
-	public static final double iCamera 									 = 0.0003;
-	public static final double dCamera 									 = 0.000;
-	
-	
+	public static final double iCamera 									 = 0.00;
+	public static final double dCamera 									 = 0.01;
+		
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	//Competition
-	public static final double pShooter									 = 0.00039;
-	public static final double iShooter									 = 0.0000055;
-	public static final double dShooter									 = 0.00;
-	public static final double kForward									 = 0.0001628902407751;
-	public static final double bForward									 = 0.048786729135007;
+	//Practice
+	public static final double pShooterBadder							 = 0.001;
+	public static final double iShooterBadder							 = 0.00000625;
+	public static final double dShooterBadder							 = 0.00;
 	
+	public static final double pShooterSpy								 = 0.001;
+	public static final double iShooterSpy								 = 0.00000625;
+	public static final double dShooterSpy								 = 0.00;
+	
+	public static final double kForward									 = 1.0/5582.0;
+	public static final double bForward									 = 0.0;
+
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
     //**************************************************************************
 	
-	//Competition
-	public static final double pArm 									 = 0.006;
+	//Practice
+	public static final double pArm 									 = 0.03;
 	public static final double iArm 									 = 0.00;
 	public static final double dArm 									 = 0.00;
-	
+		
 	//**************************************************************************
     //**************************OUTPUT VALUES (Shooter)*************************
     //**************************************************************************
 	
-	//Competition
-	public static final int downArmAngle								= 500;
+	//Practice
+	//Arm all the way down
+	public static final int downArmAngle								= 300;
 	//Arm all the way up
-	public static final int upArmAngle									= 790;
-	
+	public static final int upArmAngle									= 53;	
 	
 	//**************************************************************************
 	//***************************** SHOOTER NUMBERS ****************************
 	//**************************************************************************
 	
-	//Competition
+	//Practice
 	public static final int outerShotRPM								= 4600;
-	public static final int spyShotRPM									= 4200;
+	public static final int spyShotRPM									= 4120;
 	public static final int badderShotRPM								= 4500;
 	
 	public static final int spyShotAngle								= -78;
+	public static final int backAngle									= -180;
 	
 	public static final double waitForPop								= 0.75;
 	public static final double waitForHolder							= 0.15;
@@ -98,4 +103,5 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	public static final double intakeDist								= 12.2;
+	
 }

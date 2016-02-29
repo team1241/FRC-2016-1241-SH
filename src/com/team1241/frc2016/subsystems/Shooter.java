@@ -64,9 +64,9 @@ public class Shooter extends Subsystem {
 //				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
 		 
 		// Initialize PID	
-		 shooterPID = new PIDController (NumberConstants.pShooter,
-								   NumberConstants.iShooter,
-								   NumberConstants.dShooter);
+		 shooterPID = new PIDController (NumberConstants.pShooterBadder,
+								   NumberConstants.iShooterBadder,
+								   NumberConstants.dShooterBadder);
 		 
 		 turretPID = new PIDController(NumberConstants.pTurret,
 				 					NumberConstants.iTurret,
@@ -98,7 +98,7 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	//setDefaultCommand(new ShootCommand());
+    	setDefaultCommand(new ShootCommand());
     }
     
     

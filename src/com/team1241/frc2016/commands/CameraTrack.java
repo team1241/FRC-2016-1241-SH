@@ -11,10 +11,8 @@ public class CameraTrack extends Command {
 	private double xVal;
 	private double prevXVal = 0;
 	private double degree;
-	private double startAngle;
 	private boolean hasChanged = true;
 	private boolean started = false;
-	private double prevTurretAngle = 0;
 	
 	private TurnTurret turret;
 	
@@ -23,9 +21,11 @@ public class CameraTrack extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	hasChanged = true;
+    	started = false;
+    	prevXVal = 0;
     	target = Robot.shooter.getCoordinates();
-    	setTimeout(10);
-    	startAngle = Robot.shooter.getTurretAngle();
+    	setTimeout(2);
     	turret = new TurnTurret(0,0.5,2, true);
     }
 
@@ -44,7 +44,7 @@ public class CameraTrack extends Command {
 	    		turret.cancel();
 	    		degree = Robot.shooter.pixelToDegree(xVal);
 	    		System.out.println("SeTPOINT: " + (Robot.shooter.getTurretAngle()-degree) + " Degree: " + degree + " Angle: " + Robot.shooter.getTurretAngle());
-	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree);
+	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+3.2);
 	    		turret.start();
 	    		hasChanged = false;
 	    	}
@@ -59,7 +59,7 @@ public class CameraTrack extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;//isTimedOut();
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
