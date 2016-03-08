@@ -24,6 +24,8 @@ public class ShootCommand extends Command {
 	private TurnTurret startAngle;
 	private CameraTrack track;
 	
+	public static boolean tracked;
+	
 	ToggleBoolean toggleTurret;
 	private boolean auto = false;
 	
@@ -39,6 +41,8 @@ public class ShootCommand extends Command {
     	backAngle = new TurnTurret(NumberConstants.backAngle, 1, 5, false);
     	startAngle = new TurnTurret(0, 1, 5, false);
     	
+    	tracked = false;
+    	
     	track = new CameraTrack();
     }
 
@@ -50,6 +54,11 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-2.2) <= 1)
+			tracked = true;
+		else
+			tracked = false;
+    	
     	if(Robot.oi.getToolRightAnalogButton()) {
     		spyAngle.cancel();
     		startAngle.cancel();

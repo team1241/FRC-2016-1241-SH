@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoDriveOver extends CommandGroup {
     
     public  AutoDriveOver() {
-        //Bring down Cheval
-    	addSequential(new RunArm(NumberConstants.downArmAngle, .8, 1));
+        //Drive to defense
+    	addParallel(new DriveCommand(60,0.6,0,2));
+    	addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 2));
     	
-    	//Drives over the cheval
-    	addParallel(new DriveCommand(10, .8, 0, 1, 1));
-    	addParallel(new RunArm(NumberConstants.downArmAngle-20, .8, 1));
+    	//Drives over the defense
+    	addParallel(new RunArm(NumberConstants.downArmAngle+50, 1, 2));
+    	addSequential(new DriveCommand(70, 1, 0, 2));
 
     }
 }

@@ -25,8 +25,8 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Practice
-	public static final double pGyro 									 = 0.05;
-	public static final double iGyro 									 =0.0001;
+	public static final double pGyro 									 = 0.0125;
+	public static final double iGyro 									 = 0.00;
 	public static final double dGyro 									 = 0.00;
 	
 	//**************************************************************************
@@ -43,25 +43,32 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Practice
-	public static final double pCamera 									 = 0.03;
-	public static final double iCamera 									 = 0.00;
-	public static final double dCamera 									 = 0.01;
+	public static final double pCamera 									 = 0.05;
+	public static final double iCamera 									 = 0.002;
+	public static final double dCamera 									 = 0.00;
 		
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
 	//Practice
-	public static final double pShooterBadder							 = 0.001;
-	public static final double iShooterBadder							 = 0.00000625;
+	public static final double pShooterBadder							 = 0.0002;
+	public static final double iShooterBadder							 = 0.00000;
 	public static final double dShooterBadder							 = 0.00;
 	
-	public static final double pShooterSpy								 = 0.001;
-	public static final double iShooterSpy								 = 0.00000625;
-	public static final double dShooterSpy								 = 0.00;
+	//d 1.0E-4
+	//P 9.0E-4
 	
-	public static final double kForward									 = 1.0/5582.0;
-	public static final double bForward									 = 0.0;
+//	public static final double pShooterSpy								 = 0.001;
+//	public static final double iShooterSpy								 = 0.00000625;
+//	public static final double dShooterSpy								 = 0.00;
+	
+	//1.0/5582.0
+	//0.0
+	public static final double kForward									 = 0.00018389;
+	public static final double bForward									 = -0.0914774;
+	
+//	public static final double kForward									 = 0.67;
 
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
@@ -78,16 +85,16 @@ public class NumberConstants {
 	
 	//Practice
 	//Arm all the way down
-	public static final int downArmAngle								= 300;
+	public static final int downArmAngle								= 700;
 	//Arm all the way up
-	public static final int upArmAngle									= 53;	
+	public static final int upArmAngle									= 950;	
 	
 	//**************************************************************************
 	//***************************** SHOOTER NUMBERS ****************************
 	//**************************************************************************
 	
 	//Practice
-	public static final int outerShotRPM								= 4600;
+	public static final int outerShotRPM								= 4900;
 	public static final int spyShotRPM									= 4120;
 	public static final int badderShotRPM								= 4500;
 	

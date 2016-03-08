@@ -25,9 +25,9 @@ public class PIDController {
     double prevOutput = 0;
     
     double previousValue = 0;
-//    double previousAverage = 0;
-//    double currentAverage;
-//    double average;
+    double previousAverage = 0;
+    double currentAverage;
+    double average;
     
     boolean atTarget = false;
     
@@ -148,9 +148,9 @@ public class PIDController {
 	        errorSum += error;
 	        iOut = iGain * errorSum;
 	        
-//	        currentAverage = (previousValue+currentValue)/2;
-//	        average = (currentAverage+previousAverage)/2;
-//	        SmartDashboard.putNumber("average", average);
+	        currentAverage = (previousValue+currentValue)/2;
+	        average = (currentAverage+previousAverage)/2;
+	        SmartDashboard.putNumber("average", average);
         }
         else{
         	iOut = 0;
@@ -162,7 +162,7 @@ public class PIDController {
         
         lastError = error;
         previousValue = currentValue;
-//        previousAverage = currentAverage;
+        previousAverage = currentAverage;
         
         //PID Output
         output = pOut + iOut + dOut;

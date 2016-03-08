@@ -1,6 +1,10 @@
 package com.team1241.frc2016.commands.auto;
 
+import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
+import com.team1241.frc2016.commands.CameraTrack;
+import com.team1241.frc2016.commands.SetShooterSpeed;
+import com.team1241.frc2016.commands.TurnTurret;
 import com.team1241.frc2016.commands.defence.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -8,12 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class OuterWorksAuton extends CommandGroup {
-    
+public class OuterWorksAuton extends CommandGroup {	
     public  OuterWorksAuton(int defenceLoc, int defence) {
-        //drive in front of defense
-    	
-    	System.out.println(Robot.selectedDefence +","+ Robot.defenceLocation);
     	//Cross the defence
     	if(defence==0) {
         	addSequential(new AutoPortcullis());

@@ -148,7 +148,7 @@ public class Shooter extends Subsystem {
     }
     
     public void turnTurretCamera(double angle, double pwr) {
-    	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.7);
+    	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.5);
     	turret.set(pwr*output);	
     }
     
@@ -168,8 +168,8 @@ public class Shooter extends Subsystem {
      * Restriction: 0 <= x <= 640
      * */
     public void turnTurretToPixel(double pixel, double pwr) {
-    	double output = cameraPID.calcPIDVelocity(0, pixel, 0.5, 0.8);
-    	turret.set(-(pwr*output));	
+    	double output = cameraPID.calcPIDVelocity(320, pixel, 0.2, 0.7);
+    	turret.set((pwr*output));	
     }
     
     /*public double pixelToDegree(double pixel) {
@@ -264,8 +264,8 @@ public class Shooter extends Subsystem {
     /********************************************** SHOOTER PID ********************************************************/
     
     public void setRPM(double rpm){
-    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 30, 0.6);
-//    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
+    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
+    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
     	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
     

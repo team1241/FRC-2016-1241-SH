@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CameraTrack extends Command {
 
+	private double timeOut;
 	private double[] target;
 	private double xVal;
 	private double prevXVal = 0;
@@ -17,6 +18,11 @@ public class CameraTrack extends Command {
 	private TurnTurret turret;
 	
     public CameraTrack() {
+    	this(2.0);
+    }
+    
+    public CameraTrack(double timeOut) {
+    	this.timeOut = timeOut;
     }
 
     // Called just before this Command runs the first time
@@ -25,16 +31,17 @@ public class CameraTrack extends Command {
     	started = false;
     	prevXVal = 0;
     	target = Robot.shooter.getCoordinates();
-    	setTimeout(2);
-    	turret = new TurnTurret(0,0.5,2, true);
+    	setTimeout(timeOut);
+    	turret = new TurnTurret(0,0.5,3, true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.shooter.updateCoordinates();
     	target = Robot.shooter.getCoordinates();
-    	if(target.length == 8){
+    	if(target.length == 8) {
 	    	xVal = Robot.shooter.getXCoordinates();
+	    	
 	    	//Robot.shooter.turnTurretToPixel(xVal,1);
 	    	if(prevXVal != xVal)
 	    		hasChanged = true;
@@ -44,7 +51,7 @@ public class CameraTrack extends Command {
 	    		turret.cancel();
 	    		degree = Robot.shooter.pixelToDegree(xVal);
 	    		System.out.println("SeTPOINT: " + (Robot.shooter.getTurretAngle()-degree) + " Degree: " + degree + " Angle: " + Robot.shooter.getTurretAngle());
-	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+3.2);
+	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+2.2);
 	    		turret.start();
 	    		hasChanged = false;
 	    	}

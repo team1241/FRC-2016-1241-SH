@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.ConveyorCommand;
+import com.team1241.frc2016.commands.ShootCommand;
+import com.team1241.frc2016.commands.Test;
 import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.pid.Constants;
@@ -117,10 +119,13 @@ public class Robot extends IterativeRobot {
 		updateSmartDashboard();
 	}
 
+	
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	conveyor.extendHolder();
     	drive.reset();
+    	
+//    	new Test().start();
     	
     	defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
@@ -230,6 +235,7 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         
+        SmartDashboard.putBoolean("Tracked", ShootCommand.tracked);
         SmartDashboard.putNumber("power", power);
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
         SmartDashboard.putNumber("degree", shooter.pixelToDegree(shooter.getXCoordinates()));

@@ -108,16 +108,20 @@ public class Drivetrain extends Subsystem {
     }
     
     public void runLeftDrive(double pwmVal) {
-    	if(Math.abs(pwmVal)>1)
-    		pwmVal = Math.pow(pwmVal, 0);
+    	if(pwmVal > 1)
+    		pwmVal = 1;
+    	else if(pwmVal < -1)
+    		pwmVal = -1;
     	leftDriveFront.set(pwmVal);
 //    	leftDriveMiddle.set(pwmVal);
     	leftDriveBack.set(pwmVal);
     }
     
     public void runRightDrive(double pwmVal) {
-    	if(Math.abs(pwmVal)>1)
-    		pwmVal = Math.pow(pwmVal, 0);
+    	if(pwmVal > 1)
+    		pwmVal = 1;
+    	else if(pwmVal < -1)
+    		pwmVal = -1;
     	rightDriveFront.set(pwmVal);
 //    	rightDriveMiddle.set(pwmVal);
     	rightDriveBack.set(pwmVal);
@@ -128,17 +132,21 @@ public class Drivetrain extends Subsystem {
     }
     
     public void driveStraight(double setPoint, double speed, double setAngle, double epsilon) {
+    	drivePID.calcPIDDrive(setPoint, getAverageDistance(), epsilon);
+    	gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	double output = drivePID.calcPIDDrive(setPoint, getAverageDistance(), epsilon);
     	double angle = gyroPID.calcPID(setAngle, getYaw(), epsilon);
     	
     	System.out.println("drive pid" + output + "gyro pid" + angle + "," + getYaw());
+    	System.out.println("Left:" + (output+angle) + " Right:" + (-output+angle));
     	SmartDashboard.putNumber("drivePID", output);
     	SmartDashboard.putNumber("gyroPID", angle);
     	SmartDashboard.putNumber("LeftDrive", (output+angle)*speed);
     	SmartDashboard.putNumber("RightDrive", (-output+angle)*speed);
     	
-    	runLeftDrive((output+angle)*speed);
-    	runRightDrive((-output+angle)*speed);
+    	runLeftDrive((output+angle));
+    	runRightDrive((-output+
+    			angle));
     }
     
     public void turnDrive(double setAngle, double speed, double epsilon) {
