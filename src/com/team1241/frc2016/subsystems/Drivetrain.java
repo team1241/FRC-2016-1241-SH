@@ -144,9 +144,8 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("LeftDrive", (output+angle)*speed);
     	SmartDashboard.putNumber("RightDrive", (-output+angle)*speed);
     	
-    	runLeftDrive((output+angle));
-    	runRightDrive((-output+
-    			angle));
+    	runLeftDrive((output+angle)*speed);
+    	runRightDrive((-output+angle)*speed);
     }
     
     public void turnDrive(double setAngle, double speed, double epsilon) {

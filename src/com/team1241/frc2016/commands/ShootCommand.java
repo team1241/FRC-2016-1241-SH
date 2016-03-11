@@ -54,7 +54,9 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-2.2) <= 1)
+    	badderRPM.changeRPM(Robot.rpm);
+    	
+    	if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-1.5) <= 1)
 			tracked = true;
 		else
 			tracked = false;

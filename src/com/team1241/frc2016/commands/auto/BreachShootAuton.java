@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class OuterWorksAuton extends CommandGroup {	
-    public  OuterWorksAuton(int defenceLoc, int defence) {
+public class BreachShootAuton extends CommandGroup {	
+    public  BreachShootAuton(int defenceLoc, int defence) {
     	//Cross the defence
     	if(defence==0) {
         	addSequential(new AutoPortcullis());

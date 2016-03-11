@@ -45,6 +45,7 @@ public class Robot extends IterativeRobot {
 	double ki;
 	double kd;
 	double power;
+	public static double rpm;
 	
     Command autonomousCommand;
     public SendableChooser autoChooser;
@@ -106,7 +107,8 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Auto", 0);
 		autoChooser.addObject("SpyShot", 1);
-		autoChooser.addDefault("OuterWorks", 2);
+		autoChooser.addObject("Breach", 2);
+		autoChooser.addDefault("Breach&Shoot", 3);
 		
 		SmartDashboard.putData("Autonomous", autoChooser);
 		
@@ -125,10 +127,9 @@ public class Robot extends IterativeRobot {
     	conveyor.extendHolder();
     	drive.reset();
     	
-//    	new Test().start();
-    	
     	defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
+    	
     	switch((int)autoChooser.getSelected()) {
     	case 0:
     		autonomousCommand = (Command) new NoAuto();
@@ -137,12 +138,13 @@ public class Robot extends IterativeRobot {
     		autonomousCommand = (Command) new SpyShotAuton();
     		break;
     	case 2:
-    		autonomousCommand = (Command) new OuterWorksAuton(defenceLocation, selectedDefence);
+    		autonomousCommand = (Command) new BreachAuton(selectedDefence);
+    		break;
+    	case 3:
+    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
     		break;
     	}
     	autonomousCommand.start();
-    	
-//    	new AutoCourtyard(4).start();
     }
 
     /**
@@ -171,9 +173,9 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
+//    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
     	
-    	power = pref.getDouble("power", 0.0);
+//    	power = pref.getDouble("power", 0.0);
     	
     }
 
@@ -191,6 +193,10 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         LiveWindow.run();
         updateSmartDashboard();
+        
+        rpm = pref.getDouble("rpm", 0.0);
+        
+        
         
         /*if(Robot.oi.getDriveAButton()) {
         	new CameraTrack().start();

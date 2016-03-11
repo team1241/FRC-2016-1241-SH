@@ -9,13 +9,13 @@ package com.team1241.frc2016;
  * @since 2015-09-13
  */
 
-//Practice
+//Competition
 public class NumberConstants {
 	//**************************************************************************
     //*************************** PID VALUES (DRIVE) ***************************
     //**************************************************************************
 	
-	//Practice
+	//Competition
 	public static final double pDrive 									 = 0.05;
 	public static final double iDrive 									 = 0.00;
 	public static final double dDrive 									 = 0.008;
@@ -24,7 +24,7 @@ public class NumberConstants {
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************
 	
-	//Practice
+	//Competition
 	public static final double pGyro 									 = 0.0125;
 	public static final double iGyro 									 = 0.00;
 	public static final double dGyro 									 = 0.00;
@@ -33,69 +33,58 @@ public class NumberConstants {
     //*************************** PID VALUES (TURRET) **************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pTurret 									 = 0.03;
+	//Competition
+	public static final double pTurret 									 = 0.025;
 	public static final double iTurret 									 = 0.00;
-	public static final double dTurret 									 = 0.01;
-
+	public static final double dTurret 									 = 0.005;
+	
 	//**************************************************************************
     //*************************** PID VALUES (CAMERA) **************************
     //**************************************************************************
 	
-	//Practice
+	//Competition
 	public static final double pCamera 									 = 0.05;
 	public static final double iCamera 									 = 0.002;
-	public static final double dCamera 									 = 0.00;
-		
+	public static final double dCamera 									 = 0.000;
+	
+	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pShooterBadder							 = 0.0002;
-	public static final double iShooterBadder							 = 0.00000;
-	public static final double dShooterBadder							 = 0.00;
+	//Competition
+	public static final double pShooterBadder							= 0.0003;
+	public static final double iShooterBadder							= 0.0000;
+	public static final double dShooterBadder							= 0.0000;
+	public static final double kForward									= 0.000134559;
+	public static final double bForward									= 0.177485294;
 	
-	//d 1.0E-4
-	//P 9.0E-4
-	
-//	public static final double pShooterSpy								 = 0.001;
-//	public static final double iShooterSpy								 = 0.00000625;
-//	public static final double dShooterSpy								 = 0.00;
-	
-	//1.0/5582.0
-	//0.0
-	public static final double kForward									 = 0.00018389;
-	public static final double bForward									 = -0.0914774;
-	
-//	public static final double kForward									 = 0.67;
-
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pArm 									 = 0.03;
+	//Competition
+	public static final double pArm 									 = 0.006;
 	public static final double iArm 									 = 0.00;
 	public static final double dArm 									 = 0.00;
-		
+	
 	//**************************************************************************
     //**************************OUTPUT VALUES (Shooter)*************************
     //**************************************************************************
 	
-	//Practice
-	//Arm all the way down
-	public static final int downArmAngle								= 700;
+	//Competition
+	public static final int downArmAngle								= 510;
 	//Arm all the way up
-	public static final int upArmAngle									= 950;	
+	public static final int upArmAngle									= 780;
+	
 	
 	//**************************************************************************
 	//***************************** SHOOTER NUMBERS ****************************
 	//**************************************************************************
 	
-	//Practice
-	public static final int outerShotRPM								= 4900;
-	public static final int spyShotRPM									= 4120;
+	//Competition
+	public static final int outerShotRPM								= 4600;
+	public static final int spyShotRPM									= 4200;
 	public static final int badderShotRPM								= 4500;
 	
 	public static final int spyShotAngle								= -78;
@@ -110,5 +99,4 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	public static final double intakeDist								= 12.2;
-	
 }

@@ -51,7 +51,7 @@ public class CameraTrack extends Command {
 	    		turret.cancel();
 	    		degree = Robot.shooter.pixelToDegree(xVal);
 	    		System.out.println("SeTPOINT: " + (Robot.shooter.getTurretAngle()-degree) + " Degree: " + degree + " Angle: " + Robot.shooter.getTurretAngle());
-	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+2.2);
+	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+1.5);
 	    		turret.start();
 	    		hasChanged = false;
 	    	}

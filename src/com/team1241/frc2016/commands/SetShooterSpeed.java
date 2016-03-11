@@ -14,6 +14,10 @@ public class SetShooterSpeed extends Command {
     public SetShooterSpeed(double rpm) {
     	this.rpm = rpm;
     }
+    
+    public void changeRPM(double rpm) {
+    	this.rpm = rpm;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
