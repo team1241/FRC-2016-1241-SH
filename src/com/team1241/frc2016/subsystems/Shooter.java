@@ -265,7 +265,11 @@ public class Shooter extends Subsystem {
     
     public void setRPM(double rpm){
     	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
-    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward);
+    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
+    	/*if(output+rpm*NumberConstants.kForward+NumberConstants.bForward < 0)
+    		output = -(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
+    	else
+    		output = output+rpm*NumberConstants.kForward+NumberConstants.bForward;*/
     	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
     

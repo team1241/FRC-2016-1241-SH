@@ -25,6 +25,7 @@ public class ShootCommand extends Command {
 	private CameraTrack track;
 	
 	public static boolean tracked;
+	public static boolean detects;
 	
 	ToggleBoolean toggleTurret;
 	private boolean auto = false;
@@ -42,6 +43,7 @@ public class ShootCommand extends Command {
     	startAngle = new TurnTurret(0, 1, 5, false);
     	
     	tracked = false;
+    	detects = false;
     	
     	track = new CameraTrack();
     }
@@ -54,7 +56,13 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	badderRPM.changeRPM(Robot.rpm);
+//    	badderRPM.changeRPM(Robot.rpm);
+    	if(Robot.shooter.getXCoordinates()!=-1) {
+    		detects = true;
+    	}
+    	else {
+    		detects = false;
+    	}
     	
     	if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-1.5) <= 1)
 			tracked = true;

@@ -40,7 +40,7 @@ public class ConveyorCommand extends Command {
     		started = true;
     	}
     	SmartDashboard.putNumber("timer", timer.get());
-    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getContains() && timer.get()>0.5) {
+    	if(!Robot.conveyor.getOptic() && auto && !Robot.conveyor.getContains() && timer.get()>0.4) {
     		timer.reset();
     		timer.stop();
     		Robot.conveyor.setContains(true);

@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoPortcullis extends CommandGroup {
     
     public  AutoPortcullis() {
-    	addParallel(new DriveCommand(65, 0.5, 0, 3));
-    	addSequential(new RunArm(NumberConstants.downArmAngle, 1, 3));
+    	addParallel(new DriveCommand(68, 0.5, 0, 3));
+    	addSequential(new RunArm(NumberConstants.downArmAngle-20, 1, 3));
     	//Drive under portcullis
     	//addSequential(new DriveCommand(15, 0.3, 0, 5));
     	

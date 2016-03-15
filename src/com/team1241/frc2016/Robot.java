@@ -127,24 +127,27 @@ public class Robot extends IterativeRobot {
     	conveyor.extendHolder();
     	drive.reset();
     	
-    	defenceLocation = (int) locationChooser.getSelected();
-    	selectedDefence = (int) defenceChooser.getSelected();
+    	new BreachAuton(4).start();
+//    	new AutoCourtyard(4).start();
     	
-    	switch((int)autoChooser.getSelected()) {
-    	case 0:
-    		autonomousCommand = (Command) new NoAuto();
-    		break;
-    	case 1:
-    		autonomousCommand = (Command) new SpyShotAuton();
-    		break;
-    	case 2:
-    		autonomousCommand = (Command) new BreachAuton(selectedDefence);
-    		break;
-    	case 3:
-    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
-    		break;
-    	}
-    	autonomousCommand.start();
+//    	defenceLocation = (int) locationChooser.getSelected();
+//    	selectedDefence = (int) defenceChooser.getSelected();
+//    	
+//    	switch((int)autoChooser.getSelected()) {
+//    	case 0:
+//    		autonomousCommand = (Command) new NoAuto();
+//    		break;
+//    	case 1:
+//    		autonomousCommand = (Command) new SpyShotAuton();
+//    		break;
+//    	case 2:
+//    		autonomousCommand = (Command) new BreachAuton(selectedDefence);
+//    		break;
+//    	case 3:
+//    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
+//    		break;
+//    	}
+//    	autonomousCommand.start();
     }
 
     /**
@@ -175,7 +178,7 @@ public class Robot extends IterativeRobot {
     	
 //    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
     	
-//    	power = pref.getDouble("power", 0.0);
+    	power = pref.getDouble("power", 0.0);
     	
     }
 
@@ -194,7 +197,7 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
-        rpm = pref.getDouble("rpm", 0.0);
+//        rpm = pref.getDouble("rpm", 0.0);
         
         
         
@@ -241,6 +244,7 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         
+        SmartDashboard.putBoolean("Detects Target", ShootCommand.detects);
         SmartDashboard.putBoolean("Tracked", ShootCommand.tracked);
         SmartDashboard.putNumber("power", power);
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
