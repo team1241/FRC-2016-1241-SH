@@ -21,9 +21,9 @@ public class IntakeCommand extends Command {
 	private boolean auto = false;
 
     public IntakeCommand() {
-    	toggle = new ToggleBoolean();
-    	up = new RunArm(NumberConstants.upArmAngle, 1.0, 3);
-    	down = new RunArm(NumberConstants.downArmAngle,1.0,3);
+//    	toggle = new ToggleBoolean();
+//    	up = new RunArm(NumberConstants.upArmAngle, 1.0, 3);
+//    	down = new RunArm(NumberConstants.downArmAngle,1.0,3);
         requires(Robot.intake);
     }
 

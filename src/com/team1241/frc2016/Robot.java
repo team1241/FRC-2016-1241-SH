@@ -9,6 +9,7 @@ import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.ConveyorCommand;
 import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.commands.Test;
+import com.team1241.frc2016.commands.TurnTurret;
 import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.pid.Constants;
@@ -54,6 +55,7 @@ public class Robot extends IterativeRobot {
     
     public static int defenceLocation;
     public static int selectedDefence;
+    public static int autoNumber;
     
     CameraServer server;
     
@@ -78,10 +80,9 @@ public class Robot extends IterativeRobot {
 		conveyor = new Conveyor();
 		
 		// Camera Server
-		
-		server = CameraServer.getInstance();
-        server.setQuality(50);
-        server.startAutomaticCapture("cam0");
+//		server = CameraServer.getInstance();
+//        server.setQuality(50);
+//        server.startAutomaticCapture("cam0");
 		
         // instantiate the command used for the autonomous period
 		
@@ -119,6 +120,25 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateSmartDashboard();
+		
+		defenceLocation = (int) locationChooser.getSelected();
+    	selectedDefence = (int) defenceChooser.getSelected();
+    	autoNumber = (int) autoChooser.getSelected();
+    	
+    	switch(autoNumber) {
+    	case 0:
+    		autonomousCommand = (Command) new NoAuto();
+    		break;
+    	case 1:
+    		autonomousCommand = (Command) new SpyShotAuton();
+    		break;
+    	case 2:
+    		autonomousCommand = (Command) new BreachAuton(selectedDefence);
+    		break;
+    	case 3:
+    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
+    		break;
+    	}
 	}
 
 	
@@ -127,7 +147,7 @@ public class Robot extends IterativeRobot {
     	conveyor.extendHolder();
     	drive.reset();
     	
-    	new BreachAuton(4).start();
+//    	new BreachAuton(4).start();
 //    	new AutoCourtyard(4).start();
     	
 //    	defenceLocation = (int) locationChooser.getSelected();
@@ -147,7 +167,7 @@ public class Robot extends IterativeRobot {
 //    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
 //    		break;
 //    	}
-//    	autonomousCommand.start();
+    	autonomousCommand.start();
     }
 
     /**
@@ -176,10 +196,12 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-//    	Robot.shooter.shooterPID.changePIDGains(kp, ki, kd);
+    	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     	
+    	drive.reset();
+//    	new CameraTrack(-1).start();
     }
 
     /**
@@ -197,28 +219,23 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
+//        if(Robot.shooter.getXCoordinates()>-1)
+//        	new CameraTrack(-1).start();
+//        else 
+//        	Robot.shooter.turnTurret(0);
 //        rpm = pref.getDouble("rpm", 0.0);
         
         
         
-        /*if(Robot.oi.getDriveAButton()) {
-        	new CameraTrack().start();
-        }*/
+//        if(Robot.oi.getDriveLeftTrigger()) {
+//        	new TurnTurret(-65, 1, 4, false).start();
+//        	ShootCommand.auto = false;
+//        } else if(Robot.oi.getDriveRightTrigger()) {
+//        	new TurnTurret(65, 1, 4, false).start();
+//        	ShootCommand.auto = false;
+//        }
         
 //        Robot.shooter.setSpeed(power);
-        
-//        if(Robot.oi.getDriveXButton()) {
-//        	new AutoDrawbridge().start();
-//        }
-//        if(Robot.oi.getDriveAButton()) {
-//        	new AutoPortcullis().start();
-//        }
-//        else if(Robot.oi.getDriveBButton()) {
-//        	new AutoCheval().start();
-//        }
-        /*if(Robot.oi.getDriveYButton()) {
-        	new DrivePath("0,0","22.6,40","48,0","48,96",5,1).start();
-        }*/
     }
     
     /**
@@ -244,14 +261,29 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         
-        SmartDashboard.putBoolean("Detects Target", ShootCommand.detects);
-        SmartDashboard.putBoolean("Tracked", ShootCommand.tracked);
-        SmartDashboard.putNumber("power", power);
+        if(Robot.shooter.getXCoordinates()!=-1)
+        	SmartDashboard.putBoolean("Detects Target", true);
+    	else
+    		SmartDashboard.putBoolean("Detects Target", false);
+        
+        if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-NumberConstants.cameraOffset) <= 1)
+        	SmartDashboard.putBoolean("Tracked", true);
+		else
+			SmartDashboard.putBoolean("Tracked", false);
+        
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
         SmartDashboard.putNumber("degree", shooter.pixelToDegree(shooter.getXCoordinates()));
         SmartDashboard.putNumber("distance", shooter.getDistanceToTarget());
         SmartDashboard.putNumber("Target width", shooter.targetWidthPixels());
         SmartDashboard.putNumber("Change in Degree",shooter.getTurretAngle() - shooter.pixelToDegree(shooter.getXCoordinates()));
+        
+        SmartDashboard.putBoolean("PC Connected", shooter.connected);
+        SmartDashboard.putNumber("defenceLocation", defenceLocation);
+        SmartDashboard.putNumber("selectedDefence", selectedDefence);
+        SmartDashboard.putNumber("autoNumber", autoNumber);
+        
+        SmartDashboard.putNumber("rightX", Robot.oi.getToolRightX());
+    	SmartDashboard.putNumber("leftX", Robot.oi.getToolLeftX());
 //        System.out.println("PID " + shooter.shooterPID.getPGain() + "," + shooter.shooterPID.getIGain() + "," + shooter.shooterPID.getDGain());
     }
 }

@@ -14,42 +14,49 @@ public class AutoCourtyard extends CommandGroup {
 	public  AutoCourtyard(int location) {
 		if(location==1) {
 			//Turn towards tower
-			addParallel(new DriveCommand(150, 1, 0, 5));
-			addSequential(new TurnTurret(-70, 1, 5, false));
+			addParallel(new DriveCommand(140, 1, 0, 3));
+			addSequential(new TimedTurnTurret(-70, 1, 3, false));
 			
-			addSequential(new WaitCommand(1.0));
+//			addSequential(new WaitAndTrack(2.0));
+//			addSequential(new WaitCommand(2.0));
+			addSequential(new CameraTrack(1.5));
 			
-			addSequential(new CameraTrack(1.0));
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
+			addParallel(new SetShooterSpeed(4000));
+			addSequential(new AutoShoot());
 		}
 		else if(location==2) {
 			//Turn towards tower
 			addSequential(new DrivePath("0,0","22.6,40","36,0","36,122",3.5,0.5));
 			
+//			addSequential(new WaitAndTrack(0.5));
 			addParallel(new CameraTrack(1.0));
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
+			
+			addParallel(new SetShooterSpeed(4000));
+			addSequential(new AutoShoot());
 		}
 		else if(location==3) {
-			addParallel(new DriveCommand(125, 1,0,5));
-			addSequential(new TurnTurret(10, 1, 5, false));
+			addParallel(new DriveCommand(90, 1,0,2));
+			addSequential(new TimedTurnTurret(10, 1, 2, false));
 			
-			addSequential(new CameraTrack(1.0));
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
+//			addSequential(new WaitAndTrack(0.5));
+//			addSequential(new WaitCommand(0.5));
+			addSequential(new CameraTrack(1.5));
+			
+			addParallel(new SetShooterSpeed(4000));
+			addSequential(new AutoShoot());
 		}
 		else if(location==4) {
 			//addSequential(new TurnCommand(0, 1, 5));
-			addParallel(new RunArm(NumberConstants.downArmAngle+30, 1, 5));
-			addParallel(new DriveCommand(170, 1,0,5));
-			addSequential(new TurnTurret(60, 1, 5, false));
+			addParallel(new RunArm(NumberConstants.downArmAngle+30, 1, 4));
+			addParallel(new DriveCommand(145, 1,0,4));
+			addSequential(new TimedTurnTurret(60, 1, 4, false));
 			
-			addSequential(new WaitCommand(0.7));
+//			addSequential(new WaitAndTrack(1.5));
+//			addSequential(new WaitCommand(1.5));
+			addSequential(new CameraTrack(1.5));
 			
-			addSequential(new CameraTrack(1.0));
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
+			addParallel(new SetShooterSpeed(4000));
+			addSequential(new AutoShoot());
 		}
 	}
 }

@@ -12,13 +12,13 @@ public class AutoCheval extends CommandGroup {
     
     public  AutoCheval() {
     	//Move towards cheval
-    	addParallel(new DriveCommand(45, 0.5, 0, 2));
-    	addSequential(new RunArm(NumberConstants.downArmAngle+150, 1, 2));
-    	addSequential(new RunArm(NumberConstants.downArmAngle, 1, 1.5));
+    	addParallel(new DriveCommand(52, 0.75, 0, 2.5));
+    	addSequential(new RunArm(NumberConstants.downArmAngle+150, 1, 2.5));
+    	addSequential(new RunArm(NumberConstants.downArmAngle-20, 1, 1.5));
     	
     	//Drives over the cheval
     	addParallel(new RunArm(NumberConstants.downArmAngle+50, 1, 3));
-    	addSequential(new DriveCommand(70, 1, 0, 3));
+    	addSequential(new DriveCommand(80, 1, 0, 3));
 
     }
 }

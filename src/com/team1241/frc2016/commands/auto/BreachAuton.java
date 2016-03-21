@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class BreachAuton extends CommandGroup {	
     public  BreachAuton(int defence) {
     	//Cross the defence
-    	addSequential(new WaitCommand(5.0));
+//    	addSequential(new WaitCommand(5.0));
     	if(defence==0) {
         	addSequential(new AutoPortcullis());
         }

@@ -1,5 +1,6 @@
 package com.team1241.frc2016.commands;
 
+import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,7 +32,8 @@ public class CameraTrack extends Command {
     	started = false;
     	prevXVal = 0;
     	target = Robot.shooter.getCoordinates();
-    	setTimeout(timeOut);
+    	if(timeOut>0)
+    		setTimeout(timeOut);
     	turret = new TurnTurret(0,0.5,3, true);
     }
 
@@ -51,7 +53,7 @@ public class CameraTrack extends Command {
 	    		turret.cancel();
 	    		degree = Robot.shooter.pixelToDegree(xVal);
 	    		System.out.println("SeTPOINT: " + (Robot.shooter.getTurretAngle()-degree) + " Degree: " + degree + " Angle: " + Robot.shooter.getTurretAngle());
-	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+1.5);
+	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+ NumberConstants.cameraOffset);
 	    		turret.start();
 	    		hasChanged = false;
 	    	}
@@ -66,7 +68,11 @@ public class CameraTrack extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+    	if(timeOut==-1) {
+    		return false;
+    	} else {
+    		return isTimedOut();
+    	}
     }
 
     // Called once after isFinished returns true

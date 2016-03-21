@@ -13,5 +13,6 @@ public class AutoShoot extends CommandGroup {
     public  AutoShoot() {
     	addSequential(new WaitCommand(1.5));
     	addSequential(new ShootSequence());
+    	addSequential(new TurnTurret(0, 1, 5, false));
     }
 }

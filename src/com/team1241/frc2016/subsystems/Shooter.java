@@ -1,6 +1,8 @@
 package com.team1241.frc2016.subsystems;
 
 
+import java.util.Arrays;
+
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.commands.ShootCommand;
@@ -39,6 +41,7 @@ public class Shooter extends Subsystem {
 	private Counter optical;
 	
 	private double[] targetNum = new double[8];
+	public boolean connected;
 	
 	public Shooter(){
 		 // Initialize Talons
@@ -81,9 +84,11 @@ public class Shooter extends Subsystem {
 		 NetworkTable server = NetworkTable.getTable("SmartDashboard");
 	     try{
 	        targetNum = server.getNumberArray("MEQ_COORDINATES");
+	        connected = true;
 	     }
 	     catch(Exception ex){
 	    	 System.out.println("Unable to get coordinates");
+	    	 connected = false;
 	     }
 	}
 	
@@ -208,13 +213,16 @@ public class Shooter extends Subsystem {
         return turretEncoder.getRate();
     }
     
-    public void updateCoordinates(){
+    public boolean updateCoordinates(){
     	NetworkTable server = NetworkTable.getTable("SmartDashboard");
 	     try{
 	        targetNum = server.getNumberArray("MEQ_COORDINATES");
+//	        System.out.println(Arrays.toString(targetNum));
+	        return true;
 	     }
 	     catch(Exception ex){
-//	    	 System.out.println("Unable to get coordinates");
+	    	 System.out.println("Unable to get coordinates");
+	    	 return false;
 	     }
     }
     
@@ -223,12 +231,11 @@ public class Shooter extends Subsystem {
     }
     
     public double getXCoordinates(){
-    	updateCoordinates();
-//    	System.out.println(targetNum[0]);
-    	if(targetNum.length == 8)
-    		return (targetNum[0]+targetNum[2]+targetNum[4]+targetNum[6])/4;
-    	else
-    		return -1;
+    	if(updateCoordinates()) {
+    		if(targetNum.length == 8)
+    			return (targetNum[0]+targetNum[2]+targetNum[4]+targetNum[6])/4;
+    	}
+    	return -1;
     }
     
     public double targetWidthPixels(){

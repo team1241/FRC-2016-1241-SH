@@ -7,6 +7,7 @@ import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Default command to the Shooter subsystem.
@@ -21,14 +22,17 @@ public class ShootCommand extends Command {
 	
 	private TurnTurret spyAngle;
 	private TurnTurret backAngle;
-	private TurnTurret startAngle;
+	private TurnTurret originAngle;
 	private CameraTrack track;
+	
+	private TurnTurret leftAngle;
+	private TurnTurret rightAngle;
 	
 	public static boolean tracked;
 	public static boolean detects;
 	
 	ToggleBoolean toggleTurret;
-	private boolean auto = false;
+	public static boolean auto = false;
 	
 	
     public ShootCommand() {
@@ -38,12 +42,13 @@ public class ShootCommand extends Command {
     	outerRPM = new SetShooterSpeed(NumberConstants.outerShotRPM);
     	spyRPM = new SetShooterSpeed(NumberConstants.spyShotRPM);
     	
-    	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 5, false);
-    	backAngle = new TurnTurret(NumberConstants.backAngle, 1, 5, false);
-    	startAngle = new TurnTurret(0, 1, 5, false);
+    	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 3, false);
+    	backAngle = new TurnTurret(-180, 1, 3, false);
+    	originAngle = new TurnTurret(0, 1, 3, false);
+    	leftAngle = new TurnTurret(68, 1, 3, false);
+    	rightAngle = new TurnTurret(-68, 1, 3, false);
     	
     	tracked = false;
-    	detects = false;
     	
     	track = new CameraTrack();
     }
@@ -51,68 +56,85 @@ public class ShootCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	// if arm position is too high, put it down before shooting
+//    	originAngle.start();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 //    	badderRPM.changeRPM(Robot.rpm);
-    	if(Robot.shooter.getXCoordinates()!=-1) {
-    		detects = true;
-    	}
-    	else {
-    		detects = false;
-    	}
     	
-    	if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-1.5) <= 1)
-			tracked = true;
-		else
-			tracked = false;
-    	
-    	if(Robot.oi.getToolRightAnalogButton()) {
-    		spyAngle.cancel();
-    		startAngle.cancel();
-    		track.cancel();
+    	//Turret//
+    	if(Robot.oi.getToolRightX() > 0.9) {
+    		backAngle.cancel();
+    		originAngle.cancel();
+    		leftAngle.cancel();
+    		rightAngle.start();
+    	} else if(Robot.oi.getToolRightX() < -0.9) {
+    		backAngle.cancel();
+    		rightAngle.cancel();
+    		originAngle.cancel();
+    		leftAngle.start();
+    	} else if(Robot.oi.getToolRightY() > 0.9) {
+    		originAngle.cancel();
+    		leftAngle.cancel();
+    		rightAngle.cancel();
     		backAngle.start();
-    		auto = false;
+    	} else if(Robot.oi.getToolRightY() < -0.9) {
+    		backAngle.cancel();
+    		leftAngle.cancel();
+    		rightAngle.cancel();
+    		originAngle.start();
     	}
     	
-    	if(Robot.oi.getToolYButton()) {
-    		toggleTurret.set(true);
-    		auto = true;
-    	}
-    	if(Math.abs(Robot.oi.getToolRightX()) > 0.05) {
-    		auto = false;
-    		spyAngle.cancel();
-    		startAngle.cancel();
-    		track.cancel();
-    		backAngle.cancel();
-    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
-    	}
-    	else if(toggleTurret.get() && auto) {
-    		track.cancel();
-    		startAngle.cancel();
-    		backAngle.cancel();
-    		spyAngle.start();
-    	}
-    	else if(!toggleTurret.get() && auto) {
-    		track.cancel();
-    		spyAngle.cancel();
-    		backAngle.cancel();
-    		startAngle.start();
-    	}
-    	else {
-    		Robot.shooter.turnTurret(0);
-    	}
+//    	if(Robot.oi.getToolRightAnalogButton()) {
+//    		spyAngle.cancel();
+//    		originAngle.cancel();
+//    		track.cancel();
+//    		backAngle.start();
+// 
+//    		auto = false;
+//    	}
+//    	
+//    	if(Robot.oi.getToolYButton()) {
+//    		toggleTurret.set(true);
+//    		auto = true;
+//    	}
+//    	if(Math.abs(Robot.oi.getToolRightX()) > 0.05) {
+//    		auto = false;
+//    		spyAngle.cancel();
+//    		originAngle.cancel();
+//    		track.cancel();
+//    		backAngle.cancel();
+//    		Robot.shooter.turnTurret(-Robot.oi.getToolRightX()*0.5);
+//    	}
+//    	else if(toggleTurret.get() && auto) {
+//    		track.cancel();
+//    		originAngle.cancel();
+//    		backAngle.cancel();
+//    		spyAngle.start();
+//    	}
+//    	else if(!toggleTurret.get() && auto) {
+//    		track.cancel();
+//    		spyAngle.cancel();
+//    		backAngle.cancel();
+//    		originAngle.start();
+//    	}
+//    	else {
+//    		Robot.shooter.turnTurret(0);
+//    	}
     	
+    	
+    	//Track//
     	if(Robot.oi.getToolStartButton()){
     		spyAngle.cancel();
-    		startAngle.cancel();
+    		originAngle.cancel();
     		backAngle.cancel();
     		track.start();
     		auto = false;
     	}
     	
+    	//Shooter//
     	if (Robot.oi.getToolLeftTrigger()) {
     		Robot.shooter.setShooterState(true);
     		badderRPM.cancel();
