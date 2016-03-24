@@ -13,13 +13,13 @@ public class AutoDriveOver extends CommandGroup {
     public  AutoDriveOver() {
         //Drive to defense
 //    	addParallel(new DriveCommand(60,0.6,0,2));
-    	addParallel(new ContinousMotion(0.4, 45, 1.5));
+    	addParallel(new ContinousMotion(0.6, 40, 1.5));
     	addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 1.5));
     	
     	//Drives over the defense
-    	addParallel(new RunArm(NumberConstants.downArmAngle+50, 1, 2.75));
+    	addParallel(new RunArm(NumberConstants.downArmAngle+25, 1, 2.75));
 //    	addSequential(new DriveCommand(80, 1, 0, 2.75));
-    	addSequential(new ContinousMotion(1.0, 60, 2.75));
+    	addSequential(new ContinousMotion(1.0, 65, 2.75));
     	addSequential(new DriveCommand(0, 0, 0, 0.0));
     }
 }

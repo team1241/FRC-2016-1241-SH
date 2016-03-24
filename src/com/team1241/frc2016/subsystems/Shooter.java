@@ -218,10 +218,12 @@ public class Shooter extends Subsystem {
 	     try{
 	        targetNum = server.getNumberArray("MEQ_COORDINATES");
 //	        System.out.println(Arrays.toString(targetNum));
+	        connected = true;
 	        return true;
 	     }
 	     catch(Exception ex){
 	    	 System.out.println("Unable to get coordinates");
+	    	 connected = false;
 	    	 return false;
 	     }
     }
@@ -239,11 +241,11 @@ public class Shooter extends Subsystem {
     }
     
     public double targetWidthPixels(){
-    	updateCoordinates();
-    	if(targetNum.length == 8)
-    		return ((targetNum[0]-targetNum[2]) + (targetNum[6]-targetNum[4]))/2;
-    	else
-    		return -1;
+    	if(updateCoordinates()) {
+    		if(targetNum.length == 8)
+    			return ((targetNum[0]-targetNum[2]) + (targetNum[6]-targetNum[4]))/2;
+    	}
+    	return -1;
     }
     
     public double getDistanceToTarget(){
@@ -273,10 +275,6 @@ public class Shooter extends Subsystem {
     public void setRPM(double rpm){
     	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
     	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
-    	/*if(output+rpm*NumberConstants.kForward+NumberConstants.bForward < 0)
-    		output = -(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
-    	else
-    		output = output+rpm*NumberConstants.kForward+NumberConstants.bForward;*/
     	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
     
@@ -297,11 +295,6 @@ public class Shooter extends Subsystem {
     public void setTurretEncDirection(boolean direction) {
     	turretEncoder.setReverseDirection(direction);
     }
-    
-    public void resetEncoder() {
-    	turretEncoder.reset();
-    }
-    
 }
 
 

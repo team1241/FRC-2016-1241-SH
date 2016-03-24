@@ -12,7 +12,7 @@ public class ContinousMotion extends Command {
     private double speed;
 	private double setPoint;
 	private double timeOut;
-
+	
 	public ContinousMotion(double speed, double setPoint, double timeOut) {
         this.speed = speed;
         this.setPoint = setPoint;
@@ -27,8 +27,9 @@ public class ContinousMotion extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.runLeftDrive(speed);
-    	Robot.drive.runRightDrive(-speed);
+    	Robot.drive.driveAngle(0, speed);
+//    	Robot.drive.runLeftDrive(speed);
+//    	Robot.drive.runRightDrive(-speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

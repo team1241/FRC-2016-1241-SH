@@ -32,6 +32,6 @@ public class BreachAuton extends CommandGroup {
         	addSequential(new AutoDriveOver());
         }
     	
-    	addSequential(new DriveCommand(50, 1.0, 0, 5));
+    	addSequential(new DriveCommand(10, 1.0, 0, 1));
     }
 }

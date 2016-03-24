@@ -46,7 +46,8 @@ public class Robot extends IterativeRobot {
 	double ki;
 	double kd;
 	double power;
-	public static double rpm;
+	public static double outerRPM;
+	public static double spyRPM;
 	
     Command autonomousCommand;
     public SendableChooser autoChooser;
@@ -146,6 +147,7 @@ public class Robot extends IterativeRobot {
         // schedule the autonomous command (example)
     	conveyor.extendHolder();
     	drive.reset();
+    	shooter.reset();
     	
 //    	new BreachAuton(4).start();
 //    	new AutoCourtyard(4).start();
@@ -196,7 +198,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.drive.drivePID.changePIDGains(kp, ki, kd);
+//    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     	
@@ -223,7 +225,8 @@ public class Robot extends IterativeRobot {
 //        	new CameraTrack(-1).start();
 //        else 
 //        	Robot.shooter.turnTurret(0);
-//        rpm = pref.getDouble("rpm", 0.0);
+        outerRPM = pref.getDouble("outerRPM", 0.0);
+        spyRPM = pref.getDouble("reverseOuterRPM", 0.0);
         
         
         
@@ -266,7 +269,7 @@ public class Robot extends IterativeRobot {
     	else
     		SmartDashboard.putBoolean("Detects Target", false);
         
-        if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-NumberConstants.cameraOffset) <= 1)
+        if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-NumberConstants.cameraOffset) <= 0.5)
         	SmartDashboard.putBoolean("Tracked", true);
 		else
 			SmartDashboard.putBoolean("Tracked", false);
@@ -282,8 +285,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
         
-        SmartDashboard.putNumber("rightX", Robot.oi.getToolRightX());
-    	SmartDashboard.putNumber("leftX", Robot.oi.getToolLeftX());
 //        System.out.println("PID " + shooter.shooterPID.getPGain() + "," + shooter.shooterPID.getIGain() + "," + shooter.shooterPID.getDGain());
     }
 }

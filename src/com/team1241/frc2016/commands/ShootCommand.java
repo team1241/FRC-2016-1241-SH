@@ -45,8 +45,8 @@ public class ShootCommand extends Command {
     	spyAngle = new TurnTurret(NumberConstants.spyShotAngle, 1, 3, false);
     	backAngle = new TurnTurret(-180, 1, 3, false);
     	originAngle = new TurnTurret(0, 1, 3, false);
-    	leftAngle = new TurnTurret(68, 1, 3, false);
-    	rightAngle = new TurnTurret(-68, 1, 3, false);
+    	leftAngle = new TurnTurret(67, 1, 3, false);
+    	rightAngle = new TurnTurret(-67, 1, 3, false);
     	
     	tracked = false;
     	
@@ -62,7 +62,8 @@ public class ShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	badderRPM.changeRPM(Robot.rpm);
+    	outerRPM.changeRPM(Robot.outerRPM);
+    	spyRPM.changeRPM(Robot.spyRPM);
     	
     	//Turret//
     	if(Robot.oi.getToolRightX() > 0.9) {

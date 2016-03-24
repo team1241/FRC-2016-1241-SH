@@ -68,11 +68,9 @@ public class Drivetrain extends Subsystem {
 		
 		//Motors
 		leftDriveFront = new CANTalon(ElectricalConstants.LEFT_DRIVE_FRONT);
-//		leftDriveMiddle = new CANTalon(ElectricalConstants.LEFT_DRIVE_MIDDLE);
 		leftDriveBack = new CANTalon(ElectricalConstants.LEFT_DRIVE_BACK);
 		
 		rightDriveFront = new CANTalon(ElectricalConstants.RIGHT_DRIVE_FRONT);
-//		rightDriveMiddle = new CANTalon(ElectricalConstants.RIGHT_DRIVE_MIDDLE);
 		rightDriveBack = new CANTalon(ElectricalConstants.RIGHT_DRIVE_BACK);
 		
 		
@@ -113,7 +111,6 @@ public class Drivetrain extends Subsystem {
     	else if(pwmVal < -1)
     		pwmVal = -1;
     	leftDriveFront.set(pwmVal);
-//    	leftDriveMiddle.set(pwmVal);
     	leftDriveBack.set(pwmVal);
     }
     
@@ -123,7 +120,6 @@ public class Drivetrain extends Subsystem {
     	else if(pwmVal < -1)
     		pwmVal = -1;
     	rightDriveFront.set(pwmVal);
-//    	rightDriveMiddle.set(pwmVal);
     	rightDriveBack.set(pwmVal);
     }
     
@@ -139,13 +135,20 @@ public class Drivetrain extends Subsystem {
     	
     	System.out.println("drive pid" + output + "gyro pid" + angle + "," + getYaw());
     	System.out.println("Left:" + (output+angle) + " Right:" + (-output+angle));
-    	SmartDashboard.putNumber("drivePID", output);
-    	SmartDashboard.putNumber("gyroPID", angle);
-    	SmartDashboard.putNumber("LeftDrive", (output+angle)*speed);
-    	SmartDashboard.putNumber("RightDrive", (-output+angle)*speed);
+//    	SmartDashboard.putNumber("drivePID", output);
+//    	SmartDashboard.putNumber("gyroPID", angle);
+//    	SmartDashboard.putNumber("LeftDrive", (output+angle)*speed);
+//    	SmartDashboard.putNumber("RightDrive", (-output+angle)*speed);
     	
     	runLeftDrive((output+angle)*speed);
     	runRightDrive((-output+angle)*speed);
+    }
+    
+    public void driveAngle(double setAngle, double speed) {
+    	double angle = gyroPID.calcPID(setAngle, getYaw(), 1);
+    	
+    	runLeftDrive(speed + angle);
+    	runRightDrive(-speed + angle);
     }
     
     public void turnDrive(double setAngle, double speed, double epsilon) {
