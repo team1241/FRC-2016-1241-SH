@@ -24,7 +24,7 @@ public class DrivePath extends Command{
     {
     	counter = 0;
     	setTimeout(timeOut);
-        Robot.drive.reset();
+        Robot.drive.resetEncoders();
     }
     
     protected void execute()

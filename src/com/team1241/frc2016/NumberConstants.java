@@ -57,8 +57,10 @@ public class NumberConstants {
 	public static final double pShooterBadder							= 0.00023;
 	public static final double iShooterBadder							= 0.0000;
 	public static final double dShooterBadder							= 0.0000;
-	public static final double kForward									= 0.000151911;
-	public static final double bForward									= 0.063439490;
+//	public static final double kForward									= 0.000151911;
+//	public static final double bForward									= 0.063439490;
+	public static final double kForward									= 0.000168405;
+	public static final double bForward									= -0.03024539;
 	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
@@ -74,9 +76,9 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Competition
-	public static final int downArmAngle								= 650;
+	public static final int downArmAngle								= 415;
 	//Arm all the way up
-	public static final int upArmAngle									= 980;
+	public static final int upArmAngle									= 690;
 	
 	
 	//**************************************************************************

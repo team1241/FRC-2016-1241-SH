@@ -28,7 +28,10 @@ public class BreachShootAuton extends CommandGroup {
         	addSequential(new AutoDrawbridge());
         }
         else if (defence==4) {
-        	addSequential(new AutoDriveOver());
+        	addSequential(new AutoRockWall());
+        }
+        else if (defence==5) {
+        	addSequential(new AutoRoughTerrain());
         }
     	
     	//Drive curve towards the tower

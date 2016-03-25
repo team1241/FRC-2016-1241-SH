@@ -3,7 +3,7 @@ package com.team1241.frc2016.commands;
 import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.commands.auto.DriveCommand;
 import com.team1241.frc2016.commands.auto.RunArm;
-import com.team1241.frc2016.commands.defence.AutoDriveOver;
+import com.team1241.frc2016.commands.defence.AutoRockWall;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

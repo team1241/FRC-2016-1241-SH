@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class BreachAuton extends CommandGroup {	
     public  BreachAuton(int defence) {
     	//Cross the defence
-//    	addSequential(new WaitCommand(5.0));
     	if(defence==0) {
         	addSequential(new AutoPortcullis());
         }
@@ -29,7 +28,10 @@ public class BreachAuton extends CommandGroup {
         	addSequential(new AutoDrawbridge());
         }
         else if (defence==4) { 
-        	addSequential(new AutoDriveOver());
+        	addSequential(new AutoRockWall());
+        }
+        else if (defence==5) { 
+        	addSequential(new AutoRoughTerrain());
         }
     	
     	addSequential(new DriveCommand(10, 1.0, 0, 1));

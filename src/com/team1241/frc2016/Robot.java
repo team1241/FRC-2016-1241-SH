@@ -92,7 +92,8 @@ public class Robot extends IterativeRobot {
 		defenceChooser.addObject("Cheval de Frise", 1);
 		defenceChooser.addObject("SallyPort", 2);
 		defenceChooser.addObject("DrawBridge", 3);
-		defenceChooser.addDefault("Drive Over (B/D)", 4);
+		defenceChooser.addDefault("Rock Wall", 4);
+		defenceChooser.addDefault("Rough Terrain", 5);
 		
 		SmartDashboard.putData("Defence Mode", defenceChooser);
 		
@@ -148,27 +149,8 @@ public class Robot extends IterativeRobot {
     	conveyor.extendHolder();
     	drive.reset();
     	shooter.reset();
+  
     	
-//    	new BreachAuton(4).start();
-//    	new AutoCourtyard(4).start();
-    	
-//    	defenceLocation = (int) locationChooser.getSelected();
-//    	selectedDefence = (int) defenceChooser.getSelected();
-//    	
-//    	switch((int)autoChooser.getSelected()) {
-//    	case 0:
-//    		autonomousCommand = (Command) new NoAuto();
-//    		break;
-//    	case 1:
-//    		autonomousCommand = (Command) new SpyShotAuton();
-//    		break;
-//    	case 2:
-//    		autonomousCommand = (Command) new BreachAuton(selectedDefence);
-//    		break;
-//    	case 3:
-//    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
-//    		break;
-//    	}
     	autonomousCommand.start();
     }
 
@@ -228,15 +210,6 @@ public class Robot extends IterativeRobot {
         outerRPM = pref.getDouble("outerRPM", 0.0);
         spyRPM = pref.getDouble("reverseOuterRPM", 0.0);
         
-        
-        
-//        if(Robot.oi.getDriveLeftTrigger()) {
-//        	new TurnTurret(-65, 1, 4, false).start();
-//        	ShootCommand.auto = false;
-//        } else if(Robot.oi.getDriveRightTrigger()) {
-//        	new TurnTurret(65, 1, 4, false).start();
-//        	ShootCommand.auto = false;
-//        }
         
 //        Robot.shooter.setSpeed(power);
     }
