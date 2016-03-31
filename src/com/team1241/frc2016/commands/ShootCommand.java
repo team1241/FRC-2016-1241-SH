@@ -50,7 +50,7 @@ public class ShootCommand extends Command {
     	
     	tracked = false;
     	
-    	track = new CameraTrack();
+    	track = new CameraTrack(2.0);
     }
 
     // Called just before this Command runs the first time

@@ -60,6 +60,10 @@ public class Robot extends IterativeRobot {
     
     CameraServer server;
     
+    public static boolean connected = false;
+    public static double runTime = 0;
+    public static int timer = 0;
+    
     ToggleBoolean toggle = new ToggleBoolean();
     
 
@@ -180,7 +184,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-//    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
+    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     	
@@ -203,6 +207,13 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
+        
+	     if(oi.getDriveAButton()) {
+	    	 shooter.turnTurret(pref.getDouble("turretPower", 0.0));
+	     }
+	     else {
+	    	 shooter.turnTurret(0);
+	     }
 //        if(Robot.shooter.getXCoordinates()>-1)
 //        	new CameraTrack(-1).start();
 //        else 
@@ -253,7 +264,25 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Target width", shooter.targetWidthPixels());
         SmartDashboard.putNumber("Change in Degree",shooter.getTurretAngle() - shooter.pixelToDegree(shooter.getXCoordinates()));
         
-        SmartDashboard.putBoolean("PC Connected", shooter.connected);
+        NetworkTable server = NetworkTable.getTable("SmartDashboard");
+        double temp = -1;
+        timer++; 
+	     try{
+	        temp = server.getDouble("RUN_TIME", -1);
+	     }
+	     catch(Exception ex){
+	     }
+	     if(timer > 10 && (temp ==-1|| runTime==temp)) {
+	    	 connected = false;
+	    	 timer = 0;
+	     }
+	     else if(timer>10) {
+	    	 timer = 0;
+	    	 runTime = temp;
+	    	 connected = true;
+	     }
+	     System.out.println(temp);
+        SmartDashboard.putBoolean("PC Connected", connected);
         SmartDashboard.putNumber("defenceLocation", defenceLocation);
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
