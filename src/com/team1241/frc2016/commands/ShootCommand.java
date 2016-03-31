@@ -48,9 +48,11 @@ public class ShootCommand extends Command {
     	leftAngle = new TurnTurret(67, 1, 3, false);
     	rightAngle = new TurnTurret(-67, 1, 3, false);
     	
+    	
+    	
     	tracked = false;
     	
-    	track = new CameraTrack(2.0);
+    	track = new CameraTrack(1.2);
     }
 
     // Called just before this Command runs the first time

@@ -154,7 +154,23 @@ public class Shooter extends Subsystem {
     
     public void turnTurretCamera(double angle, double pwr) {
     	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.8);
-    	turret.set(pwr*output);	
+    	System.out.print("CameraPIDs:" + output);
+    	if(Math.abs(angle-getTurretAngle()) <0.5) {
+    		turret.set(0);
+    		System.out.println(" Output:" + 0);
+    	}
+    	else if(Math.abs(output)>0.1) {
+    		turret.set(pwr*output);
+    		System.out.println(" Output:" + pwr*output);
+    	}
+    	else if(output>-0.1 && output<0) {
+    		turret.set(-0.1);
+    		System.out.println(" Output:" + -0.1);
+    	}
+    	else if(output<0.1 && output>0) {
+    		turret.set(0.1);
+    		System.out.println(" Output:" + 0.1);
+    	}
     }
     
     /** 

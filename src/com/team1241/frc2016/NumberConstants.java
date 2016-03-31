@@ -44,10 +44,10 @@ public class NumberConstants {
 	
 	//Competition
 	public static final double pCamera 									 = 0.07;
-	public static final double iCamera 									 = 0.0075;
+	public static final double iCamera 									 = 0.00;
 	public static final double dCamera 									 = 0.000;
 	
-	public static final double cameraOffset								= 2.5;
+	public static final double cameraOffset								= 1.5;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************

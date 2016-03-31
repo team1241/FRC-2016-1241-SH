@@ -153,7 +153,6 @@ public class Robot extends IterativeRobot {
     	conveyor.extendHolder();
     	drive.reset();
     	shooter.reset();
-  
     	
     	autonomousCommand.start();
     }
@@ -184,7 +183,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
+//    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     	
@@ -208,12 +207,16 @@ public class Robot extends IterativeRobot {
         updateSmartDashboard();
         
         
-	     if(oi.getDriveAButton()) {
-	    	 shooter.turnTurret(pref.getDouble("turretPower", 0.0));
-	     }
-	     else {
-	    	 shooter.turnTurret(0);
-	     }
+//	     if(oi.getDriveXButton()) {
+//	    	 shooter.turnTurret(pref.getDouble("turretPower", 0.0));
+//	     }
+//	     else if(oi.getDriveBButton()) {
+//	    	 shooter.turnTurret(-pref.getDouble("turretPower", 0.0));
+//	     }
+//	     else {
+//	    	 shooter.turnTurret(0);
+//	     }
+	     
 //        if(Robot.shooter.getXCoordinates()>-1)
 //        	new CameraTrack(-1).start();
 //        else 
@@ -253,7 +256,7 @@ public class Robot extends IterativeRobot {
     	else
     		SmartDashboard.putBoolean("Detects Target", false);
         
-        if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-NumberConstants.cameraOffset) <= 0.5)
+        if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-NumberConstants.cameraOffset) <= 0.8)
         	SmartDashboard.putBoolean("Tracked", true);
 		else
 			SmartDashboard.putBoolean("Tracked", false);
@@ -267,26 +270,24 @@ public class Robot extends IterativeRobot {
         NetworkTable server = NetworkTable.getTable("SmartDashboard");
         double temp = -1;
         timer++; 
-	     try{
-	        temp = server.getDouble("RUN_TIME", -1);
-	     }
-	     catch(Exception ex){
-	     }
-	     if(timer > 10 && (temp ==-1|| runTime==temp)) {
-	    	 connected = false;
-	    	 timer = 0;
-	     }
-	     else if(timer>10) {
-	    	 timer = 0;
-	    	 runTime = temp;
-	    	 connected = true;
-	     }
-	     System.out.println(temp);
+        try{
+        	temp = server.getDouble("RUN_TIME", -1);
+        }
+        catch(Exception ex){
+        }
+        if(timer > 10 && (temp ==-1|| runTime==temp)) {
+        	connected = false;
+        	timer = 0;
+        }
+        else if(timer>10) {
+        	timer = 0;
+        	runTime = temp;
+        	connected = true;
+        }
+        
         SmartDashboard.putBoolean("PC Connected", connected);
         SmartDashboard.putNumber("defenceLocation", defenceLocation);
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
-        
-//        System.out.println("PID " + shooter.shooterPID.getPGain() + "," + shooter.shooterPID.getIGain() + "," + shooter.shooterPID.getDGain());
     }
 }
