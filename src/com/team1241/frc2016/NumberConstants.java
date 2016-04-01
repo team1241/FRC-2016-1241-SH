@@ -47,7 +47,7 @@ public class NumberConstants {
 	public static final double iCamera 									 = 0.00;
 	public static final double dCamera 									 = 0.000;
 	
-	public static final double cameraOffset								= 1.5;
+	public static final double cameraOffset								= 0.0;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************

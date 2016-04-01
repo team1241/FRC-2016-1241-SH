@@ -35,7 +35,7 @@ public class AutoCourtyard extends CommandGroup {
 			addSequential(new AutoShoot());
 		}
 		else if(location==3) {
-			addParallel(new DriveCommand(100, 1,0,2));
+			addParallel(new DriveCommand(105, 1,0,2));
 			addSequential(new TimedTurnTurret(10, 1, 2, false));
 			
 //			addSequential(new WaitAndTrack(0.5));

@@ -15,6 +15,7 @@ public class ShooterTest extends Command {
 	private static double current = 0;
 	private static int state = 0;
 	private static Timer timer = new Timer();
+	private static Timer target = new Timer();
 	private static boolean atTarget = false;
 	
 	@Override
@@ -25,19 +26,32 @@ public class ShooterTest extends Command {
 
 	@Override
 	protected void execute() {
+//		System.out.println(timer.get());
 		current = Robot.shooter.getRPM();
 		Robot.shooter.setSpeed(rpm);
-		if (timer.get()>0.5) {
-			System.out.println("Sensor:" + current + " power:" + rpm);
-			if(Math.abs(staticRPM[state]-current) <50) {
+		if(atTarget) {
+			target.start();
+			
+			if(Math.abs(staticRPM[state]-current) >50) {
+				atTarget = false;
+			} else if(target.get()>0.3) {
 				power[state] = rpm;
 				state++;
+				atTarget = false;
+			}
+		}
+		else if (timer.get()>0.2) {
+			target.stop();
+			target.reset();
+			System.out.println("Sensor:" + current + " power:" + rpm);
+			if(Math.abs(staticRPM[state]-current) <50) {
+				atTarget = true;
 			}
 			else if(staticRPM[state]>current) {
-				rpm = rpm+0.05;
+				rpm = rpm+0.005;
 			}
 			else if(staticRPM[state]<current) {
-				rpm = rpm-0.05;
+				rpm = rpm-0.005;
 			}
 			timer.reset();
 		}
