@@ -28,6 +28,9 @@ public class ShootCommand extends Command {
 	private TurnTurret leftAngle;
 	private TurnTurret rightAngle;
 	
+	private TurnTurret leftSquareAngle;
+	private TurnTurret rightSquareAngle;
+	
 	public static boolean tracked;
 	public static boolean detects;
 	
@@ -48,7 +51,8 @@ public class ShootCommand extends Command {
     	leftAngle = new TurnTurret(67, 1, 3, false);
     	rightAngle = new TurnTurret(-67, 1, 3, false);
     	
-    	
+    	leftSquareAngle = new TurnTurret(90, 1, 3, false);
+    	rightSquareAngle = new TurnTurret(-90, 1, 3, false);
     	
     	tracked = false;
     	
@@ -69,25 +73,50 @@ public class ShootCommand extends Command {
     	
     	//Turret//
     	if(Robot.oi.getToolRightX() > 0.9) {
+    		rightSquareAngle.cancel();
+    		leftSquareAngle.cancel();
     		backAngle.cancel();
     		originAngle.cancel();
     		leftAngle.cancel();
     		rightAngle.start();
+    		
     	} else if(Robot.oi.getToolRightX() < -0.9) {
+    		rightSquareAngle.cancel();
+    		leftSquareAngle.cancel();
     		backAngle.cancel();
     		rightAngle.cancel();
     		originAngle.cancel();
     		leftAngle.start();
     	} else if(Robot.oi.getToolRightY() > 0.9) {
+    		rightSquareAngle.cancel();
+    		leftSquareAngle.cancel();
     		originAngle.cancel();
     		leftAngle.cancel();
     		rightAngle.cancel();
     		backAngle.start();
     	} else if(Robot.oi.getToolRightY() < -0.9) {
+    		rightSquareAngle.cancel();
+    		leftSquareAngle.cancel();
     		backAngle.cancel();
     		leftAngle.cancel();
     		rightAngle.cancel();
     		originAngle.start();
+    	}
+    	
+    	else if(Robot.oi.getDriveLeftTrigger()) {
+    		backAngle.cancel();
+    		originAngle.cancel();
+    		leftAngle.cancel();
+    		rightAngle.cancel();
+    		rightSquareAngle.cancel();
+    		leftSquareAngle.start();
+    	} else if(Robot.oi.getDriveRightTrigger()) {
+    		backAngle.cancel();
+    		originAngle.cancel();
+    		leftAngle.cancel();
+    		rightAngle.cancel();
+    		leftSquareAngle.cancel();
+    		rightSquareAngle.start();
     	}
     	
 //    	if(Robot.oi.getToolRightAnalogButton()) {
@@ -178,5 +207,14 @@ public class ShootCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    }
+    
+    private void cancelTurret() {
+    	rightSquareAngle.cancel();
+		leftSquareAngle.cancel();
+		backAngle.cancel();
+		originAngle.cancel();
+		leftAngle.cancel();
+		rightAngle.cancel();
     }
 }

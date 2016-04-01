@@ -15,6 +15,7 @@ import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.pid.Constants;
 import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.DataOutput;
+import com.team1241.frc2016.utilities.ShooterTest;
 import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -207,8 +208,9 @@ public class Robot extends IterativeRobot {
         updateSmartDashboard();
         
         
+        
 //	     if(oi.getDriveXButton()) {
-//	    	 shooter.turnTurret(pref.getDouble("turretPower", 0.0));
+//	    	 new ShooterTest().start();
 //	     }
 //	     else if(oi.getDriveBButton()) {
 //	    	 shooter.turnTurret(-pref.getDouble("turretPower", 0.0));

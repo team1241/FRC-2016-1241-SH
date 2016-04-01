@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.team1241.frc2016.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterTest extends Command {
@@ -13,31 +14,32 @@ public class ShooterTest extends Command {
 	private static double rpm = 0;
 	private static double current = 0;
 	private static int state = 0;
-	private static int timer = 0;
+	private static Timer timer = new Timer();
+	private static boolean atTarget = false;
 	
 	@Override
 	protected void initialize() {
-		requires(Robot.shooter);
-		rpm = 0.75;
+		rpm = 0.62;
+		timer.start();
 	}	
 
 	@Override
 	protected void execute() {
-		timer++;
 		current = Robot.shooter.getRPM();
 		Robot.shooter.setSpeed(rpm);
-		if (timer>10) {
+		if (timer.get()>0.5) {
+			System.out.println("Sensor:" + current + " power:" + rpm);
 			if(Math.abs(staticRPM[state]-current) <50) {
 				power[state] = rpm;
 				state++;
 			}
 			else if(staticRPM[state]>current) {
-				rpm = rpm+0.1;
+				rpm = rpm+0.05;
 			}
 			else if(staticRPM[state]<current) {
-				rpm = rpm-0.1;
+				rpm = rpm-0.05;
 			}
-			timer = 0;
+			timer.reset();
 		}
 	}
 
@@ -51,6 +53,7 @@ public class ShooterTest extends Command {
 	protected void end() {
 		// TODO Auto-generated method stub
 		Robot.shooter.setSpeed(0);
+		timer.stop();
 		System.out.println(Arrays.toString(power));
 	}
 	
@@ -58,6 +61,7 @@ public class ShooterTest extends Command {
 	protected void interrupted() {
 		// TODO Auto-generated method stub
 		Robot.shooter.setSpeed(0);
+		timer.stop();
 		System.out.println(Arrays.toString(power));
 	}
 

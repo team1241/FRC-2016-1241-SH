@@ -12,9 +12,9 @@ public class AutoDrawbridge extends CommandGroup {
     
     public  AutoDrawbridge() {
     	//Robot has to start with bumpers bud up with drawbridge and arms up
-        
+        addParallel(new DriveCommand(52, 0.75, 0, 2.5));
         //Bring arm down
-        addSequential(new RunArm(150, 0.5, 5));
+        addSequential(new RunArm(NumberConstants.upArmAngle-50, 0.5, 5));
         
         //Bring down drawbridge
         addParallel(new DriveCommand(-50, .5, 0, 5));
