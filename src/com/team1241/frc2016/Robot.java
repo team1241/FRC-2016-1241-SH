@@ -239,37 +239,47 @@ public class Robot extends IterativeRobot {
     }
     
     public void updateSmartDashboard() {
+    	//DriveTrain
     	SmartDashboard.putNumber("LeftDrive Encoder", drive.getLeftEncoderDist());
         SmartDashboard.putNumber("RightDrive Encoder", drive.getRightEncoderDist());
-        SmartDashboard.putNumber("Gyro", drive.getYaw());
+        SmartDashboard.putNumber("Gyro Yaw", drive.getYaw());
+        SmartDashboard.putNumber("Gyro Pitch", drive.getPitch());
+        SmartDashboard.putNumber("Gyro Roll", drive.getRoll());
         
+        //Shooter
         SmartDashboard.putBoolean("ShooterState", shooter.getShooterState());
         SmartDashboard.putNumber("Turret Angle", shooter.getTurretAngle());
         SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
         SmartDashboard.putBoolean("Can Shoot", shooter.shooterPID.isDone());
         
+        //Popper
         SmartDashboard.putBoolean("Holders", conveyor.getHoldState());
         SmartDashboard.putBoolean("Detects Ball", !conveyor.getOptic());
         SmartDashboard.putBoolean("Contains Ball", conveyor.getContains());
         
+        //Arm
         SmartDashboard.putNumber("Arm Pot", intake.getPotValue());
         
+        //Detects target
         if(Robot.shooter.getXCoordinates()!=-1)
         	SmartDashboard.putBoolean("Detects Target", true);
     	else
     		SmartDashboard.putBoolean("Detects Target", false);
         
+        //On Target
         if(Math.abs(Robot.shooter.pixelToDegree(Robot.shooter.getXCoordinates())-NumberConstants.cameraOffset) <= 0.8)
         	SmartDashboard.putBoolean("Tracked", true);
 		else
 			SmartDashboard.putBoolean("Tracked", false);
         
+        //Camera Tracking
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
         SmartDashboard.putNumber("degree", shooter.pixelToDegree(shooter.getXCoordinates()));
         SmartDashboard.putNumber("distance", shooter.getDistanceToTarget());
         SmartDashboard.putNumber("Target width", shooter.targetWidthPixels());
         SmartDashboard.putNumber("Change in Degree",shooter.getTurretAngle() - shooter.pixelToDegree(shooter.getXCoordinates()));
         
+        //Connection to the Kangaroo
         NetworkTable server = NetworkTable.getTable("SmartDashboard");
         double temp = -1;
         timer++; 
@@ -289,6 +299,8 @@ public class Robot extends IterativeRobot {
         }
         
         SmartDashboard.putBoolean("PC Connected", connected);
+        
+        //Autonomous
         SmartDashboard.putNumber("defenceLocation", defenceLocation);
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
