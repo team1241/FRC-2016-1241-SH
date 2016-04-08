@@ -18,6 +18,8 @@ public class ShooterTest extends Command {
 	private static Timer target = new Timer();
 	private static boolean atTarget = false;
 	
+	private LineRegression lR = new LineRegression();
+	
 	@Override
 	protected void initialize() {
 		rpm = 0.62;
@@ -26,32 +28,44 @@ public class ShooterTest extends Command {
 
 	@Override
 	protected void execute() {
-//		System.out.println(timer.get());
+		rpm = Math.round(rpm*10000.0)/10000.0;
 		current = Robot.shooter.getRPM();
 		Robot.shooter.setSpeed(rpm);
 		if(atTarget) {
-			target.start();
+			if(target.get()==0) {
+				target.start();
+				System.out.println("started");
+			}
 			
+			current = Robot.shooter.getRPM();
 			if(Math.abs(staticRPM[state]-current) >50) {
-				atTarget = false;
-			} else if(target.get()>0.3) {
+				atTarget = true;
+			} else if(target.get()>0.4) {
 				power[state] = rpm;
 				state++;
 				atTarget = false;
 			}
 		}
-		else if (timer.get()>0.2) {
+		else if (timer.get()>0.3) {
 			target.stop();
 			target.reset();
 			System.out.println("Sensor:" + current + " power:" + rpm);
+			
+			current = Robot.shooter.getRPM();
 			if(Math.abs(staticRPM[state]-current) <50) {
 				atTarget = true;
 			}
 			else if(staticRPM[state]>current) {
-				rpm = rpm+0.005;
+				if(Math.abs(staticRPM[state]-current) >200)
+					rpm = rpm+0.005;
+				else
+					rpm = rpm+0.0025;
 			}
 			else if(staticRPM[state]<current) {
-				rpm = rpm-0.005;
+				if(Math.abs(staticRPM[state]-current) >200)
+					rpm = rpm+0.005;
+				else
+					rpm = rpm+0.0025;
 			}
 			timer.reset();
 		}
@@ -69,6 +83,9 @@ public class ShooterTest extends Command {
 		Robot.shooter.setSpeed(0);
 		timer.stop();
 		System.out.println(Arrays.toString(power));
+		
+		lR.setValues(staticRPM, power);
+		System.out.println("Slope: " + lR.getSlope() + "intercept: " + lR.getIntercept());
 	}
 	
 	@Override

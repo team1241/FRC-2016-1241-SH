@@ -190,8 +190,10 @@ public class Robot extends IterativeRobot {
     	
     	drive.reset();
 //    	new CameraTrack(-1).start();
-//    	new ShooterTest().start();
+    	new ShooterTest().start();
+    	
     }
+    
 
     /**
      * This function is called when the disabled button is hit.
@@ -226,7 +228,6 @@ public class Robot extends IterativeRobot {
 //        	Robot.shooter.turnTurret(0);
         outerRPM = pref.getDouble("outerRPM", 0.0);
         spyRPM = pref.getDouble("reverseOuterRPM", 0.0);
-        
         
 //        Robot.shooter.setSpeed(power);
     }

@@ -238,7 +238,7 @@ public class Shooter extends Subsystem {
 	        return true;
 	     }
 	     catch(Exception ex){
-	    	 System.out.println("Unable to get coordinates");
+//	    	 System.out.println("Unable to get coordinates");
 	    	 connected = false;
 	    	 return false;
 	     }
