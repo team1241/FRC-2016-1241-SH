@@ -54,7 +54,7 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Practice
-	public static final double pShooterBadder							 = 0.0002;
+	public static final double pShooterBadder							 = 0.00023;
 	public static final double iShooterBadder							 = 0.00000;
 	public static final double dShooterBadder							 = 0.00;
 	
@@ -67,8 +67,8 @@ public class NumberConstants {
 	
 	//1.0/5582.0
 	//0.0
-	public static final double kForward									 = 0.00014325;
-	public static final double bForward									 = 0.14742331;
+	public static final double kForward									 = 0.000149539877;
+	public static final double bForward									 = 0.090506134969;
 	
 //	public static final double kForward									 = 0.67;
 

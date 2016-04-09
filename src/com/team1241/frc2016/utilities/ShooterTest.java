@@ -23,6 +23,8 @@ public class ShooterTest extends Command {
 	@Override
 	protected void initialize() {
 		rpm = 0.62;
+		state = 0;
+		atTarget = false;
 		timer.start();
 	}	
 

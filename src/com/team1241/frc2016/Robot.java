@@ -190,7 +190,7 @@ public class Robot extends IterativeRobot {
     	
     	drive.reset();
 //    	new CameraTrack(-1).start();
-    	new ShooterTest().start();
+//    	new ShooterTest().start();
     	
     }
     
@@ -305,5 +305,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("defenceLocation", defenceLocation);
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
+
+        SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData("Calibrate Shooter", new ShooterTest());
     }
 }
