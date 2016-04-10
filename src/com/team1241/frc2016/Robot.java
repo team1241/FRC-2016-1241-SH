@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.ConveyorCommand;
+import com.team1241.frc2016.commands.LiveTrack;
 import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.commands.Test;
 import com.team1241.frc2016.commands.TurnTurret;
@@ -184,7 +185,7 @@ public class Robot extends IterativeRobot {
     	ki = pref.getDouble("ki", 0.0);
     	kd = pref.getDouble("kd", 0.0);
     	
-//    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
+    	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
     	
     	power = pref.getDouble("power", 0.0);
     	
@@ -238,6 +239,9 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
+    ShooterTest autoTune = new ShooterTest();
+    LiveTrack liveTrack = new LiveTrack();
     
     public void updateSmartDashboard() {
     	//DriveTrain
@@ -306,7 +310,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
 
-        SmartDashboard.putData(Scheduler.getInstance());
-        SmartDashboard.putData("Calibrate Shooter", new ShooterTest());
+//        SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData("Calibrate Shooter", autoTune);
+        SmartDashboard.putData("LiveTrack", liveTrack);
+        SmartDashboard.putBoolean("Live", LiveTrack.tracking);
     }
 }

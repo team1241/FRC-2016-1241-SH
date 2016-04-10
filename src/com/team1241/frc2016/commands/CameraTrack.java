@@ -34,7 +34,7 @@ public class CameraTrack extends Command {
     	target = Robot.shooter.getCoordinates();
     	if(timeOut>0)
     		setTimeout(timeOut);
-    	turret = new TurnTurret(0,0.5,3, true);
+    	turret = new TurnTurret(0,0.5,timeOut, true);
     }
 
     // Called repeatedly when this Command is scheduled to run

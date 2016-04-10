@@ -59,13 +59,13 @@ public class ShooterTest extends Command {
 			}
 			else if(staticRPM[state]>current) {
 				if(Math.abs(staticRPM[state]-current) >200)
-					rpm = rpm+0.005;
+					rpm = rpm+0.01;
 				else
 					rpm = rpm+0.0025;
 			}
 			else if(staticRPM[state]<current) {
 				if(Math.abs(staticRPM[state]-current) >200)
-					rpm = rpm+0.005;
+					rpm = rpm+0.01;
 				else
 					rpm = rpm+0.0025;
 			}

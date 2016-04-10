@@ -56,6 +56,7 @@ public class ShootCommand extends Command {
     	
     	tracked = false;
     	
+    	//1.2
     	track = new CameraTrack(1.2);
     }
 

@@ -152,9 +152,35 @@ public class Shooter extends Subsystem {
     	turret.set(pwr*output);	
     }
     
+    public void liveTrack(double angle) {
+    	System.out.println(Math.abs(angle-getTurretAngle()));
+    	if(Math.abs(angle-getTurretAngle())<0.5) {
+    		turret.set(0);
+    	}
+    	else if(angle>getTurretAngle()) {
+    		if(Math.abs(angle-getTurretAngle())<32)
+    			turret.set(0.2);
+    		if(Math.abs(angle-getTurretAngle())<5)
+    			turret.set(0.1);
+    		if(Math.abs(angle-getTurretAngle())<2.5)
+    			turret.set(0.05);
+    	}
+    	else if(angle<getTurretAngle()) {
+    		if(Math.abs(angle-getTurretAngle())<32)
+    			turret.set(-0.2);
+    		if(Math.abs(angle-getTurretAngle())<5)
+    			turret.set(-0.1);
+    		if(Math.abs(angle-getTurretAngle())<2.5)
+    			turret.set(-0.05);
+    	}
+    	else {
+    		turret.set(0);
+    	}
+    }
+    
     public void turnTurretCamera(double angle, double pwr) {
     	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.8);
-    	System.out.print("CameraPIDs:" + output);
+    	System.out.print(" diffAngle: "+ (angle-getTurretAngle()) + " CameraPIDs:" + output);
     	if(Math.abs(angle-getTurretAngle()) <0.5) {
     		turret.set(0);
     		System.out.println(" Output:" + 0);
