@@ -12,25 +12,25 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class BreachAuton extends CommandGroup {	
+public class BreachAuton extends CommandGroup {
     public  BreachAuton(int defence) {
     	//Cross the defence
-    	if(defence==0) {
+    	if(defence==NumberConstants.PORTCULLIS) {
         	addSequential(new AutoPortcullis());
         }
-        else if(defence==1) {
+        else if(defence==NumberConstants.CHEVAL) {
         	addSequential(new AutoCheval());
         }
-        else if(defence==2) {
+        else if(defence==NumberConstants.SALLYPORT) {
         	addSequential(new AutoSallyPort());
         }
-        else if(defence==3) {
+        else if(defence==NumberConstants.DRAWBRIDGE) {
         	addSequential(new AutoDrawbridge());
         }
-        else if (defence==4) { 
+        else if (defence==NumberConstants.ROCKWALL) { 
         	addSequential(new AutoRockWall());
         }
-        else if (defence==5) { 
+        else if (defence==NumberConstants.ROUGHTERRAIN) { 
         	addSequential(new AutoRoughTerrain());
         }
     	

@@ -32,8 +32,10 @@ public class LiveTrack extends Command {
 			xVal = Robot.shooter.getXCoordinates();
 			
 			degree = Robot.shooter.pixelToDegree(xVal);
-			Robot.shooter.turnTurretCamera(Robot.shooter.getTurretAngle()-degree+NumberConstants.cameraOffset, 0.5);
-//			Robot.shooter.liveTrack(Robot.shooter.getTurretAngle()-degree+NumberConstants.cameraOffset);
+			
+			
+//			Robot.shooter.turnTurretCamera(Robot.shooter.getTurretAngle()-degree+NumberConstants.cameraOffset, 0.5);
+			Robot.shooter.liveTrack(Robot.shooter.getTurretAngle()-degree+NumberConstants.cameraOffset);
 		}
 		else {
 			tracking = false;
@@ -51,12 +53,13 @@ public class LiveTrack extends Command {
 	protected void end() {
 		// TODO Auto-generated method stub
 		Robot.shooter.turnTurret(0);
-		
+		tracking = false;
 	}
 
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
+		tracking = false;
 		Robot.shooter.turnTurret(0);
 	}
 }

@@ -74,10 +74,10 @@ public class ConveyorCommand extends Command {
     	}
     	
     	if(Robot.oi.getToolAButton()) {
-    		Robot.conveyor.runMotor(0.70);
+    		Robot.conveyor.runMotor(0.90);
     	}
     	else if(Robot.oi.getToolXButton()) {
-    		Robot.conveyor.runMotor(-0.70);
+    		Robot.conveyor.runMotor(-0.90);
     	}
     	else {
     		Robot.conveyor.runMotor(0);

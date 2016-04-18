@@ -12,7 +12,30 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoCourtyard extends CommandGroup {
 
-	public  AutoCourtyard(int location) {
+	public  AutoCourtyard(int location, int endLocation) {
+		
+		if(endLocation==NumberConstants.DEFAULT) {
+			original(location);
+		}
+		else if(endLocation==NumberConstants.LEFT) {
+			left(location);
+		}
+		else if(endLocation==NumberConstants.CENTER) {
+			center(location);
+		}
+		else if(endLocation==NumberConstants.RIGHT) {
+			right(location);
+		}
+		
+		
+		if(Robot.shooter.getXCoordinates()!=-1) {
+			addSequential(new CameraTrack(1.0));
+			addParallel(new SetShooterSpeed(4000));
+			addSequential(new AutoShoot());
+		}
+	}
+	
+	public void original(int location) {
 		if(location==1) {
 			//Turn towards tower
 			addParallel(new DriveCommand(160, 1, 0, 3));
@@ -51,11 +74,45 @@ public class AutoCourtyard extends CommandGroup {
 //			addParallel(new SetShooterSpeed(4000));
 //			addSequential(new AutoShoot());
 		}
-		
-		if(Robot.shooter.getXCoordinates()!=-1) {
-			addSequential(new CameraTrack(1.0));
-			addParallel(new SetShooterSpeed(4000));
-			addSequential(new AutoShoot());
+	}
+	
+	public void left(int location) {
+		if(location==1) {
+			original(location);
+		}
+		else if(location==2) {
+			
+		}
+		else if(location==3) {
+		}
+		else if(location==4) {
+		}
+	}
+	
+	public void center(int location) {
+		if(location==1) {
+			addSequential(new DrivePath("0,0","22.6,40","36 ,0","95,122",3.5,0.5));
+		}
+		else if(location==2) {
+			original(location);
+		}
+		else if(location==3) {
+			original(location);
+		}
+		else if(location==4) {
+			
+		}
+	}
+	
+	public void right(int location) {
+		if(location==1) {
+		}
+		else if(location==2) {	
+		}
+		else if(location==3) {
+		}
+		else if(location==4) {
+			original(location);
 		}
 	}
 }

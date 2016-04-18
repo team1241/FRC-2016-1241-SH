@@ -55,10 +55,12 @@ public class Robot extends IterativeRobot {
     public SendableChooser autoChooser;
     public SendableChooser defenceChooser;
     public SendableChooser locationChooser;
+    public SendableChooser endLocationChooser;
     
     public static int defenceLocation;
     public static int selectedDefence;
     public static int autoNumber;
+    public static int endLocation;
     
     CameraServer server;
     
@@ -67,7 +69,9 @@ public class Robot extends IterativeRobot {
     public static int timer = 0;
     
     ToggleBoolean toggle = new ToggleBoolean();
-    
+    ShooterTest autoTune = new ShooterTest();
+//    LiveTrack liveTrack = new LiveTrack();
+    CameraTrack liveTrack = new CameraTrack(-1);
 
     /**
      * This function is run when the robot is first started up and should be
@@ -94,12 +98,12 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
 		
 		defenceChooser = new SendableChooser();
-		defenceChooser.addObject("Portcullis", 0);
-		defenceChooser.addObject("Cheval de Frise", 1);
-		defenceChooser.addObject("SallyPort", 2);
-		defenceChooser.addObject("DrawBridge", 3);
-		defenceChooser.addDefault("Rock Wall", 4);
-		defenceChooser.addDefault("Rough Terrain", 5);
+		defenceChooser.addObject("Portcullis", NumberConstants.PORTCULLIS);
+		defenceChooser.addObject("Cheval de Frise", NumberConstants.CHEVAL);
+		defenceChooser.addObject("SallyPort", NumberConstants.SALLYPORT);
+		defenceChooser.addObject("DrawBridge", NumberConstants.DRAWBRIDGE);
+		defenceChooser.addDefault("Rock Wall", NumberConstants.ROCKWALL);
+		defenceChooser.addDefault("Rough Terrain", NumberConstants.ROUGHTERRAIN);
 		
 		SmartDashboard.putData("Defence Mode", defenceChooser);
 		
@@ -113,11 +117,21 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Location", locationChooser);
 		
+		endLocationChooser = new SendableChooser();
+		
+		endLocationChooser.addDefault("Default", NumberConstants.DEFAULT);
+		endLocationChooser.addObject("Left", NumberConstants.LEFT);
+		endLocationChooser.addObject("Center", NumberConstants.RIGHT);
+		endLocationChooser.addObject("Right", NumberConstants.RIGHT);
+		
+		SmartDashboard.putData("End Location", endLocationChooser);
+		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Auto", 0);
 		autoChooser.addObject("SpyShot", 1);
 		autoChooser.addObject("Breach", 2);
 		autoChooser.addDefault("Breach&Shoot", 3);
+		autoChooser.addObject("Two Ball", 4);
 		
 		SmartDashboard.putData("Autonomous", autoChooser);
 		
@@ -131,6 +145,7 @@ public class Robot extends IterativeRobot {
 		
 		defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
+    	endLocation = (int) endLocationChooser.getSelected();
     	autoNumber = (int) autoChooser.getSelected();
     	
     	switch(autoNumber) {
@@ -144,7 +159,10 @@ public class Robot extends IterativeRobot {
     		autonomousCommand = (Command) new BreachAuton(selectedDefence);
     		break;
     	case 3:
-    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence);
+    		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence, endLocation);
+    		break;
+    	case 4:
+    		autonomousCommand = (Command) new TwoBallAuton(selectedDefence);
     		break;
     	}
 	}
@@ -206,15 +224,20 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+//    DoubleSolenoid a = new DoubleSolenoid(12, 0, 7);
+//    DoubleSolenoid b = new DoubleSolenoid(12, 1, 4);
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         LiveWindow.run();
         updateSmartDashboard();
         
-        
-        
 //	     if(oi.getDriveXButton()) {
-//	    	 new ShooterTest().start();
+//	    	 a.set(DoubleSolenoid.Value.kForward);
+//	    	 b.set(DoubleSolenoid.Value.kForward);
+//	     }
+//	     else {
+//	    	 a.set(DoubleSolenoid.Value.kReverse);
+//	    	 b.set(DoubleSolenoid.Value.kReverse);
 //	     }
 //	     else if(oi.getDriveBButton()) {
 //	    	 shooter.turnTurret(-pref.getDouble("turretPower", 0.0));
@@ -240,8 +263,7 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
     
-    ShooterTest autoTune = new ShooterTest();
-    LiveTrack liveTrack = new LiveTrack();
+    
     
     public void updateSmartDashboard() {
     	//DriveTrain
@@ -280,9 +302,10 @@ public class Robot extends IterativeRobot {
         //Camera Tracking
         SmartDashboard.putNumber("X", shooter.getXCoordinates());
         SmartDashboard.putNumber("degree", shooter.pixelToDegree(shooter.getXCoordinates()));
+        SmartDashboard.putNumber("Angle diff", shooter.pixelToDegree(shooter.getXCoordinates())-NumberConstants.cameraOffset);
+        SmartDashboard.putNumber("Setpoint", shooter.getTurretAngle()-shooter.pixelToDegree(shooter.getXCoordinates())+NumberConstants.cameraOffset);
         SmartDashboard.putNumber("distance", shooter.getDistanceToTarget());
         SmartDashboard.putNumber("Target width", shooter.targetWidthPixels());
-        SmartDashboard.putNumber("Change in Degree",shooter.getTurretAngle() - shooter.pixelToDegree(shooter.getXCoordinates()));
         
         //Connection to the Kangaroo
         NetworkTable server = NetworkTable.getTable("SmartDashboard");

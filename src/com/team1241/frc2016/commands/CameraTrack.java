@@ -34,7 +34,7 @@ public class CameraTrack extends Command {
     	target = Robot.shooter.getCoordinates();
     	if(timeOut>0)
     		setTimeout(timeOut);
-    	turret = new TurnTurret(0,0.5,timeOut, true);
+    	turret = new TurnTurret(0,0.5,1, true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -52,7 +52,7 @@ public class CameraTrack extends Command {
 	    	if(hasChanged && !started){
 	    		turret.cancel();
 	    		degree = Robot.shooter.pixelToDegree(xVal);
-	    		System.out.println("SeTPOINT: " + (Robot.shooter.getTurretAngle()-degree) + " Degree: " + degree + " Angle: " + Robot.shooter.getTurretAngle());
+	    		System.out.println("SeTPOINT: " + (Robot.shooter.getTurretAngle()-degree+NumberConstants.cameraOffset) + " Degree: " + degree + " Angle: " + Robot.shooter.getTurretAngle());
 	    		turret.changeAngle(Robot.shooter.getTurretAngle()-degree+ NumberConstants.cameraOffset);
 	    		turret.start();
 	    		hasChanged = false;
@@ -84,5 +84,6 @@ public class CameraTrack extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.shooter.turnTurret(0);
     }
 }

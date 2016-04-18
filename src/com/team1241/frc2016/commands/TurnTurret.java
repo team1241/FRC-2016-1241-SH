@@ -43,7 +43,7 @@ public class TurnTurret extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.shooter.turretPID.isDone() || isTimedOut();
+        return Robot.shooter.turretPID.isDone() || isTimedOut() /*|| Robot.shooter.cameraPID.isDone()*/;
     }
 
     // Called once after isFinished returns true

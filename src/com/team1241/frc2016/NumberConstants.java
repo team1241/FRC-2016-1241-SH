@@ -47,7 +47,7 @@ public class NumberConstants {
 	public static final double iCamera 									 = 0.00;
 	public static final double dCamera 									 = 0.00;
 	
-	public static final double cameraOffset								= 0.6;
+	public static final double cameraOffset								= 1.4;
 		
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
@@ -68,9 +68,12 @@ public class NumberConstants {
 //	public static final double kForward									 = 0.000149539877;
 //	public static final double bForward									 = 0.090506134969;
 	
-	public static final double kForward									 = 1.4677914110429447E-4;
-	public static final double bForward									 = 0.10604294478527598;
+//	public static final double kForward									 = 1.4677914110429447E-4;
+//	public static final double bForward									 = 0.10604294478527598;
 
+	public static final double kForward									 = 1.4846625766871168E-4;
+	public static final double bForward									 = 0.07418711656441712;
+	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
     //**************************************************************************
@@ -86,7 +89,7 @@ public class NumberConstants {
 	
 	//Practice
 	//Arm all the way down
-	public static final int downArmAngle								= 650;
+	public static final int downArmAngle								= 740;
 	//Arm all the way up
 	public static final int upArmAngle									= 930;	
 	
@@ -111,5 +114,23 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	public static final double intakeDist								= 12.2;
+	
+	//**************************************************************************
+	//****************************** AUTO NUMBERS ******************************
+	//**************************************************************************
+
+	//END LOCATION
+	public static final int DEFAULT											= 0;
+	public static final int LEFT											= 1;
+	public static final int CENTER											= 2;
+	public static final int RIGHT											= 3;
+	
+	//DEFENSES
+	public static final int PORTCULLIS										= 0;
+	public static final int CHEVAL											= 1;
+	public static final int SALLYPORT										= 2;
+	public static final int DRAWBRIDGE										= 3;
+	public static final int ROCKWALL										= 4;
+	public static final int ROUGHTERRAIN									= 5;
 	
 }
