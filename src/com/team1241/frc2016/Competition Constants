@@ -20,6 +20,8 @@ public class NumberConstants {
 	public static final double iDrive 									 = 0.00;
 	public static final double dDrive 									 = 0.008;
 	
+	public static final double Drive_Scale 								 = 0.6;
+	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************

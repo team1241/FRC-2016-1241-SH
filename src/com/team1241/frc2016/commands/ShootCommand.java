@@ -189,7 +189,6 @@ public class ShootCommand extends Command {
     	else if(Robot.oi.getToolRightTrigger()) {
     		Robot.conveyor.setContains(true);
     		new ShootSequence().start();
-//    		Robot.conveyor.setContains(false);
     	}
     	else if(Robot.oi.getToolBackButton()) {
     		Robot.shooter.setShooterState(false);

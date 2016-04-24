@@ -153,7 +153,7 @@ public class Shooter extends Subsystem {
     }
     
     public void liveTrack(double angle) {
-    	System.out.println(Math.abs(angle-getTurretAngle()));
+//    	System.out.println(Math.abs(angle-getTurretAngle()));
     	if(Math.abs(angle-getTurretAngle())<0.5) {
     		turret.set(0);
     	}
@@ -180,22 +180,22 @@ public class Shooter extends Subsystem {
     
     public void turnTurretCamera(double angle, double pwr) {
     	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.8);
-    	System.out.print("DiffAngle: "+ (angle-getTurretAngle()) + " CameraPIDs:" + output);
+//    	System.out.print("DiffAngle: "+ (angle-getTurretAngle()) + " CameraPIDs:" + output);
     	if(Math.abs(angle-getTurretAngle()) <0.5) {
     		turret.set(0);
-    		System.out.println(" Output:" + 0);
+//    		System.out.println(" Output:" + 0);
     	}
     	else if(Math.abs(output)>0.1) {
     		turret.set(pwr*output);
-    		System.out.println(" Output:" + pwr*output);
+//    		System.out.println(" Output:" + pwr*output);
     	}
     	else if(output>-0.1 && output<0) {
     		turret.set(-0.1);
-    		System.out.println(" Output:" + -0.1);
+//    		System.out.println(" Output:" + -0.1);
     	}
     	else if(output<0.1 && output>0) {
     		turret.set(0.1);
-    		System.out.println(" Output:" + 0.1);
+//    		System.out.println(" Output:" + 0.1);
     	}
     }
     
@@ -317,7 +317,7 @@ public class Shooter extends Subsystem {
     
     public void setRPM(double rpm){
     	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
-    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
+//    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
     	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
     

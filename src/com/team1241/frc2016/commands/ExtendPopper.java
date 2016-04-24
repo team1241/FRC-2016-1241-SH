@@ -18,7 +18,8 @@ public class ExtendPopper extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.fFlash.set(true);
+		Robot.sFlash.set(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,7 +34,6 @@ public class ExtendPopper extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same

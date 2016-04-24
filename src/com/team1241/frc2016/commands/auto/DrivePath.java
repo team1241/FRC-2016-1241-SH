@@ -10,13 +10,20 @@ public class DrivePath extends Command{
 	double distance;
 	double timeOut;
 	double speed;
+	boolean reverse;
 	
 	public DrivePath(String startPoint, String controlPoint1, String controlPoint2, String endPoint, double timeOut, double speed)
+    {
+		this(startPoint, controlPoint1, controlPoint2, endPoint, timeOut, speed, false);
+    }
+	
+	public DrivePath(String startPoint, String controlPoint1, String controlPoint2, String endPoint, double timeOut, double speed, boolean reverse)
     {
 		curve = new TheoryCurve(startPoint, controlPoint1, controlPoint2, endPoint);
 		distance = curve.findDistance();
 		this.timeOut = timeOut;
 		this.speed = speed;
+		this.reverse = reverse;
 		requires(Robot.drive);
     }
     
@@ -29,10 +36,18 @@ public class DrivePath extends Command{
     
     protected void execute()
     {
-    	if(Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < 19)
-    		counter++;
+    	if(reverse){
+    		if(-Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < 19)
+        		counter++;
 
-    	Robot.drive.driveStraight(distance, speed, curve.findAngle(counter), 1);
+        	Robot.drive.driveStraight(-distance, speed, curve.findAngle(counter), 1);
+    	}
+    	else{
+    		if(Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < 19)
+        		counter++;
+
+        	Robot.drive.driveStraight(distance, speed, curve.findAngle(counter), 1);
+    	}
     }
     
     protected boolean isFinished()

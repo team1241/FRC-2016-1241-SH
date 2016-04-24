@@ -1,6 +1,7 @@
 package com.team1241.frc2016;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -8,6 +9,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import com.team1241.frc2016.commands.CameraTrack;
 import com.team1241.frc2016.commands.ConveyorCommand;
 import com.team1241.frc2016.commands.LiveTrack;
+import com.team1241.frc2016.commands.SetShooterPower;
+import com.team1241.frc2016.commands.SetShooterSpeed;
 import com.team1241.frc2016.commands.ShootCommand;
 import com.team1241.frc2016.commands.Test;
 import com.team1241.frc2016.commands.TurnTurret;
@@ -41,7 +44,7 @@ public class Robot extends IterativeRobot {
 	
 	public static Constants constants;
 	public static OI oi;
-	public static DataOutput output;
+//	public static DataOutput output;
 	
 	Preferences pref;
 	double kp;
@@ -56,11 +59,15 @@ public class Robot extends IterativeRobot {
     public SendableChooser defenceChooser;
     public SendableChooser locationChooser;
     public SendableChooser endLocationChooser;
+//    public SendableChooser backLocationChooser;
+//    public SendableChooser backDefenceChooser;
     
     public static int defenceLocation;
     public static int selectedDefence;
     public static int autoNumber;
     public static int endLocation;
+//    public static int backLocation;
+//    public static int backDefence;
     
     CameraServer server;
     
@@ -72,7 +79,10 @@ public class Robot extends IterativeRobot {
     ShooterTest autoTune = new ShooterTest();
 //    LiveTrack liveTrack = new LiveTrack();
     CameraTrack liveTrack = new CameraTrack(-1);
-
+    SetShooterPower fullPower = new SetShooterPower(0);
+    
+    public static DigitalOutput fFlash = new DigitalOutput(6);
+    public static DigitalOutput sFlash = new DigitalOutput(7);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -81,8 +91,8 @@ public class Robot extends IterativeRobot {
     	pdp = new PowerDistributionPanel();
     	
 		oi = new OI();
-		constants = new Constants("pidValues.txt");
-		output = new DataOutput("data.txt");
+//		constants = new Constants("pidValues.txt");
+//		output = new DataOutput("data.txt");
 		pref = Preferences.getInstance();
 		
 		drive = new Drivetrain();
@@ -94,6 +104,7 @@ public class Robot extends IterativeRobot {
 //		server = CameraServer.getInstance();
 //        server.setQuality(50);
 //        server.startAutomaticCapture("cam0");
+		
 		
         // instantiate the command used for the autonomous period
 		
@@ -109,7 +120,6 @@ public class Robot extends IterativeRobot {
 		
 		locationChooser = new SendableChooser();
 		
-		locationChooser.addObject("1", 0);
 		locationChooser.addObject("2", 1);
 		locationChooser.addDefault("3", 2);
 		locationChooser.addObject("4", 3);
@@ -121,10 +131,30 @@ public class Robot extends IterativeRobot {
 		
 		endLocationChooser.addDefault("Default", NumberConstants.DEFAULT);
 		endLocationChooser.addObject("Left", NumberConstants.LEFT);
-		endLocationChooser.addObject("Center", NumberConstants.RIGHT);
+		endLocationChooser.addObject("Center", NumberConstants.CENTER);
 		endLocationChooser.addObject("Right", NumberConstants.RIGHT);
 		
 		SmartDashboard.putData("End Location", endLocationChooser);
+		
+//		backLocationChooser = new SendableChooser();
+//		
+//		backLocationChooser.addDefault("None", 0);
+//		backLocationChooser.addObject("2", 1);
+//		backLocationChooser.addObject("3", 2);
+//		backLocationChooser.addObject("4", 3);
+//		backLocationChooser.addObject("5", 4);
+//		
+//		SmartDashboard.putData("Back Location", backLocationChooser);
+//
+//		backDefenceChooser = new SendableChooser();
+//		
+//		backDefenceChooser.addDefault("None", 0);
+//		backDefenceChooser.addObject("SallyPort", NumberConstants.SALLYPORT);
+//		backDefenceChooser.addObject("DrawBridge", NumberConstants.DRAWBRIDGE);
+//		backDefenceChooser.addObject("Rock Wall", NumberConstants.ROCKWALL);
+//		backDefenceChooser.addObject("Rough Terrain", NumberConstants.ROUGHTERRAIN);
+//		
+//		SmartDashboard.putData("Back Defence", backDefenceChooser);
 		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Auto", 0);
@@ -143,9 +173,14 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		updateSmartDashboard();
 		
+		fFlash.set(false);
+		sFlash.set(false);
+		
 		defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
     	endLocation = (int) endLocationChooser.getSelected();
+//    	backLocation = (int) backLocationChooser.getSelected();
+//    	backDefence = (int) backDefenceChooser.getSelected();
     	autoNumber = (int) autoChooser.getSelected();
     	
     	switch(autoNumber) {
@@ -173,6 +208,7 @@ public class Robot extends IterativeRobot {
     	conveyor.extendHolder();
     	drive.reset();
     	shooter.reset();
+    	resetColor();
     	
     	autonomousCommand.start();
     }
@@ -196,6 +232,8 @@ public class Robot extends IterativeRobot {
     	shooter.retractPop();
     	conveyor.retractHolder();
     	conveyor.setContains(false);
+    	drive.reset();
+    	resetColor();
     	
     	new ConveyorCommand().start();
     	
@@ -205,9 +243,8 @@ public class Robot extends IterativeRobot {
     	
     	Robot.shooter.cameraPID.changePIDGains(kp, ki, kd);
     	
-    	power = pref.getDouble("power", 0.0);
+//    	power = pref.getDouble("power", 0.0);
     	
-    	drive.reset();
 //    	new CameraTrack(-1).start();
 //    	new ShooterTest().start();
     	
@@ -231,6 +268,24 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
         updateSmartDashboard();
         
+        
+//        if(oi.getDriveYButton())  {
+//        	fFlash.set(true);
+//        	sFlash.set(true);
+//        }
+//        else if(oi.getDriveXButton()) {
+//        	fFlash.set(false);
+//        	sFlash.set(true);
+//        }
+//        else if(oi.getDriveBButton()) {
+//        	fFlash.set(true);
+//        	sFlash.set(false);
+//        }
+//        else if(oi.getDriveAButton()) {
+//        	fFlash.set(false);
+//        	sFlash.set(false);
+//        }
+        
 //	     if(oi.getDriveXButton()) {
 //	    	 a.set(DoubleSolenoid.Value.kForward);
 //	    	 b.set(DoubleSolenoid.Value.kForward);
@@ -252,6 +307,7 @@ public class Robot extends IterativeRobot {
 //        	Robot.shooter.turnTurret(0);
         outerRPM = pref.getDouble("outerRPM", 0.0);
         spyRPM = pref.getDouble("reverseOuterRPM", 0.0);
+        fullPower.changePower(pref.getDouble("power", 0.0));
         
 //        Robot.shooter.setSpeed(power);
     }
@@ -332,10 +388,25 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("defenceLocation", defenceLocation);
         SmartDashboard.putNumber("selectedDefence", selectedDefence);
         SmartDashboard.putNumber("autoNumber", autoNumber);
+        SmartDashboard.putNumber("endLocation", endLocation);
 
 //        SmartDashboard.putData(Scheduler.getInstance());
-        SmartDashboard.putData("Calibrate Shooter", autoTune);
-        SmartDashboard.putData("LiveTrack", liveTrack);
-        SmartDashboard.putBoolean("Live", LiveTrack.tracking);
+//        SmartDashboard.putData("Calibrate Shooter", autoTune);
+//        SmartDashboard.putData("LiveTrack", liveTrack);
+//        SmartDashboard.putData("Test Shooter", fullPower);
+//        SmartDashboard.putData("Test Drive", new DriveCommand(50, 1, 0, 5));
+//        SmartDashboard.putData("Test DrivePath", new DrivePath("0,0","22.6,40","30,0","30,122",3.5,0.5, true));
+//        SmartDashboard.putBoolean("Live", LiveTrack.tracking);
+    }
+    
+    public static void resetColor() {
+    	if(DriverStation.getInstance().getAlliance()==DriverStation.Alliance.Blue) {
+			fFlash.set(true);
+        	sFlash.set(false);
+		}
+		else {
+			fFlash.set(false);
+			sFlash.set(true);
+		}
     }
 }

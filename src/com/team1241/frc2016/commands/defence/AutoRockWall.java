@@ -12,8 +12,8 @@ public class AutoRockWall extends CommandGroup {
     
     public  AutoRockWall() {
         //Drive to defense
-//    	addParallel(new DriveCommand(60,0.6,0,2));
-    	addParallel(new ContinousMotion(0.6, 40, 1.5));
+//    	addParallel(new ContinousMotion(0.6, 40, 1.5));
+    	addParallel(new ContinousMotion(1.0, 40, 1.5));
     	addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 1.5));
     	
     	//Drives over the defense

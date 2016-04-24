@@ -49,7 +49,7 @@ public class Intake extends Subsystem {
        		 					   NumberConstants.dArm);
         
         pot = new AnalogInput(ElectricalConstants.ARM_POTENTIOMETER);
-        ultra = new Ultrasonic(ElectricalConstants.ULTRASONIC_TRIG, ElectricalConstants.ULTRASONIC_ECHO);
+//        ultra = new Ultrasonic(ElectricalConstants.ULTRASONIC_TRIG, ElectricalConstants.ULTRASONIC_ECHO);
     }
     
     

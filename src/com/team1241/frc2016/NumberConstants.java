@@ -16,9 +16,11 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Practice
-	public static final double pDrive 									 = 0.03;
+	public static final double pDrive 									 = 0.04;
 	public static final double iDrive 									 = 0.00;
-	public static final double dDrive 									 = 0.008;
+	public static final double dDrive 									 = 0.00;
+	
+	public static final double Drive_Scale 								 = 0.4;
 	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
@@ -68,11 +70,11 @@ public class NumberConstants {
 //	public static final double kForward									 = 0.000149539877;
 //	public static final double bForward									 = 0.090506134969;
 	
-//	public static final double kForward									 = 1.4677914110429447E-4;
-//	public static final double bForward									 = 0.10604294478527598;
+	public static final double kForward									 = 1.4409509202453983E-4;
+	public static final double bForward									 =  0.06274539877300644;
 
-	public static final double kForward									 = 1.4846625766871168E-4;
-	public static final double bForward									 = 0.07418711656441712;
+//	public static final double kForward									 = 1.4846625766871168E-4;
+//	public static final double bForward									 = 0.07418711656441712;
 	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
@@ -132,5 +134,6 @@ public class NumberConstants {
 	public static final int DRAWBRIDGE										= 3;
 	public static final int ROCKWALL										= 4;
 	public static final int ROUGHTERRAIN									= 5;
+	
 	
 }

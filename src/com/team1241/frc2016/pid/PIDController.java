@@ -1,5 +1,7 @@
 package com.team1241.frc2016.pid;
 
+import com.team1241.frc2016.NumberConstants;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -122,7 +124,7 @@ public class PIDController {
         
       //Scale output to be between 1 and -1
         if(output!=0.0)
-        	output = output/Math.abs(output)*(1.0 - Math.pow(0.6,(Math.abs(output))));
+        	output = output/Math.abs(output)*(1.0 - Math.pow(NumberConstants.Drive_Scale,(Math.abs(output))));
         
         return output;
     }

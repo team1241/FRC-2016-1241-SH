@@ -17,21 +17,21 @@ public class AutoCourtyard extends CommandGroup {
 		if(endLocation==NumberConstants.DEFAULT) {
 			original(location);
 		}
-		else if(endLocation==NumberConstants.LEFT) {
-			left(location);
-		}
 		else if(endLocation==NumberConstants.CENTER) {
 			center(location);
 		}
-		else if(endLocation==NumberConstants.RIGHT) {
-			right(location);
-		}
 		
 		
-		if(Robot.shooter.getXCoordinates()!=-1) {
+		if(Robot.connected) {
 			addSequential(new CameraTrack(1.0));
 			addParallel(new SetShooterSpeed(4000));
 			addSequential(new AutoShoot());
+			if(endLocation==NumberConstants.CENTER)
+				addSequential(new DriveCommand(-80, 1, 0, 3));
+			else if(location==1 || location==4)
+				addSequential(new DriveCommand(-100, 1, 0, 3));
+			else if(location==2 || location==3)
+				addSequential(new DriveCommand(-80, 1, 0, 3));
 		}
 	}
 	
@@ -40,58 +40,25 @@ public class AutoCourtyard extends CommandGroup {
 			//Turn towards tower
 			addParallel(new DriveCommand(160, 1, 0, 3));
 			addSequential(new TimedTurnTurret(-70, 1, 3, false));
-			
-//			addSequential(new CameraTrack(1.0));
-//			
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
 		}
 		else if(location==2) {
 			//Turn towards tower
 			addSequential(new DrivePath("0,0","22.6,40","36,0","36,122",3.5,0.5));
-			
-//			addParallel(new CameraTrack(1.0));
-//			
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
 		}
 		else if(location==3) {
 			addParallel(new DriveCommand(105, 1,0,2));
 			addSequential(new TimedTurnTurret(10, 1, 2, false));
-			
-//			addSequential(new CameraTrack(1.0));
-//			
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
 		}
 		else if(location==4) {
 			addParallel(new RunArm(NumberConstants.downArmAngle+30, 1, 3));
 			addParallel(new DriveCommand(160, 1,0,3));
 			addSequential(new TimedTurnTurret(60, 1, 3, false));
-			
-//			addSequential(new CameraTrack(1.0));
-//			
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
-		}
-	}
-	
-	public void left(int location) {
-		if(location==1) {
-			original(location);
-		}
-		else if(location==2) {
-			
-		}
-		else if(location==3) {
-		}
-		else if(location==4) {
 		}
 	}
 	
 	public void center(int location) {
 		if(location==1) {
-			addSequential(new DrivePath("0,0","22.6,40","36 ,0","95,122",3.5,0.5));
+			addSequential(new DrivePath("0,0","50,75","93,0","93,118",3.5,0.5));
 		}
 		else if(location==2) {
 			original(location);
@@ -101,18 +68,6 @@ public class AutoCourtyard extends CommandGroup {
 		}
 		else if(location==4) {
 			
-		}
-	}
-	
-	public void right(int location) {
-		if(location==1) {
-		}
-		else if(location==2) {	
-		}
-		else if(location==3) {
-		}
-		else if(location==4) {
-			original(location);
 		}
 	}
 }

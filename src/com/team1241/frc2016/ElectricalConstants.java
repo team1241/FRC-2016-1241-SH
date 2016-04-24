@@ -69,8 +69,8 @@ public class ElectricalConstants {
 	//***************************** TURRET ENCODERS *****************************
 	//***************************************************************************
 
-	public static final int ULTRASONIC_TRIG									= 6;
-	public static final int ULTRASONIC_ECHO									= 7;
+//	public static final int ULTRASONIC_TRIG									= 6;
+//	public static final int ULTRASONIC_ECHO									= 7;
 	
 	//***************************************************************************
 	//***************************** OPTICAL SENSORS *****************************
