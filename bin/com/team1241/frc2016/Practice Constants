@@ -16,9 +16,11 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Practice
-	public static final double pDrive 									 = 0.03;
+	public static final double pDrive 									 = 0.04;
 	public static final double iDrive 									 = 0.00;
-	public static final double dDrive 									 = 0.008;
+	public static final double dDrive 									 = 0.00;
+	
+	public static final double Drive_Scale 								 = 0.4;
 	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
@@ -43,18 +45,18 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Practice
-	public static final double pCamera 									 = 0.07;
-	public static final double iCamera 									 = 0.007;
+	public static final double pCamera 									 = 0.09;
+	public static final double iCamera 									 = 0.00;
 	public static final double dCamera 									 = 0.00;
 	
-	public static final double cameraOffset								= -0.6;
+	public static final double cameraOffset								= 1.4;
 		
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
 	//Practice
-	public static final double pShooterBadder							 = 0.0002;
+	public static final double pShooterBadder							 = 0.00023;
 	public static final double iShooterBadder							 = 0.00000;
 	public static final double dShooterBadder							 = 0.00;
 	
@@ -65,13 +67,15 @@ public class NumberConstants {
 //	public static final double iShooterSpy								 = 0.00000625;
 //	public static final double dShooterSpy								 = 0.00;
 	
-	//1.0/5582.0
-	//0.0
-	public static final double kForward									 = 0.00014325;
-	public static final double bForward									 = 0.14742331;
+//	public static final double kForward									 = 0.000149539877;
+//	public static final double bForward									 = 0.090506134969;
 	
-//	public static final double kForward									 = 0.67;
+	public static final double kForward									 = 1.4409509202453983E-4;
+	public static final double bForward									 =  0.06274539877300644;
 
+//	public static final double kForward									 = 1.4846625766871168E-4;
+//	public static final double bForward									 = 0.07418711656441712;
+	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
     //**************************************************************************
@@ -87,7 +91,7 @@ public class NumberConstants {
 	
 	//Practice
 	//Arm all the way down
-	public static final int downArmAngle								= 650;
+	public static final int downArmAngle								= 740;
 	//Arm all the way up
 	public static final int upArmAngle									= 930;	
 	
@@ -112,5 +116,24 @@ public class NumberConstants {
 	//**************************************************************************
 	
 	public static final double intakeDist								= 12.2;
+	
+	//**************************************************************************
+	//****************************** AUTO NUMBERS ******************************
+	//**************************************************************************
+
+	//END LOCATION
+	public static final int DEFAULT											= 0;
+	public static final int LEFT											= 1;
+	public static final int CENTER											= 2;
+	public static final int RIGHT											= 3;
+	
+	//DEFENSES
+	public static final int PORTCULLIS										= 0;
+	public static final int CHEVAL											= 1;
+	public static final int SALLYPORT										= 2;
+	public static final int DRAWBRIDGE										= 3;
+	public static final int ROCKWALL										= 4;
+	public static final int ROUGHTERRAIN									= 5;
+	
 	
 }

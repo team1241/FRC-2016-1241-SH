@@ -91,15 +91,15 @@ public class ElectricalConstants {
 
 	public static final int PCM												= 12;
 
-//	public static final int POPPER_SHOOT_SOLENOID_A							= 6;
-//	public static final int POPPER_SHOOT_SOLENOID_B							= 1;
 	public static final int POPPER_SHOOT_SOLENOID_A							= 6;
-	public static final int POPPER_SHOOT_SOLENOID_B							= 4;
+	public static final int POPPER_SHOOT_SOLENOID_B							= 1;
+//	public static final int POPPER_SHOOT_SOLENOID_A							= 6;
+//	public static final int POPPER_SHOOT_SOLENOID_B							= 4;
 	
-//	public static final int POPPER_HOLD_SOLENOID_A							= 5;
-//	public static final int POPPER_HOLD_SOLENOID_B							= 2;
 	public static final int POPPER_HOLD_SOLENOID_A							= 5;
-	public static final int POPPER_HOLD_SOLENOID_B							= 7;
+	public static final int POPPER_HOLD_SOLENOID_B							= 2;
+//	public static final int POPPER_HOLD_SOLENOID_A							= 5;
+//	public static final int POPPER_HOLD_SOLENOID_B							= 7;
 	
 //	public static final int POPPER_RELEASE_SOLENOID_A						= 1;
 //	public static final int POPPER_RELEASE_SOLENOID_B						= 0;

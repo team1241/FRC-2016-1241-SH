@@ -14,7 +14,7 @@ public class ShootSequence extends CommandGroup {
 	public  ShootSequence() {
 		//Only shoots when contains a ball
 		addSequential(new ActuateHolder(false));
-//		addSequential(new WaitCommand(0.1));
+		addSequential(new WaitCommand(0.1));
 		addSequential(new ExtendPopper());
 		addSequential(new WaitCommand(NumberConstants.waitForPop));
 		addSequential(new RetractPopper());

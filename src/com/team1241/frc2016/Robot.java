@@ -136,26 +136,6 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("End Location", endLocationChooser);
 		
-//		backLocationChooser = new SendableChooser();
-//		
-//		backLocationChooser.addDefault("None", 0);
-//		backLocationChooser.addObject("2", 1);
-//		backLocationChooser.addObject("3", 2);
-//		backLocationChooser.addObject("4", 3);
-//		backLocationChooser.addObject("5", 4);
-//		
-//		SmartDashboard.putData("Back Location", backLocationChooser);
-//
-//		backDefenceChooser = new SendableChooser();
-//		
-//		backDefenceChooser.addDefault("None", 0);
-//		backDefenceChooser.addObject("SallyPort", NumberConstants.SALLYPORT);
-//		backDefenceChooser.addObject("DrawBridge", NumberConstants.DRAWBRIDGE);
-//		backDefenceChooser.addObject("Rock Wall", NumberConstants.ROCKWALL);
-//		backDefenceChooser.addObject("Rough Terrain", NumberConstants.ROUGHTERRAIN);
-//		
-//		SmartDashboard.putData("Back Defence", backDefenceChooser);
-		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("No Auto", 0);
 		autoChooser.addObject("SpyShot", 1);
@@ -179,8 +159,6 @@ public class Robot extends IterativeRobot {
 		defenceLocation = (int) locationChooser.getSelected();
     	selectedDefence = (int) defenceChooser.getSelected();
     	endLocation = (int) endLocationChooser.getSelected();
-//    	backLocation = (int) backLocationChooser.getSelected();
-//    	backDefence = (int) backDefenceChooser.getSelected();
     	autoNumber = (int) autoChooser.getSelected();
     	
     	switch(autoNumber) {
@@ -263,28 +241,24 @@ public class Robot extends IterativeRobot {
      */
 //    DoubleSolenoid a = new DoubleSolenoid(12, 0, 7);
 //    DoubleSolenoid b = new DoubleSolenoid(12, 1, 4);
+    
+//    int test = 0;
+//    Joystick joy = new Joystick(4);
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         LiveWindow.run();
         updateSmartDashboard();
         
-        
-//        if(oi.getDriveYButton())  {
-//        	fFlash.set(true);
-//        	sFlash.set(true);
+//        test++;
+//        if(test<50) {
+//        	joy.setOutput(1, true);
 //        }
-//        else if(oi.getDriveXButton()) {
-//        	fFlash.set(false);
-//        	sFlash.set(true);
+//        else if(test>50){
+//        	joy.setOutput(1, false);
 //        }
-//        else if(oi.getDriveBButton()) {
-//        	fFlash.set(true);
-//        	sFlash.set(false);
-//        }
-//        else if(oi.getDriveAButton()) {
-//        	fFlash.set(false);
-//        	sFlash.set(false);
-//        }
+//        
+//        if(test>100)
+//        	test = 0;
         
 //	     if(oi.getDriveXButton()) {
 //	    	 a.set(DoubleSolenoid.Value.kForward);
@@ -293,12 +267,6 @@ public class Robot extends IterativeRobot {
 //	     else {
 //	    	 a.set(DoubleSolenoid.Value.kReverse);
 //	    	 b.set(DoubleSolenoid.Value.kReverse);
-//	     }
-//	     else if(oi.getDriveBButton()) {
-//	    	 shooter.turnTurret(-pref.getDouble("turretPower", 0.0));
-//	     }
-//	     else {
-//	    	 shooter.turnTurret(0);
 //	     }
 	     
 //        if(Robot.shooter.getXCoordinates()>-1)
@@ -391,7 +359,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("endLocation", endLocation);
 
 //        SmartDashboard.putData(Scheduler.getInstance());
-//        SmartDashboard.putData("Calibrate Shooter", autoTune);
+        SmartDashboard.putData("Calibrate Shooter", autoTune);
 //        SmartDashboard.putData("LiveTrack", liveTrack);
 //        SmartDashboard.putData("Test Shooter", fullPower);
 //        SmartDashboard.putData("Test Drive", new DriveCommand(50, 1, 0, 5));

@@ -9,24 +9,24 @@ package com.team1241.frc2016;
  * @since 2015-09-13
  */
 
-//Practice
+//Competition
 public class NumberConstants {
 	//**************************************************************************
     //*************************** PID VALUES (DRIVE) ***************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pDrive 									 = 0.04;
+	//Competition
+	public static final double pDrive 									 = 0.05;
 	public static final double iDrive 									 = 0.00;
-	public static final double dDrive 									 = 0.00;
+	public static final double dDrive 									 = 0.008;
 	
-	public static final double Drive_Scale 								 = 0.4;
+	public static final double Drive_Scale 								 = 0.6;
 	
 	//**************************************************************************
     //**************************** PID VALUES (GYRO) ***************************
     //**************************************************************************
 	
-	//Practice
+	//Competition
 	public static final double pGyro 									 = 0.0125;
 	public static final double iGyro 									 = 0.00;
 	public static final double dGyro 									 = 0.00;
@@ -35,74 +35,62 @@ public class NumberConstants {
     //*************************** PID VALUES (TURRET) **************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pTurret 									 = 0.03;
+	//Competition
+	public static final double pTurret 									 = 0.025;
 	public static final double iTurret 									 = 0.00;
-	public static final double dTurret 									 = 0.01;
-
+	public static final double dTurret 									 = 0.005;
+	
 	//**************************************************************************
     //*************************** PID VALUES (CAMERA) **************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pCamera 									 = 0.09;
+	//Competition
+	public static final double pCamera 									 = 0.07;
 	public static final double iCamera 									 = 0.00;
-	public static final double dCamera 									 = 0.00;
+	public static final double dCamera 									 = 0.000;
 	
-	public static final double cameraOffset								= 1.4;
-		
+	public static final double cameraOffset								= 0.0;
+	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pShooterBadder							 = 0.00023;
-	public static final double iShooterBadder							 = 0.00000;
-	public static final double dShooterBadder							 = 0.00;
-	
-	//d 1.0E-4
-	//P 9.0E-4
-	
-//	public static final double pShooterSpy								 = 0.001;
-//	public static final double iShooterSpy								 = 0.00000625;
-//	public static final double dShooterSpy								 = 0.00;
-	
-//	public static final double kForward									 = 0.000149539877;
-//	public static final double bForward									 = 0.090506134969;
-	
-	public static final double kForward									 = 1.4409509202453983E-4;
-	public static final double bForward									 =  0.06274539877300644;
-
-//	public static final double kForward									 = 1.4846625766871168E-4;
-//	public static final double bForward									 = 0.07418711656441712;
+	//Competition
+	public static final double pShooterBadder							= 0.00023;
+	public static final double iShooterBadder							= 0.0000;
+	public static final double dShooterBadder							= 0.0000;
+//	public static final double kForward									= 0.000158742;
+//	public static final double bForward									= 0.012883435;
+	public static final double kForward									= 0.000157668;
+	public static final double bForward									= 0.001564417;
 	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************
     //**************************************************************************
 	
-	//Practice
-	public static final double pArm 									 = 0.03;
+	//Competition
+	public static final double pArm 									 = 0.006;
 	public static final double iArm 									 = 0.00;
 	public static final double dArm 									 = 0.00;
-		
+	
 	//**************************************************************************
     //**************************OUTPUT VALUES (Shooter)*************************
     //**************************************************************************
 	
-	//Practice
-	//Arm all the way down
-	public static final int downArmAngle								= 740;
+	//Competition
+	public static final int downArmAngle								= 670;
 	//Arm all the way up
-	public static final int upArmAngle									= 930;	
+	public static final int upArmAngle									= 970;
+	
 	
 	//**************************************************************************
 	//***************************** SHOOTER NUMBERS ****************************
 	//**************************************************************************
 	
-	//Practice
-	public static final int outerShotRPM								= 4900;
-	public static final int spyShotRPM									= 4120;
-	public static final int badderShotRPM								= 4500;
+	//Competition
+	public static final int outerShotRPM								= 4600;
+	public static final int spyShotRPM									= 4200;
+	public static final int badderShotRPM								= 4400;
 	
 	public static final int spyShotAngle								= -78;
 	public static final int backAngle									= -180;
@@ -126,7 +114,7 @@ public class NumberConstants {
 	public static final int LEFT											= 1;
 	public static final int CENTER											= 2;
 	public static final int RIGHT											= 3;
-	
+
 	//DEFENSES
 	public static final int PORTCULLIS										= 0;
 	public static final int CHEVAL											= 1;
@@ -134,6 +122,4 @@ public class NumberConstants {
 	public static final int DRAWBRIDGE										= 3;
 	public static final int ROCKWALL										= 4;
 	public static final int ROUGHTERRAIN									= 5;
-	
-	
 }
