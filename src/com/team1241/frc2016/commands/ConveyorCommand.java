@@ -1,8 +1,7 @@
 package com.team1241.frc2016.commands;
 
 import com.team1241.frc2016.Robot;
-import com.team1241.frc2016.commands.auto.AutoHolder;
-import com.team1241.frc2016.commands.auto.WaitCommand;
+import com.team1241.frc2016.commands.auto.*;
 import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.Timer;

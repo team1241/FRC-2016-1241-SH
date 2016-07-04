@@ -21,38 +21,38 @@ public class TwoBallAuton extends CommandGroup {
         else if (defence==5) {
         }
     	
-        addParallel(new TurnTurret(-180, 1,3, false));
-    	addSequential(new DriveCommand(10, 1.0, 0, 1));
-    	
-    	if(Robot.shooter.getXCoordinates()!=-1) {
-			addSequential(new CameraTrack(1.0));
-			addParallel(new SetShooterSpeed(4000));
-			addSequential(new AutoShoot());
-		}
-    	
-    	if (defence==4) { 
-        	addSequential(new AutoRockWall());
-        }
-        else if (defence==5) {
-        }
-    	
-    	addParallel(new RunIntake(RunIntake.INTAKE));
-    	addParallel(new DriveCommand(20, 0.5, 0, 1));
-    	addSequential(new RunArm(NumberConstants.downArmAngle, 1, 1));
-    	
-    	if (defence==4) { 
-        	addSequential(new BackwardsRockWall());
-        }
-        else if (defence==5) {
-        }
-    	
-        addParallel(new TurnTurret(-180, 1,3, false));
-    	addSequential(new DriveCommand(10, 1.0, 0, 1));
-    	
-    	if(Robot.shooter.getXCoordinates()!=-1) {
-			addSequential(new CameraTrack(1.0));
-			addParallel(new SetShooterSpeed(4000));
-			addSequential(new AutoShoot());
-		}
+//        addParallel(new TurnTurret(-180, 1,3, false));
+//    	addSequential(new DriveCommand(10, 1.0, 0, 1));
+//    	
+//    	if(Robot.shooter.getXCoordinates()!=-1) {
+//			addSequential(new CameraTrack(1.0));
+//			addParallel(new SetShooterSpeed(4000));
+//			addSequential(new AutoShoot());
+//		}
+//    	
+//    	if (defence==4) { 
+//        	addSequential(new AutoRockWall());
+//        }
+//        else if (defence==5) {
+//        }
+//    	
+//    	addParallel(new RunIntake(RunIntake.INTAKE));
+//    	addParallel(new DriveCommand(20, 0.5, 0, 1));
+//    	addSequential(new RunArm(NumberConstants.downArmAngle, 1, 1));
+//    	
+//    	if (defence==4) { 
+//        	addSequential(new BackwardsRockWall());
+//        }
+//        else if (defence==5) {
+//        }
+//    	
+//        addParallel(new TurnTurret(-180, 1,3, false));
+//    	addSequential(new DriveCommand(10, 1.0, 0, 1));
+//    	
+//    	if(Robot.shooter.getXCoordinates()!=-1) {
+//			addSequential(new CameraTrack(1.0));
+//			addParallel(new SetShooterSpeed(4000));
+//			addSequential(new AutoShoot());
+//		}
     }
 }

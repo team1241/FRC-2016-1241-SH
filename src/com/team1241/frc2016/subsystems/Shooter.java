@@ -29,7 +29,7 @@ public class Shooter extends Subsystem {
 	private CANTalon turret;
 	
 	private DoubleSolenoid popUp;
-//	private DoubleSolenoid hood;
+	private DoubleSolenoid hood;
 	private boolean shooterState;
 	
 	public PIDController shooterPID;
@@ -63,8 +63,8 @@ public class Shooter extends Subsystem {
 	     // Initialize Pistons		
 		 popUp = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
 				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
-//		 hood = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
-//				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
+		 hood = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
+				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
 		 
 		// Initialize PID	
 		 shooterPID = new PIDController (NumberConstants.pShooterBadder,
@@ -108,13 +108,13 @@ public class Shooter extends Subsystem {
     
     
    /**********************************************PNEUMATIC METHODS**********************************************/
-//    public void closeHood() {
-//    	hood.set(DoubleSolenoid.Value.kReverse);
-//    }
-//    
-//    public void openHood(){
-//    	hood.set(DoubleSolenoid.Value.kForward);
-//    }
+    public void extendHood() {
+    	hood.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    public void retractHood(){
+    	hood.set(DoubleSolenoid.Value.kForward);
+    }
     
     public void retractPop(){
     	popUp.set(DoubleSolenoid.Value.kReverse);
@@ -317,7 +317,7 @@ public class Shooter extends Subsystem {
     
     public void setRPM(double rpm){
     	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
-//    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
+    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
     	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
     }
     

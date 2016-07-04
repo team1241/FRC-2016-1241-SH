@@ -1,7 +1,6 @@
 package com.team1241.frc2016.commands;
 
 import com.team1241.frc2016.Robot;
-import com.team1241.frc2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 

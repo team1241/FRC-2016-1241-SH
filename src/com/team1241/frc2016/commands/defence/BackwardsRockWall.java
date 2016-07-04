@@ -16,8 +16,8 @@ public class BackwardsRockWall extends CommandGroup {
     	addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 1.5));
     	
     	//Drives over the defense
-    	addParallel(new RunArm(NumberConstants.downArmAngle+25, 1, 2.75));
-    	addSequential(new ContinousMotion(-1.0, -65, 2.75));
-    	addSequential(new DriveCommand(-15, -1, 0, 0.75));
+//    	addParallel(new RunArm(NumberConstants.downArmAngle+25, 1, 2.75));
+//    	addSequential(new ContinousMotion(-1.0, -65, 2.75));
+//    	addSequential(new DriveCommand(-15, -1, 0, 0.75));
     }
 }

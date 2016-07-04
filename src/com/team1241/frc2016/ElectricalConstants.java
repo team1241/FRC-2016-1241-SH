@@ -98,11 +98,9 @@ public class ElectricalConstants {
 	
 	public static final int POPPER_HOLD_SOLENOID_A							= 5;
 	public static final int POPPER_HOLD_SOLENOID_B							= 2;
-//	public static final int POPPER_HOLD_SOLENOID_A							= 5;
-//	public static final int POPPER_HOLD_SOLENOID_B							= 7;
 	
-//	public static final int POPPER_RELEASE_SOLENOID_A						= 1;
-//	public static final int POPPER_RELEASE_SOLENOID_B						= 0;
+	public static final int SHOOTER_HOOD_SOLENOID_A							= 3;
+	public static final int SHOOTER_HOOD_SOLENOID_B							= 4;
 	
 	//4 and 1 and 0 broken
 

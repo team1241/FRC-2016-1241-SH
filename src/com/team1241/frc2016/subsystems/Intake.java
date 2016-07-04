@@ -54,7 +54,7 @@ public class Intake extends Subsystem {
     
     
     public void initDefaultCommand() {
-    	setDefaultCommand(new IntakeCommand());
+//    	setDefaultCommand(new IntakeCommand());
     }
     
     /**************** Potentiometer methods *****************/

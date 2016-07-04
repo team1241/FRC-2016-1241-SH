@@ -26,6 +26,8 @@ public class AutoCourtyard extends CommandGroup {
 			addSequential(new CameraTrack(1.0));
 			addParallel(new SetShooterSpeed(4000));
 			addSequential(new AutoShoot());
+
+	    	addSequential(new TurnTurret(0, 1, 5, false));
 			if(endLocation==NumberConstants.CENTER)
 				addSequential(new DriveCommand(-80, 1, 0, 3));
 			else if(location==1 || location==4)

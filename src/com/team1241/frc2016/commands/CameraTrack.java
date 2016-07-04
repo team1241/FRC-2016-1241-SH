@@ -4,7 +4,6 @@ import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CameraTrack extends Command {
 

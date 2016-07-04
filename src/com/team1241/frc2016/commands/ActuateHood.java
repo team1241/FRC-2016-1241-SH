@@ -1,4 +1,4 @@
-package com.team1241.frc2016.commands.auto;
+package com.team1241.frc2016.commands;
 
 import com.team1241.frc2016.Robot;
 
@@ -8,15 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author Bryan Kristiono
  * @since 2016-01-30
  */
-public class RunIntake extends Command {
-	public static final int INTAKE = 0;
-	public static final int OUTTAKE = 1;
-	public static final int STATIC = 2;
+public class ActuateHood extends Command {
+
+	private boolean actuate;
 	
-	private int direction;
-	
-    public RunIntake(int direction) {
-    	this.direction = direction;
+    public ActuateHood(boolean actuate) {
+    	this.actuate = actuate;
     }
 
     // Called just before this Command runs the first time
@@ -25,17 +22,11 @@ public class RunIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(direction==INTAKE) {
-    		Robot.intake.runIntake(1);
-    		Robot.conveyor.runMotor(1);
-    	}
-    	else if(direction==OUTTAKE) {
-    		Robot.intake.runIntake(-1);
-    		Robot.conveyor.runMotor(-1);
+    	if (actuate) {
+    		Robot.shooter.extendHood();
     	}
     	else {
-    		Robot.intake.runIntake(0);
-    		Robot.conveyor.runMotor(0);
+    		Robot.shooter.retractHood();
     	}
     }
 

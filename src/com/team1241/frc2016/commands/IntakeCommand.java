@@ -1,12 +1,8 @@
 package com.team1241.frc2016.commands;
 
-import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
-import com.team1241.frc2016.commands.auto.RunArm;
-import com.team1241.frc2016.utilities.ToggleBoolean;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Default command for the intake subsystem.
@@ -14,16 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @since 2016-02-01
  */
 public class IntakeCommand extends Command {
-	
-	ToggleBoolean toggle;
-	RunArm up;
-	RunArm down;
-	private boolean auto = false;
-
     public IntakeCommand() {
-//    	toggle = new ToggleBoolean();
-//    	up = new RunArm(NumberConstants.upArmAngle, 1.0, 3);
-//    	down = new RunArm(NumberConstants.downArmAngle,1.0,3);
         requires(Robot.intake);
     }
 
@@ -32,31 +19,8 @@ public class IntakeCommand extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if (Robot.oi.getToolLeftAnalogButton()) {
-    		toggle.set(true);
-    		auto = true;
-    	}
-    	
-//    	if(Robot.oi.getToolLeftY()!=0) {
-//    		auto = false;
-//    		up.cancel();
-//    		down.cancel();
-    		Robot.intake.runArms(Robot.oi.getToolLeftY()*0.6);
-//    	}
-//    	else if(!auto) {
-//    		Robot.intake.runArms(0);
-//    	}
-//    	
-//    	//
-//    	else if(toggle.get() && auto){
-//    		up.cancel();
-//    		down.start();
-//    	}
-//    	else if(!toggle.get() && auto){
-//    		down.cancel();
-//    		up.start();
-//    	}
+    protected void execute() {    	
+    	Robot.intake.runArms(Robot.oi.getToolLeftY()*0.6);
     	
     	if(Robot.oi.getToolAButton()) {
     		Robot.intake.runIntake(1);

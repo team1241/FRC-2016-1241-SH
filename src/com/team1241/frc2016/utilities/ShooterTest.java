@@ -43,6 +43,7 @@ public class ShooterTest extends Command {
 			if(Math.abs(staticRPM[state]-current) >50) {
 				atTarget = true;
 			} else if(target.get()>0.4) {
+				System.out.println("finished: " + rpm);
 				power[state] = rpm;
 				state++;
 				atTarget = false;

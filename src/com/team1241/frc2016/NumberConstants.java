@@ -59,10 +59,10 @@ public class NumberConstants {
 	public static final double pShooterBadder							= 0.00023;
 	public static final double iShooterBadder							= 0.0000;
 	public static final double dShooterBadder							= 0.0000;
-//	public static final double kForward									= 0.000158742;
-//	public static final double bForward									= 0.012883435;
-	public static final double kForward									= 0.000157668;
-	public static final double bForward									= 0.001564417;
+	public static final double kForward									= 0.000137500;
+	public static final double bForward									= 0.080000000;
+//	public static final double kForward									= 0.000157668;
+//	public static final double bForward									= 0.001564417;
 	
 	//**************************************************************************
     //**************************** PID VALUES (ARM) ****************************

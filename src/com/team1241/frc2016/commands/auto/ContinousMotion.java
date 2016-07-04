@@ -34,7 +34,11 @@ public class ContinousMotion extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut() || Robot.drive.getAverageDistance()>setPoint;
+    	if(setPoint>=0) {
+    		return isTimedOut() || Robot.drive.getAverageDistance()>setPoint;
+    	} else {
+    		return isTimedOut() || Robot.drive.getAverageDistance()<setPoint;
+    	}
     }
 
     // Called once after isFinished returns true
