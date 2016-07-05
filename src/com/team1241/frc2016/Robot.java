@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import com.team1241.frc2016.commands.*;
 import com.team1241.frc2016.commands.auto.*;
-import com.team1241.frc2016.commands.defence.BackwardsRockWall;
-import com.team1241.frc2016.commands.defence.BackwardsRoughTerrain;
+import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.*;
 
@@ -113,7 +112,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Breach", 2);
 		autoChooser.addDefault("Breach&Shoot", 3);
 		autoChooser.addObject("Two Ball", 4);
-		autoChooser.addObject("Test", 5);
+		autoChooser.addObject("Backwards Rough Terrain", 5);
+		autoChooser.addObject("Backwards Rock Wall", 6);
+		autoChooser.addObject("Backwards Moat", 7);
 		
 		SmartDashboard.putData("Defence Mode", defenceChooser);
 		SmartDashboard.putData("Location", locationChooser);
@@ -154,6 +155,13 @@ public class Robot extends IterativeRobot {
     		break;
     	case 5:
     		autonomousCommand = (Command) new BackwardsRoughTerrain();
+    		break;
+    	case 6:
+    		autonomousCommand = (Command) new BackwardsRockWall();
+    		break;
+    	case 7:
+    		autonomousCommand = (Command) new BackwardsMoat();
+    		break;
     	}
 	}
 

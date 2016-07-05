@@ -19,19 +19,20 @@ public class BackwardsRoughTerrain extends CommandGroup {
     	addSequential(new RunArm(NumberConstants.downArmAngle+160, 0.6, 1.5));
     	
     	//Drives over the defense
-//    	addParallel(new RunArm(NumberConstants.downArmAngle+100, 1, 1.75));
     	addParallel(new TurnTurret(-190, 1.0, 3, false));
     	addParallel(new SetShooterSpeed(4500));
-//    	addSequential(new ContinousMotion(-0.8, -45, 1.75));
     	addSequential(new DriveCommand(-55, 1, 0, 1.75));
     	
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new CameraTrack(1.0));
-    	addSequential(new ShootSequence());
+    	addSequential(new WaitCommand(0.25));
+    	addSequential(new CameraTrack(0.5));
+    	addSequential(new ActuateHolder(false));
+		addSequential(new WaitCommand(0.1));
+		addSequential(new ExtendPopper());
+		addSequential(new WaitCommand(0.5));
+		addSequential(new RetractPopper());
 		
     	//Driving Forward
 //    	addParallel(new ContinousMotion(0.8, 40, 1.5));
-//    	addSequential(new RunArm(NumberConstants.downArmAngle+50, 0.6, 1.5));
     	addSequential(new RunIntake(RunIntake.INTAKE));
     	
     	addParallel(new DriveCommand(170, 0.7, 0, 3.0));
@@ -45,9 +46,16 @@ public class BackwardsRoughTerrain extends CommandGroup {
     	addParallel(new SetShooterSpeed(4500));
     	addSequential(new DriveCommand(-65, 1, 0, 1.75));
     	
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new CameraTrack(1.0));
-    	addSequential(new ShootSequence());
+    	addSequential(new WaitCommand(0.25));
+    	addSequential(new CameraTrack(0.5));
+    	addSequential(new ActuateHolder(false));
+		addSequential(new WaitCommand(0.1));
+		addSequential(new ExtendPopper());
+		addSequential(new WaitCommand(0.5));
+		addSequential(new RetractPopper());
     	addSequential(new DriveCommand(-20, 1, 0, 1.75));
+    	addSequential(new RunIntake(RunIntake.STATIC));
+    	addSequential(new StopShooter());
+    	addSequential(new TurnTurret(0, 1, 2,false));
     }
 }
