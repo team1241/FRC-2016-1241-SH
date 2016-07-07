@@ -112,9 +112,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Breach", 2);
 		autoChooser.addDefault("Breach&Shoot", 3);
 		autoChooser.addObject("Two Ball", 4);
-		autoChooser.addObject("Backwards Rough Terrain", 5);
-		autoChooser.addObject("Backwards Rock Wall", 6);
-		autoChooser.addObject("Backwards Moat", 7);
+//		autoChooser.addObject("Backwards Rough Terrain", 5);
+//		autoChooser.addObject("Backwards Rock Wall", 6);
+//		autoChooser.addObject("Backwards Moat", 7);
 		
 		SmartDashboard.putData("Defence Mode", defenceChooser);
 		SmartDashboard.putData("Location", locationChooser);
@@ -151,17 +151,17 @@ public class Robot extends IterativeRobot {
     		autonomousCommand = (Command) new BreachShootAuton(defenceLocation, selectedDefence, endLocation);
     		break;
     	case 4:
-    		autonomousCommand = (Command) new TwoBallAuton(selectedDefence);
+    		autonomousCommand = (Command) new TwoBallAuton(defenceLocation, selectedDefence);
     		break;
-    	case 5:
-    		autonomousCommand = (Command) new BackwardsRoughTerrain();
-    		break;
-    	case 6:
-    		autonomousCommand = (Command) new BackwardsRockWall();
-    		break;
-    	case 7:
-    		autonomousCommand = (Command) new BackwardsMoat();
-    		break;
+//    	case 5:
+//    		autonomousCommand = (Command) new BackwardsRoughTerrain();
+//    		break;
+//    	case 6:
+//    		autonomousCommand = (Command) new BackwardsRockWall();
+//    		break;
+//    	case 7:
+//    		autonomousCommand = (Command) new BackwardsMoat();
+//    		break;
     	}
 	}
 

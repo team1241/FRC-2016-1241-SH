@@ -17,54 +17,72 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class BackwardsRockWall extends CommandGroup {
-    
-    public  BackwardsRockWall() {
-        //Drive to defense
-    	addSequential(new ActuateHood(true));
-    	addParallel(new ContinousMotion(-0.8, -60, 1.5));
-    	addSequential(new RunArm(NumberConstants.downArmAngle+160, 0.6, 1.5));
-    	
-    	//Drives over the defense
-    	addParallel(new TurnTurret(-190, 1.0, 2.0, false));
-    	addParallel(new SetShooterSpeed(4500));
-//    	addSequential(new ContinousMotion(-0.8, -45, 2.75));
-    	addSequential(new DriveCommand(-45, 1, 0, 1.75));
-    	
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new CameraTrack(0.5));
-    	addSequential(new ActuateHolder(false));
+
+	public  BackwardsRockWall(int location) {
+		//Drive to defense
+		if(location!= 4)
+			addSequential(new ActuateHood(true));
+		addParallel(new ContinousMotion(-0.8, -60, 1.5));
+		addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 1.5));
+
+		//Drives over the defense
+		if(location==1)
+			addParallel(new TurnTurret(-190, 1.0, 3, false));
+		else if(location==2)
+			addParallel(new TurnTurret(-190, 1.0, 3, false));
+		else if(location==3)
+			addParallel(new TurnTurret(-180, 1.0, 3, false));
+		else if(location==4)
+			addParallel(new TurnTurret(-130, 1.0, 3, false));
+
+		addParallel(new SetShooterSpeed(4500));
+
+
+		if(location==4)
+			addSequential(new DriveCommand(-185, 1, 0, 2.5));
+		else
+			addSequential(new DriveCommand(-45, 1, 0, 1.5));
+
+		addSequential(new WaitCommand(0.5));
+		addSequential(new CameraTrack(0.5));
+		addSequential(new ActuateHolder(false));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ExtendPopper());
-		addSequential(new WaitCommand(0.5));
+		addSequential(new WaitCommand(0.4));
 		addSequential(new RetractPopper());
+
+		//Driving Forward
+		addSequential(new RunIntake(RunIntake.INTAKE));
+
+		if(location==4)
+			addSequential(new DriveCommand(110, 1, 0, 1.5));
 		
-    	//Driving Forward
-//    	addParallel(new ContinousMotion(0.8, 40, 1.5));
-    	addSequential(new RunIntake(RunIntake.INTAKE));
-    	
-    	addParallel(new ContinousMotion(0.8, 40, 1.5));
-    	addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 1.5));
-    	
-    	addParallel(new DriveCommand(90, 0.7, 0, 2.5));
-    	addSequential(new RunArm(NumberConstants.downArmAngle+10, 0.6, 2.5));
-    	
-    	addParallel(new ContinousMotion(-0.8, -70, 1.5));
-    	addSequential(new RunArm(NumberConstants.downArmAngle+160, 0.6, 1.5));
-    	
-    	//Drives over the defense
-    	addParallel(new SetShooterSpeed(4500));
-//    	addSequential(new ContinousMotion(-0.8, -45, 2.75));
-    	addSequential(new DriveCommand(-65, 1, 0, 0.75));
-    	
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new CameraTrack(0.5));
-    	addSequential(new ActuateHolder(false));
-		addSequential(new WaitCommand(0.1));
-		addSequential(new ExtendPopper());
-		addSequential(new WaitCommand(0.5));
-		addSequential(new RetractPopper());
+		addParallel(new ContinousMotion(0.8, 40, 1.5));
+		addSequential(new RunArm(NumberConstants.downArmAngle+150, 0.6, 1.5));
+
+		addParallel(new DriveCommand(110, 0.7, 0, 2.5));
+		addSequential(new RunArm(NumberConstants.downArmAngle, 0.6, 2.5));
+
+		addParallel(new ContinousMotion(-0.8, -70, 1.5));
+		addSequential(new RunArm(NumberConstants.downArmAngle+160, 0.6, 1.5));
+		
+		//Drives over the defense
+		addParallel(new SetShooterSpeed(4550));
+		addSequential(new DriveCommand(-75, 1, 0, 1.0));
+		
+		if(location!=4) {
+			addSequential(new WaitCommand(0.5));
+			addSequential(new CameraTrack(0.5));
+			addSequential(new ActuateHolder(false));
+			addSequential(new WaitCommand(0.1));
+			addSequential(new ExtendPopper());
+			addSequential(new WaitCommand(0.4));
+			addSequential(new RetractPopper());
+		}
 		addSequential(new RunIntake(RunIntake.STATIC));
 		addSequential(new StopShooter());
+		addParallel(new DriveCommand(-20, 1, 0, 1.0));
 		addSequential(new TurnTurret(0, 1, 2,false));
-    }
+
+	}
 }

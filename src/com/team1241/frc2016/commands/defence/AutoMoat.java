@@ -1,6 +1,8 @@
 package com.team1241.frc2016.commands.defence;
 
 import com.team1241.frc2016.NumberConstants;
+import com.team1241.frc2016.commands.SetShooterSpeed;
+import com.team1241.frc2016.commands.TurnTurret;
 import com.team1241.frc2016.commands.auto.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -11,15 +13,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoMoat extends CommandGroup {
     
     public  AutoMoat() {
-//    	addParallel(new DriveCommand(72, 0.6, 0, 2.5));
-//    	addSequential(new RunArm(NumberConstants.downArmAngle-20, 1, 2.5));
-//    	
-//    	addParallel(new RunArm(NumberConstants.downArmAngle+100, 1, 2));
-//    	addSequential(new ContinousMotion(0.3, 10, 2));
-//        addParallel(new DriveCommand(60, 1.0, 0, 2));
-//        addSequential(new RunArm(NumberConstants.upArmAngle, 1, 2));
-//        
-//        addSequential(new RunArm(NumberConstants.downArmAngle+50,1, 1.5));
-        
+    	addParallel(new ContinousMotion(-0.9, -60, 1.5));
+    	addSequential(new RunArm(NumberConstants.downArmAngle+160, 0.6, 1.5));
+    	
+    	//Drives over the defense
+    	addParallel(new TurnTurret(-190, 1.0, 2.0, false));
+    	addParallel(new SetShooterSpeed(4500));
+//    	addSequential(new ContinousMotion(-0.8, -45, 2.75));
+    	addSequential(new DriveCommand(-60, 1, 0, 1.75));
     }
 }

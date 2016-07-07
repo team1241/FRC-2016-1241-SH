@@ -26,6 +26,8 @@ public class ActuateHood extends Command {
     		Robot.shooter.extendHood();
     	}
     	else {
+    		if(ShootCommand.toggleHood.get())
+    			ShootCommand.toggleHood.set(true);
     		Robot.shooter.retractHood();
     	}
     }

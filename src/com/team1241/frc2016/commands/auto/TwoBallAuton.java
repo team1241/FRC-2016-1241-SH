@@ -13,12 +13,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class TwoBallAuton extends CommandGroup {	
-    public  TwoBallAuton(int defence) {
+    public  TwoBallAuton(int location, int defence) {
     	//Cross the defence
-        if (defence==4) { 
-        	addSequential(new BackwardsRockWall());
+        if (defence==NumberConstants.ROCKWALL) { 
+        	addSequential(new BackwardsRockWall(location));
         }
-        else if (defence==5) {
+        else if (defence==NumberConstants.ROUGHTERRAIN) {
+        	addSequential(new BackwardsRoughTerrain(location));
         }
     	
 //        addParallel(new TurnTurret(-180, 1,3, false));

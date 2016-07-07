@@ -49,7 +49,7 @@ public class NumberConstants {
 	public static final double iCamera 									 = 0.00;
 	public static final double dCamera 									 = 0.000;
 	
-	public static final double cameraOffset								= 0.0;
+	public static final double cameraOffset								= 2.5;
 	
 	//**************************************************************************
     //************************** PID VALUES (SHOOTER) **************************
@@ -78,7 +78,7 @@ public class NumberConstants {
     //**************************************************************************
 	
 	//Competition
-	public static final int downArmAngle								= 670;
+	public static final int downArmAngle								= 690;
 	//Arm all the way up
 	public static final int upArmAngle									= 970;
 	
@@ -122,4 +122,5 @@ public class NumberConstants {
 	public static final int DRAWBRIDGE										= 3;
 	public static final int ROCKWALL										= 4;
 	public static final int ROUGHTERRAIN									= 5;
+	public static final int MOAT											= 6;
 }

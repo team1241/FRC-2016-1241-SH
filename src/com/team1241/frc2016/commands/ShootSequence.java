@@ -22,5 +22,6 @@ public class ShootSequence extends CommandGroup {
 		addSequential(new ActuateHolder(false));
 		addSequential(new WaitCommand(NumberConstants.waitForHolder));
 		addSequential(new StopShooter());
+		addSequential(new ActuateHood(false));
 	}
 }

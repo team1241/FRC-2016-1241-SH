@@ -33,6 +33,9 @@ public class BreachShootAuton extends CommandGroup {
         else if (defence==NumberConstants.ROUGHTERRAIN) {
         	addSequential(new AutoRoughTerrain());
         }
+        else if(defence==NumberConstants.MOAT) {
+        	addSequential(new AutoMoat());
+        }
     	
     	//Drive curve towards the tower
     	addSequential(new AutoCourtyard(defenceLoc, endLocation));

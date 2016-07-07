@@ -30,7 +30,7 @@ public class ShootCommand extends Command {
 	public static boolean tracked;
 	public static boolean detects;
 	
-	ToggleBoolean toggleHood;
+	public static ToggleBoolean toggleHood;
 	public static boolean auto = false;
 	
 	
@@ -112,6 +112,8 @@ public class ShootCommand extends Command {
     	}
     	else if(Robot.oi.getToolRightBumper()) {
     		Robot.shooter.setShooterState(true);
+    		if(!toggleHood.get())
+    			toggleHood.set(true);
     		badderRPM.cancel();
     		spyRPM.cancel();
     		outerRPM.start();    		
@@ -127,7 +129,7 @@ public class ShootCommand extends Command {
     	if(Robot.oi.getToolYButton()) {
     		toggleHood.set(true);
     	}
-    	if(toggleHood.get()==true) {
+    	if(toggleHood.get()) {
     		Robot.shooter.extendHood();
     	}
     	else {
