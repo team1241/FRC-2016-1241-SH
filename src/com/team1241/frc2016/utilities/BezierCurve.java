@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BezierCurve {
+	private static int SIZE = 1000;
+	
 	public Point[] vector = new Point[4];
 	public List<Double> xPoints = new ArrayList<Double>();
 	public List<Double> yPoints = new ArrayList<Double>();
@@ -38,6 +40,17 @@ public class BezierCurve {
 		vector[1] = controlPoint1;
 		vector[2] = controlPoint2;
 		vector[3] = endPoint;
+		putPoints();
+		findPoints();
+		calcPoints();
+	}
+	
+	public BezierCurve(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint, int size) {
+		vector[0] = startPoint;
+		vector[1] = controlPoint1;
+		vector[2] = controlPoint2;
+		vector[3] = endPoint;
+		SIZE = size;
 		putPoints();
 		findPoints();
 		calcPoints();
@@ -73,10 +86,9 @@ public class BezierCurve {
 		xPoints.clear();
 		yPoints.clear();
 
-		for (double x = 0; x <= 1; x += 0.001) {
+		for (double x = 0; x <= 1; x += 1/SIZE) {
 			xVal = useFunctionX(xValues[0], xValues[1], xValues[2], xValues[3], x);
 			yVal = useFunctionY(yValues[0], yValues[1], yValues[2], yValues[3], x);
-			// System.out.println(xVal + ", " + yVal);
 			xPoints.add(xVal);
 			yPoints.add(yVal);
 			points.add(xVal + ", " + yVal);
@@ -186,6 +198,10 @@ public class BezierCurve {
 
 	public List<Double> getYPoints() {
 		return yPoints;
+	}
+
+	public int size() {
+		return SIZE-1;
 	}
 
 }

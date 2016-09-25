@@ -39,13 +39,13 @@ public class DrivePath extends Command{
     protected void execute()
     {
     	if(reverse){
-    		if(-Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < 19)
+    		if(-Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter <= curve.size())
         		counter++;
 
         	Robot.drive.driveStraight(-distance, speed, curve.findAngle(counter), 1);
     	}
     	else{
-    		if(Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < 19)
+    		if(Robot.drive.getAverageDistance() > curve.findHypotenuse(counter) && counter < curve.size())
         		counter++;
 
         	Robot.drive.driveStraight(distance, speed, curve.findAngle(counter), 1);
