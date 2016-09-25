@@ -1,25 +1,27 @@
 package com.team1241.frc2016.commands.auto;
 
 import com.team1241.frc2016.Robot;
-import com.team1241.frc2016.utilities.TheoryCurve;
+import com.team1241.frc2016.utilities.BezierCurve;
+import com.team1241.frc2016.utilities.Point;
+
 import edu.wpi.first.wpilibj.command.*;
 
 public class DrivePath extends Command{
-	TheoryCurve curve;
+	BezierCurve curve;
 	int counter;
 	double distance;
 	double timeOut;
 	double speed;
 	boolean reverse;
 	
-	public DrivePath(String startPoint, String controlPoint1, String controlPoint2, String endPoint, double timeOut, double speed)
+	public DrivePath(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint, double timeOut, double speed)
     {
 		this(startPoint, controlPoint1, controlPoint2, endPoint, timeOut, speed, false);
     }
 	
-	public DrivePath(String startPoint, String controlPoint1, String controlPoint2, String endPoint, double timeOut, double speed, boolean reverse)
+	public DrivePath(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint, double timeOut, double speed, boolean reverse)
     {
-		curve = new TheoryCurve(startPoint, controlPoint1, controlPoint2, endPoint);
+		curve = new BezierCurve(startPoint, controlPoint1, controlPoint2, endPoint);
 		distance = curve.findDistance();
 		this.timeOut = timeOut;
 		this.speed = speed;

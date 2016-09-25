@@ -4,6 +4,7 @@ import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.Robot;
 import com.team1241.frc2016.commands.*;
 import com.team1241.frc2016.commands.auto.*;
+import com.team1241.frc2016.utilities.Point;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -45,7 +46,7 @@ public class AutoCourtyard extends CommandGroup {
 		}
 		else if(location==2) {
 			//Turn towards tower
-			addSequential(new DrivePath("0,0","22.6,40","36,0","36,122",3.5,0.5));
+			addSequential(new DrivePath(new Point(0, 0),new Point(22.6, 40),new Point(36, 0),new Point(36, 122),3.5,0.5));
 		}
 		else if(location==3) {
 			addParallel(new DriveCommand(105, 1,0,2));
@@ -60,7 +61,7 @@ public class AutoCourtyard extends CommandGroup {
 	
 	public void center(int location) {
 		if(location==1) {
-			addSequential(new DrivePath("0,0","50,75","93,0","93,118",3.5,0.5));
+			addSequential(new DrivePath(new Point(0, 0),new Point(50, 75),new Point(93, 0),new Point(93, 118),3.5,0.5));
 		}
 		else if(location==2) {
 			original(location);
