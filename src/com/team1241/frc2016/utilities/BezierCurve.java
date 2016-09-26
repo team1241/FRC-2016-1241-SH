@@ -1,39 +1,64 @@
 package com.team1241.frc2016.utilities;
 
-/*
- * Class that generates a Bezier Curve based of off 4 coordinates given by the client
+import java.util.List;
+import java.util.ArrayList;
+
+/**
+ * Class that generates a Bezier Curve based of off 4 coordinates given by the
+ * client
  * 
- * Reference Material:
- * https://www.desmos.com/calculator/cahqdxeshd
+ * Reference Material: https://www.desmos.com/calculator/cahqdxeshd
  * 
  * @author Mahrus Kazi
  * @version 2.0, 25 Sep 2016
  */
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class BezierCurve {
-	private static int SIZE = 1000;
-	
+
+	/** Used to save number of points generated */
+	private static int size = 1000;
+
+	/** Used to store inputed coordinates */
 	public Point[] vector = new Point[4];
+
+	/** Stores all x points on the curve */
 	public List<Double> xPoints = new ArrayList<Double>();
+
+	/** Stores all y points on the curve */
 	public List<Double> yPoints = new ArrayList<Double>();
+
+	/** Stores distanced between coordinates */
 	public List<Double> hypotenuse = new ArrayList<Double>();
+
+	/** Used to store difference between x and x+1 */
 	public List<Double> xDelta = new ArrayList<Double>();
+
+	/** Used to store difference between y and y+1 */
 	public List<Double> yDelta = new ArrayList<Double>();
+
+	/** Used to store angles between two coordinates */
 	public List<Double> angle = new ArrayList<Double>();
+
+	/** Stores x values from inputed coordinates */
 	public double[] xValues = new double[4];
+
+	/** Stores y values from inputed coordinates */
 	public double[] yValues = new double[4];
+
+	/** Used to store total arc length */
 	public double distance;
 
 	/**
-	 * Requires 4 points to generate Bezier Curves, inputed as Points
-	 * 
+	 * Requires 4 points to generate Bezier Curves, inputed as Points.
+	 *
 	 * @param startPoint
+	 *            the start point
 	 * @param controlPoint1
+	 *            the control point 1
 	 * @param controlPoint2
+	 *            the control point 2
 	 * @param endPoint
+	 *            the end point
 	 */
 	public BezierCurve(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint) {
 		vector[0] = startPoint;
@@ -44,25 +69,43 @@ public class BezierCurve {
 		findPoints();
 		calcPoints();
 	}
-	
+
+	/**
+	 * Instantiates a new bezier curve.
+	 *
+	 * @param startPoint
+	 *            the start point
+	 * @param controlPoint1
+	 *            the control point 1
+	 * @param controlPoint2
+	 *            the control point 2
+	 * @param endPoint
+	 *            the end point
+	 * @param size
+	 *            the number points to be generated
+	 */
 	public BezierCurve(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint, int size) {
 		vector[0] = startPoint;
 		vector[1] = controlPoint1;
 		vector[2] = controlPoint2;
 		vector[3] = endPoint;
-		SIZE = size;
+		this.size = size;
 		putPoints();
 		findPoints();
 		calcPoints();
 	}
 
 	/**
-	 * Update given coordinates
-	 * 
+	 * Update given coordinates.
+	 *
 	 * @param startPoint
+	 *            the start point
 	 * @param controlPoint1
+	 *            the control point 1
 	 * @param controlPoint2
+	 *            the control point 2
 	 * @param endPoint
+	 *            the end point
 	 */
 	public void changePoints(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint) {
 		vector[0] = startPoint;
@@ -75,31 +118,31 @@ public class BezierCurve {
 	}
 
 	/**
-	 * Generates the points on the Bezier Curve
-	 * 
+	 * Generates the points on the Bezier Curve.
+	 *
 	 * @return Returns a ArrayList consisting of Points
 	 */
-	public ArrayList<String> findPoints() {
-		ArrayList<String> points = new ArrayList<String>();
+	public ArrayList<Point> findPoints() {
+		ArrayList<Point> points = new ArrayList<Point>();
 		double xVal;
 		double yVal;
 		xPoints.clear();
 		yPoints.clear();
 
-		for (double x = 0; x <= 1; x += 1/SIZE) {
+		for (double x = 0; x <= 1; x += 1 / size) {
 			xVal = useFunctionX(xValues[0], xValues[1], xValues[2], xValues[3], x);
 			yVal = useFunctionY(yValues[0], yValues[1], yValues[2], yValues[3], x);
 			xPoints.add(xVal);
 			yPoints.add(yVal);
-			points.add(xVal + ", " + yVal);
+			points.add(new Point(xVal, yVal));
 		}
 
 		return points;
 	}
 
 	/**
-	 * Generates x points for Bezier Curve
-	 * 
+	 * Generates x points for Bezier Curve.
+	 *
 	 * @param x0
 	 * @param x1
 	 * @param x2
@@ -117,14 +160,14 @@ public class BezierCurve {
 	}
 
 	/**
-	 * Generates y points for Bezier Curve
-	 * 
+	 * Generates y points for Bezier Curve.
+	 *
 	 * @param y0
 	 * @param y1
 	 * @param y2
 	 * @param y3
 	 * @param counter
-	 * @return Returns the y values for the coordinate 
+	 * @return Returns the y values for the coordinate
 	 */
 	public double useFunctionY(double y0, double y1, double y2, double y3, double counter) {
 		double cy = 3 * (y1 - y0);
@@ -135,6 +178,9 @@ public class BezierCurve {
 		return yVal;
 	}
 
+	/**
+	 * Separates coordinates into x and y values
+	 */
 	public void putPoints() {
 		Point point;
 
@@ -145,6 +191,9 @@ public class BezierCurve {
 		}
 	}
 
+	/**
+	 * Used to calculate angles and arc length.
+	 */
 	public void calcPoints() {
 		for (int x = 0; x < xPoints.size() - 1; x++) {
 			xDelta.add((xPoints.get(x + 1) - xPoints.get(x)));
@@ -168,40 +217,54 @@ public class BezierCurve {
 		}
 	}
 
-	public double findDistance() {
+	/**
+	 * @return The arc length of the curve
+	 */
+	public double findArcLength() {
 		return distance;
 	}
 
+	/**
+	 * Find the angle at an index
+	 *
+	 * @param index
+	 *            Index of angle (0 to number of coordinates)
+	 * @return Returns angle in degrees
+	 */
 	public double findAngle(int index) {
 		return angle.get(index);
 	}
 
+	/**
+	 * Find the hypotenuse length between two coordinates at an index.
+	 *
+	 * @param index
+	 *            Index of hypotenuse segment
+	 * @return Returns the hypotenuse length in inches
+	 */
 	public double findHypotenuse(int index) {
 		return hypotenuse.get(index);
 	}
 
-	public double findIndex() {
-		return xDelta.size();
-	}
-
-	public double findXDelta(int x) {
-		return xDelta.get(x);
-	}
-
-	public double findYDelta(int y) {
-		return yDelta.get(y);
-	}
-
+	/**
+	 * @return Returns all the x values on the Bezier Curve
+	 */
 	public List<Double> getXPoints() {
 		return xPoints;
 	}
 
+	/**
+	 * @return Returns all the y values on the Bezier Curve
+	 */
 	public List<Double> getYPoints() {
 		return yPoints;
 	}
 
+	/**
+	 * @return Returns the number of points generated
+	 */
 	public int size() {
-		return SIZE-1;
+		return size - 1;
 	}
 
 }

@@ -1,8 +1,5 @@
 package com.team1241.frc2016.subsystems;
 
-
-import java.util.Arrays;
-
 import com.team1241.frc2016.ElectricalConstants;
 import com.team1241.frc2016.NumberConstants;
 import com.team1241.frc2016.commands.ShootCommand;
@@ -12,332 +9,359 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *The Subsystem that is used for firing the balls from a flywheel. It uses the 2 motors on the turret head,
  *the vertical indexing piston and reads an encoder for turret position feedback.
+ *
  *@author Shaqeeb Momen
  */
 public class Shooter extends Subsystem {
+
+	/** The Shooter Talons. */
 	private CANTalon rightShooter;
 	private CANTalon leftShooter;
-	
+
+	/** The Turret Talon */
 	private CANTalon turret;
-	
+
+	/** DoubleSolenoid for popper */
 	private DoubleSolenoid popUp;
+
+	/** DoubleSolenoid for the hood */
 	private DoubleSolenoid hood;
+
+	/** The shooter state. Used to check if shooter is on, and to turn it off */
 	private boolean shooterState;
-	
+
+	/** The shooter PID. */
 	public PIDController shooterPID;
+
+	/** The turret PID. */
 	public PIDController turretPID;
+
+	/** The camera PID. */
 	public PIDController cameraPID;
-	
+
+	/** The turret encoder, used to find turret angle */
 	private Encoder turretEncoder;
-	
+
+	/** Optical Sensor, used for finding flywheel rpm */
 	private Counter optical;
-	
+
+	/** Used to receive array of coordinates from camera */
 	private double[] targetNum = new double[8];
-	public boolean connected;
-	
-	public Shooter(){
-		 // Initialize Talons
-		 rightShooter = new CANTalon (ElectricalConstants.RIGHT_SHOOTER_MOTOR);
-		 leftShooter = new CANTalon (ElectricalConstants.LEFT_SHOOTER_MOTOR);
-		 
-		 
-		 // Initialize turret, encoder, and the encoder properties
-		 turret = new CANTalon(ElectricalConstants.TURRET_MOTOR);
-		 turretEncoder = new Encoder(ElectricalConstants.TURRET_ENCODER_A, ElectricalConstants.TURRET_ENCODER_B,
-				 ElectricalConstants.turretEncoderReverse, Encoder.EncodingType.k4X);
-		 turretEncoder.setDistancePerPulse(ElectricalConstants.turretEncoderDegPerTick);
-		 
-		 optical = new Counter();
-		 optical.setUpSource(ElectricalConstants.SHOOTER_OPTICS);
-		 optical.setUpDownCounterMode();
-		 optical.setDistancePerPulse(1);
-		 
-	     // Initialize Pistons		
-		 popUp = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.POPPER_SHOOT_SOLENOID_A, 
-				 					ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
-		 hood = new DoubleSolenoid (ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
-				 					ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
-		 
-		// Initialize PID	
-		 shooterPID = new PIDController (NumberConstants.pShooterBadder,
-								   NumberConstants.iShooterBadder,
-								   NumberConstants.dShooterBadder);
-		 
-		 turretPID = new PIDController(NumberConstants.pTurret,
-				 					NumberConstants.iTurret,
-				 					NumberConstants.dTurret);
-		 
-		 cameraPID = new PIDController(NumberConstants.pCamera,
-				 					NumberConstants.iCamera,
-				 					NumberConstants.dCamera);
-		 
-		 shooterState = false;
-		 
-		 NetworkTable server = NetworkTable.getTable("SmartDashboard");
-	     try{
-	        targetNum = server.getNumberArray("MEQ_COORDINATES");
-	        connected = true;
-	     }
-	     catch(Exception ex){
-	    	 System.out.println("Unable to get coordinates");
-	    	 connected = false;
-	     }
+
+	/**
+	 * Instantiates a new shooter subsystem, this includes initializing all
+	 * components related to the subsystem
+	 */
+	public Shooter() {
+		// Initialize Talons
+		rightShooter = new CANTalon(ElectricalConstants.RIGHT_SHOOTER_MOTOR);
+		leftShooter = new CANTalon(ElectricalConstants.LEFT_SHOOTER_MOTOR);
+
+		// Initialize turret, encoder, and the encoder properties
+		turret = new CANTalon(ElectricalConstants.TURRET_MOTOR);
+		turretEncoder = new Encoder(ElectricalConstants.TURRET_ENCODER_A, ElectricalConstants.TURRET_ENCODER_B,
+				ElectricalConstants.turretEncoderReverse, Encoder.EncodingType.k4X);
+		turretEncoder.setDistancePerPulse(ElectricalConstants.turretEncoderDegPerTick);
+
+		// Sets up optical sensor to be used to check rpm
+		optical = new Counter();
+		optical.setUpSource(ElectricalConstants.SHOOTER_OPTICS);
+		optical.setUpDownCounterMode();
+		optical.setDistancePerPulse(1);
+
+		// Initialize Pistons
+		popUp = new DoubleSolenoid(ElectricalConstants.PCM, ElectricalConstants.POPPER_SHOOT_SOLENOID_A,
+				ElectricalConstants.POPPER_SHOOT_SOLENOID_B);
+		hood = new DoubleSolenoid(ElectricalConstants.PCM, ElectricalConstants.SHOOTER_HOOD_SOLENOID_A,
+				ElectricalConstants.SHOOTER_HOOD_SOLENOID_B);
+
+		// Initialize PIDs
+		shooterPID = new PIDController(NumberConstants.pShooterBadder, NumberConstants.iShooterBadder,
+				NumberConstants.dShooterBadder);
+
+		turretPID = new PIDController(NumberConstants.pTurret, NumberConstants.iTurret, NumberConstants.dTurret);
+
+		cameraPID = new PIDController(NumberConstants.pCamera, NumberConstants.iCamera, NumberConstants.dCamera);
+
+		// Shooter is not running
+		shooterState = false;
+
+		// Uses NetworkTables to receive coordinates from camera
+		NetworkTable server = NetworkTable.getTable("SmartDashboard");
+		try {
+			targetNum = server.getNumberArray("MEQ_COORDINATES");
+		} catch (Exception ex) {
+			System.out.println("Unable to get coordinates");
+		}
 	}
-	
+
+	/**
+	 * Sets the shooter state.
+	 *
+	 * @param state
+	 *            the new shooter state
+	 */
 	public void setShooterState(boolean state) {
 		shooterState = state;
 	}
-	
+
+	/**
+	 * Gets the shooter state.
+	 *
+	 * @return the shooter state
+	 */
 	public boolean getShooterState() {
 		return shooterState;
 	}
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ShootCommand());
-    }
-    
-    
-   /**********************************************PNEUMATIC METHODS**********************************************/
-    public void extendHood() {
-    	hood.set(DoubleSolenoid.Value.kReverse);
-    }
-    
-    public void retractHood(){
-    	hood.set(DoubleSolenoid.Value.kForward);
-    }
-    
-    public void retractPop(){
-    	popUp.set(DoubleSolenoid.Value.kReverse);
-    }
-    
-    public void extendPop(){
-    	popUp.set(DoubleSolenoid.Value.kForward);
-    }
-    
-    /**********************************************MOTOR METHODS**************************************************/
+	/**
+	 * Runs ShootCommand as a default command
+	 */
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new ShootCommand());
+	}
 
-    public void setSpeed(double shotVal){
-    	rightShooter.set(-shotVal);
-    	leftShooter.set(-shotVal);
-    }
-    
-    public void setRight(double speed){
-    	rightShooter.set(speed);
-    }
-    
-    public void setLeft(double speed){
-    	leftShooter.set(speed);
-    }
-    
-    public void turnTurret(double pwr) {
-    	turret.set(pwr);
-    }
-    
-    /** @param angle angle is in degrees
-     * @param pwr pwr is +/- 0 to 1 
-     * Restriction: -180 <= x <= 180
-     * */
-    public void turnTurretToAngle(double angle, double pwr) {
-    	double output = turretPID.calcPID(angle, getTurretAngle(), 0.5);
-    	turret.set(pwr*output);	
-    }
-    
-    public void liveTrack(double angle) {
-//    	System.out.println(Math.abs(angle-getTurretAngle()));
-    	if(Math.abs(angle-getTurretAngle())<0.5) {
-    		turret.set(0);
-    	}
-    	else if(angle>getTurretAngle()) {
-    		if(Math.abs(angle-getTurretAngle())<32)
-    			turret.set(0.2);
-    		if(Math.abs(angle-getTurretAngle())<5)
-    			turret.set(0.1);
-    		if(Math.abs(angle-getTurretAngle())<2.5)
-    			turret.set(0.05);
-    	}
-    	else if(angle<getTurretAngle()) {
-    		if(Math.abs(angle-getTurretAngle())<32)
-    			turret.set(-0.2);
-    		if(Math.abs(angle-getTurretAngle())<5)
-    			turret.set(-0.1);
-    		if(Math.abs(angle-getTurretAngle())<2.5)
-    			turret.set(-0.05);
-    	}
-    	else {
-    		turret.set(0);
-    	}
-    }
-    
-    public void turnTurretCamera(double angle, double pwr) {
-    	double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.8);
-//    	System.out.print("DiffAngle: "+ (angle-getTurretAngle()) + " CameraPIDs:" + output);
-    	if(Math.abs(angle-getTurretAngle()) <0.5) {
-    		turret.set(0);
-//    		System.out.println(" Output:" + 0);
-    	}
-    	else if(Math.abs(output)>0.1) {
-    		turret.set(pwr*output);
-//    		System.out.println(" Output:" + pwr*output);
-    	}
-    	else if(output>-0.1 && output<0) {
-    		turret.set(-0.1);
-//    		System.out.println(" Output:" + -0.1);
-    	}
-    	else if(output<0.1 && output>0) {
-    		turret.set(0.1);
-//    		System.out.println(" Output:" + 0.1);
-    	}
-    }
-    
-    /** 
-     * If turret goes over the rotational limit, swing it in the opposite direction to the same angle
-     * Eg: 370 degrees is the same as 10 degrees */
-    public void adjustTurret(double pwr) {
-    	if (getTurretAngle() >= 360) {
-    		turnTurretToAngle(getTurretAngle() - 360, pwr);
-    	} else if (getTurretAngle() <= -360) {
-    		turnTurretToAngle(getTurretAngle() + 360, pwr);
-    	}
-    }
-    
-    /** @param pixel pixel is in degrees
-     * @param pwr pwr is +/- 0 to 1 
-     * Restriction: 0 <= x <= 640
-     * */
-    public void turnTurretToPixel(double pixel, double pwr) {
-    	double output = cameraPID.calcPIDVelocity(320, pixel, 0.2, 0.7);
-    	turret.set((pwr*output));	
-    }
-    
-    /*public double pixelToDegree(double pixel) {
-    	return 0.105807*pixel-37.4135;
-    }*/
-    
-    public double pixelToDegree(double pixel){
-//    	return 0.0870234789*pixel-28.5146932592;
-    	return Math.toDegrees(Math.atan(((pixel-320)*Math.tan(Math.toRadians(31.81)))/320));
-    }
-    
-    /********************************************** TURRET ENCODER METHODS **********************************************/
-    
-    public void reset() {
-    	turretEncoder.reset();
-    }
-    
-    public double getTurretDistance() {
-    	return turretEncoder.getDistance();
-    }
-    
-    /**
-     * This function returns the raw value from the left encoder
-     * 
-     * @return Returns raw value from encoder
-     */
-    public double getTurretRaw(){
-        return turretEncoder.getRaw();
-    }
-    
-    /**
-     * This function returns the rate the left encoder is moving at in inches/sec
-     * 
-     * @return Returns rate of encoder in inches/sec
-     */
-    public double getTurretEncoderRate(){
-        return turretEncoder.getRate();
-    }
-    
-    public boolean updateCoordinates(){
-    	NetworkTable server = NetworkTable.getTable("SmartDashboard");
-	     try{
-	        targetNum = server.getNumberArray("MEQ_COORDINATES");
-//	        System.out.println(Arrays.toString(targetNum));
-	        connected = true;
-	        return true;
-	     }
-	     catch(Exception ex){
-//	    	 System.out.println("Unable to get coordinates");
-	    	 connected = false;
-	    	 return false;
-	     }
-    }
-    
-    public double[] getCoordinates(){
-    	return targetNum;
-    }
-    
-    public double getXCoordinates(){
-    	if(updateCoordinates()) {
-    		if(targetNum.length == 8)
-    			return (targetNum[0]+targetNum[2]+targetNum[4]+targetNum[6])/4;
-    	}
-    	return -1;
-    }
-    
-    public double targetWidthPixels(){
-    	if(updateCoordinates()) {
-    		if(targetNum.length == 8)
-    			return ((targetNum[0]-targetNum[2]) + (targetNum[6]-targetNum[4]))/2;
-    	}
-    	return -1;
-    }
-    
-    public double getDistanceToTarget(){
-    	return 20*640/(2*targetWidthPixels()*Math.tan(Math.toRadians(31.81)));
-    }
-    
-    /********************************************** OPTICAL SENSOR METHODS **********************************************/
-    
-    public double getOptic(){
-    	return optical.get();
-    }
-    
-    public double getRPM(){
-    	return optical.getRate()*60;
-    }
-    
-    /********************************************** TURRET PID *********************************************************/
-    
-    public void turnTurretTo(double setPoint, double power) {
-    	double output = turretPID.calcPID(setPoint, turretEncoder.getRaw(), 5);
-    	
-    	turret.set(output*power);
-    }
-    
-    /********************************************** SHOOTER PID ********************************************************/
-    
-    public void setRPM(double rpm){
-    	double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
-    	System.out.println("Output: " + output + " FeedBack: " + rpm*NumberConstants.kForward+NumberConstants.bForward);
-    	setSpeed(output+rpm*NumberConstants.kForward+NumberConstants.bForward);
-    }
-    
-    /**
-     * Initial: 0 degrees, facing forwards
-     * Derivation: from % of rotation multiplied by 360 
-     */
-    public double getTurretAngle() {
-    	return turretEncoder.getRaw() / ElectricalConstants.turretEncoderDegPerTick;
-    }
-    
-    /** true for "up", false for "down" */
-    public boolean getTurretDirection() {
-    	return turretEncoder.getDirection();
-    }
-    
-    /** true for "up", false for "down" */
-    public void setTurretEncDirection(boolean direction) {
-    	turretEncoder.setReverseDirection(direction);
-    }
+	// PNEUMATIC METHODS
+
+	/**
+	 * Extend hood piston.
+	 */
+	public void extendHood() {
+		hood.set(DoubleSolenoid.Value.kReverse);
+	}
+
+	/**
+	 * Retract hood piston.
+	 */
+	public void retractHood() {
+		hood.set(DoubleSolenoid.Value.kForward);
+	}
+
+	/**
+	 * Retract popper piston.
+	 */
+	public void retractPop() {
+		popUp.set(DoubleSolenoid.Value.kReverse);
+	}
+
+	/**
+	 * Extend popper piston.
+	 */
+	public void extendPop() {
+		popUp.set(DoubleSolenoid.Value.kForward);
+	}
+
+	// MOTOR METHODS
+
+	/**
+	 * Used to set speed of shooter motors
+	 *
+	 * @param shotVal
+	 *            Power sent to the shooter motors (-1.0 to 1.0)
+	 */
+
+	public void setSpeed(double shotVal) {
+		rightShooter.set(-shotVal);
+		leftShooter.set(-shotVal);
+	}
+
+	/**
+	 * Used to set speed of turret motor
+	 *
+	 * @param pwr
+	 *            Power sent to the turret motor (-1.0 to 1.0)
+	 */
+	public void turnTurret(double pwr) {
+		turret.set(pwr);
+	}
+
+	/**
+	 * Turn turret to angle.
+	 *
+	 * @param angle
+	 *            angle is in degrees - Restriction: -180 <= x <= 90
+	 * @param pwr
+	 *            Power is 0.0 to 1.0
+	 */
+	public void turnTurretToAngle(double angle, double pwr) {
+		double output = turretPID.calcPID(angle, getTurretAngle(), 0.5);
+		turret.set(pwr * output);
+	}
+
+	/**
+	 * Using the camera to live track (Not used during match)
+	 *
+	 * @param angle
+	 *            the angle
+	 */
+	public void liveTrack(double angle) {
+		// System.out.println(Math.abs(angle-getTurretAngle()));
+		if (Math.abs(angle - getTurretAngle()) < 0.5) {
+			turret.set(0);
+		} else if (angle > getTurretAngle()) {
+			if (Math.abs(angle - getTurretAngle()) < 32)
+				turret.set(0.2);
+			if (Math.abs(angle - getTurretAngle()) < 5)
+				turret.set(0.1);
+			if (Math.abs(angle - getTurretAngle()) < 2.5)
+				turret.set(0.05);
+		} else if (angle < getTurretAngle()) {
+			if (Math.abs(angle - getTurretAngle()) < 32)
+				turret.set(-0.2);
+			if (Math.abs(angle - getTurretAngle()) < 5)
+				turret.set(-0.1);
+			if (Math.abs(angle - getTurretAngle()) < 2.5)
+				turret.set(-0.05);
+		} else {
+			turret.set(0);
+		}
+	}
+
+	/**
+	 * Separate method used turning the turret using the camera
+	 *
+	 * @param angle
+	 *            the angle
+	 * @param pwr
+	 *            Power is 0.0 to 1.0
+	 */
+	public void turnTurretCamera(double angle, double pwr) {
+		double output = cameraPID.calcPIDVelocity(angle, getTurretAngle(), 0.5, 0.8);
+
+		if (Math.abs(angle - getTurretAngle()) < 0.5) {
+			turret.set(0);
+		} else if (Math.abs(output) > 0.1) {
+			turret.set(pwr * output);
+		} else if (output > -0.1 && output < 0) {
+			turret.set(-0.1);
+		} else if (output < 0.1 && output > 0) {
+			turret.set(0.1);
+		}
+	}
+
+	/**
+	 * Converts the pixel offset from the center of the image to degrees, which
+	 * is then used for turning the turret
+	 *
+	 * @param pixel
+	 *            The x coordinate pixel from the image. Ranging from 0 to 640
+	 *            on a 480x640 image
+	 * @return the double
+	 */
+	public double pixelToDegree(double pixel) {
+		return Math.toDegrees(Math.atan(((pixel - 320) * Math.tan(Math.toRadians(31.81))) / 320));
+	}
+
+	// TURRET ENCODER METHODS
+
+	/**
+	 * Resets the turret encoder
+	 */
+	public void reset() {
+		turretEncoder.reset();
+	}
+
+	/**
+	 * @return Returns raw value from turret encoder
+	 */
+	public double getTurretRaw() {
+		return turretEncoder.getRaw();
+	}
+
+	/**
+	 * Update coordinates from image.
+	 *
+	 * @return Returns true if coordinates received successfully.
+	 */
+	public boolean updateCoordinates() {
+		NetworkTable server = NetworkTable.getTable("SmartDashboard");
+		try {
+			targetNum = server.getNumberArray("MEQ_COORDINATES");
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+
+	/**
+	 * @return Returns an array filled with target coordinates
+	 */
+	public double[] getCoordinates() {
+		return targetNum;
+	}
+
+	/**
+	 * @return Returns the calculated x value for the center of the target
+	 */
+	public double getXCoordinates() {
+		if (updateCoordinates()) {
+			if (targetNum.length == 8)
+				return (targetNum[0] + targetNum[2] + targetNum[4] + targetNum[6]) / 4;
+		}
+		return -1;
+	}
+
+	/**
+	 * @return Returns the target width in pixels
+	 */
+	public double targetWidthPixels() {
+		if (updateCoordinates()) {
+			if (targetNum.length == 8)
+				return ((targetNum[0] - targetNum[2]) + (targetNum[6] - targetNum[4])) / 2;
+		}
+		return -1;
+	}
+
+	/**
+	 * @return Returns the distance to the target
+	 */
+	public double getDistanceToTarget() {
+		return 20 * 640 / (2 * targetWidthPixels() * Math.tan(Math.toRadians(31.81)));
+	}
+
+	// OPTICAL SENSOR METHODS
+
+	/**
+	 * @return Returns what the optical sensor is currently sensing
+	 */
+	public double getOptic() {
+		return optical.get();
+	}
+
+	/**
+	 * @return Returns the rpm
+	 */
+	public double getRPM() {
+		return optical.getRate() * 60;
+	}
+
+	// SHOOTER PID
+
+	/**
+	 * Method used to set rpm for the shooter, uses PID in combination with
+	 * feedforward to reach speed. Inputed rpm is sent into a linear function to
+	 * calculate needed feedforward value.
+	 * 
+	 * @param rpm
+	 *            rpm for the shooter
+	 */
+	public void setRPM(double rpm) {
+		double output = shooterPID.calcPIDVelocity(rpm, getRPM(), 50, 0.6);
+		setSpeed(output + rpm * NumberConstants.kForward + NumberConstants.bForward);
+	}
+
+	/**
+	 * @return Returns the turret angle in degrees.
+	 */
+	public double getTurretAngle() {
+		return turretEncoder.getRaw() / ElectricalConstants.turretEncoderDegPerTick;
+	}
 }
-
-

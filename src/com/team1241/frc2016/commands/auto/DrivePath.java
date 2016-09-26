@@ -22,7 +22,7 @@ public class DrivePath extends Command{
 	public DrivePath(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint, double timeOut, double speed, boolean reverse)
     {
 		curve = new BezierCurve(startPoint, controlPoint1, controlPoint2, endPoint);
-		distance = curve.findDistance();
+		distance = curve.findArcLength();
 		this.timeOut = timeOut;
 		this.speed = speed;
 		this.reverse = reverse;

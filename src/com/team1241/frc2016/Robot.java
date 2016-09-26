@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import com.team1241.frc2016.commands.*;
 import com.team1241.frc2016.commands.auto.*;
-import com.team1241.frc2016.commands.defence.*;
 import com.team1241.frc2016.subsystems.*;
 import com.team1241.frc2016.utilities.*;
 

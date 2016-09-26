@@ -7,12 +7,15 @@ import com.team1241.frc2016.commands.auto.WaitCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Command used to shoot ball
  */
 public class ShootSequence extends CommandGroup {
 
-	public  ShootSequence() {
-		//Only shoots when contains a ball
+	/**
+	 * Instantiates a new shoot sequence. CommandGroup ties multiple commands
+	 * together to make sure correct sequence of events
+	 */
+	public ShootSequence() {
 		addSequential(new ActuateHolder(false));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ExtendPopper());
