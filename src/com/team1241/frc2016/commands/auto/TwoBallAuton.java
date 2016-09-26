@@ -10,50 +10,58 @@ import com.team1241.frc2016.commands.defence.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Class still under progress
  */
-public class TwoBallAuton extends CommandGroup {	
-    public  TwoBallAuton(int location, int defence) {
-    	//Cross the defence
-        if (defence==NumberConstants.ROCKWALL) { 
-        	addSequential(new BackwardsRockWall(location));
-        }
-        else if (defence==NumberConstants.ROUGHTERRAIN) {
-        	addSequential(new BackwardsRoughTerrain(location));
-        }
-    	
-//        addParallel(new TurnTurret(-180, 1,3, false));
-//    	addSequential(new DriveCommand(10, 1.0, 0, 1));
-//    	
-//    	if(Robot.shooter.getXCoordinates()!=-1) {
-//			addSequential(new CameraTrack(1.0));
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
-//		}
-//    	
-//    	if (defence==4) { 
-//        	addSequential(new AutoRockWall());
-//        }
-//        else if (defence==5) {
-//        }
-//    	
-//    	addParallel(new RunIntake(RunIntake.INTAKE));
-//    	addParallel(new DriveCommand(20, 0.5, 0, 1));
-//    	addSequential(new RunArm(NumberConstants.downArmAngle, 1, 1));
-//    	
-//    	if (defence==4) { 
-//        	addSequential(new BackwardsRockWall());
-//        }
-//        else if (defence==5) {
-//        }
-//    	
-//        addParallel(new TurnTurret(-180, 1,3, false));
-//    	addSequential(new DriveCommand(10, 1.0, 0, 1));
-//    	
-//    	if(Robot.shooter.getXCoordinates()!=-1) {
-//			addSequential(new CameraTrack(1.0));
-//			addParallel(new SetShooterSpeed(4000));
-//			addSequential(new AutoShoot());
-//		}
-    }
+public class TwoBallAuton extends CommandGroup {
+
+	/**
+	 * Instantiates a new two ball auton.
+	 *
+	 * @param location
+	 *            the location
+	 * @param defence
+	 *            the defence
+	 */
+	public TwoBallAuton(int location, int defence) {
+		// Cross the defence
+		if (defence == NumberConstants.ROCKWALL) {
+			addSequential(new BackwardsRockWall(location));
+		} else if (defence == NumberConstants.ROUGHTERRAIN) {
+			addSequential(new BackwardsRoughTerrain(location));
+		}
+
+		// addParallel(new TurnTurret(-180, 1,3, false));
+		// addSequential(new DriveCommand(10, 1.0, 0, 1));
+		//
+		// if(Robot.shooter.getXCoordinates()!=-1) {
+		// addSequential(new CameraTrack(1.0));
+		// addParallel(new SetShooterSpeed(4000));
+		// addSequential(new AutoShoot());
+		// }
+		//
+		// if (defence==4) {
+		// addSequential(new AutoRockWall());
+		// }
+		// else if (defence==5) {
+		// }
+		//
+		// addParallel(new RunIntake(RunIntake.INTAKE));
+		// addParallel(new DriveCommand(20, 0.5, 0, 1));
+		// addSequential(new RunArm(NumberConstants.downArmAngle, 1, 1));
+		//
+		// if (defence==4) {
+		// addSequential(new BackwardsRockWall());
+		// }
+		// else if (defence==5) {
+		// }
+		//
+		// addParallel(new TurnTurret(-180, 1,3, false));
+		// addSequential(new DriveCommand(10, 1.0, 0, 1));
+		//
+		// if(Robot.shooter.getXCoordinates()!=-1) {
+		// addSequential(new CameraTrack(1.0));
+		// addParallel(new SetShooterSpeed(4000));
+		// addSequential(new AutoShoot());
+		// }
+	}
 }

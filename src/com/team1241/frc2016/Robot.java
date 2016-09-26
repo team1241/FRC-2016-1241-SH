@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static PowerDistributionPanel pdp;
 	
 	//Subsystems
 	public static Drivetrain drive;
@@ -65,9 +64,7 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
-    	pdp = new PowerDistributionPanel();
-    	
+    public void robotInit() {    	
 		oi = new OI();
 		pref = Preferences.getInstance();
 		
@@ -76,13 +73,8 @@ public class Robot extends IterativeRobot {
 		intake = new Intake();
 		conveyor = new Conveyor();
 		
-		// Camera Server
-//		server = CameraServer.getInstance();
-//        server.setQuality(50);
-//        server.startAutomaticCapture("cam0");
 		
-		
-        // instantiate the command used for the autonomous period
+        // Instantiate the command used for the autonomous period
 		
 		defenceChooser = new SendableChooser();
 		locationChooser = new SendableChooser();
@@ -128,6 +120,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		updateSmartDashboard();
 		
+		// Used for LEDs!!!
 		fFlash.set(false);
 		sFlash.set(false);
 		
@@ -166,7 +159,6 @@ public class Robot extends IterativeRobot {
 
 	
     public void autonomousInit() {
-        // schedule the autonomous command (example)
     	conveyor.extendHolder();
     	drive.reset();
     	shooter.reset();
@@ -184,10 +176,6 @@ public class Robot extends IterativeRobot {
     }
     
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
     	if(autonomousCommand!=null)
     		autonomousCommand.cancel();
     	
