@@ -84,8 +84,7 @@ public class Robot extends IterativeRobot {
 		
 		
         // instantiate the command used for the autonomous period
-		
-		defenceChooser = new SendableChooser();
+		defenceChooser = new SendableChooser();//KothaRoti
 		locationChooser = new SendableChooser();
 		endLocationChooser = new SendableChooser();
 		

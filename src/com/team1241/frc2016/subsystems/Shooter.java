@@ -109,11 +109,11 @@ public class Shooter extends Subsystem {
     
    /**********************************************PNEUMATIC METHODS**********************************************/
     public void extendHood() {
-    	hood.set(DoubleSolenoid.Value.kReverse);
+    	//hood.set(DoubleSolenoid.Value.kReverse);
     }
     
     public void retractHood(){
-    	hood.set(DoubleSolenoid.Value.kForward);
+    	//hood.set(DoubleSolenoid.Value.kForward);
     }
     
     public void retractPop(){
