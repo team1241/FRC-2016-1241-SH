@@ -6,7 +6,7 @@ import com.team1241.frc2016.commands.auto.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Command Groups used to cross the rockwall
  */
 public class AutoRockWall extends CommandGroup {
     
